@@ -1,0 +1,78 @@
+{
+  "type": "textures",
+  "url": "sheet.png",
+  "textures": [
+    {
+      "type": "sprite",
+      "name": "solid",
+      "x": 1,
+      "y": 0,
+      "w": 1,
+      "h": 1
+    },
+    {
+      "type": "sprite",
+      "name": "pointer",
+      "x": 0,
+      "y": 10,
+      "w": 8,
+      "h": 8
+    },
+    {
+      "type": "sprite",
+      "name": "pistol_small",
+      "x": 0,
+      "y": 18,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "pistol_large",
+      "x": 0,
+      "y": 290,
+      "w": 96,
+      "h": 96
+    },
+    {
+      "type": "sprite",
+      "name": "card_large",
+      "x": 0,
+      "y": 146,
+      "w": 96,
+      "h": 144
+    },
+    {
+      "type": "sprite",
+      "name": "card_small_back",
+      "x": 96,
+      "y": 146,
+      "w": 32,
+      "h": 48
+    },
+    {
+      "type": "sprite",
+      "name": "card_small",
+      "x": 128,
+      "y": 146,
+      "w": 32,
+      "h": 48
+    },
+    {
+      "type": "row",
+      "name": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", "!"],
+      "x": 0,
+      "y": 0,
+      "w": 5,
+      "h": 5
+    },
+    {
+      "type": "row",
+      "name": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "#", "[", "]", "-", "+", "/", "\\", "|", ":", "(", ")", "<", ">", ",", "'", "\"", "%", "?"],
+      "x": 0,
+      "y": 5,
+      "w": 5,
+      "h": 5
+    }
+  ]
+}

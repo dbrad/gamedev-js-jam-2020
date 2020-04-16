@@ -1,0 +1,36 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Typescript Watch",
+      "type": "typescript",
+      "tsconfig": "tsconfig.dev.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"]
+    },
+    {
+      "label": "Watch Static Files",
+      "type": "shell",
+      "command": "./node_modules/.bin/gulp",
+      "args": ["watch", "--env", "development"],
+      "group": "build"
+    },
+    {
+      "label": "Webpack",
+      "type": "shell",
+      "command": "./node_modules/.bin/webpack-dev-server",
+      "args": ["--open", "--config", "webpack.dev.js"],
+      "group": "build"
+    },
+    {
+      "label": "Build",
+      "dependsOn": ["Typescript Watch", "Watch Static Files", "Webpack"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

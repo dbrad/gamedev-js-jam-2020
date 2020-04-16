@@ -1,0 +1,13 @@
+{
+  "type": "player_cards",
+  "cards": [
+    {
+      "name": "pistol",
+      "cost": 0,
+      "value": 1,
+      "type": "action",
+      "art": "pistol",
+      "effects": "attack 1"
+    }
+  ]
+}

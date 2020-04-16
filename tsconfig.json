@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin",
+        "configFile": "tslint.json"
+      }
+    ],
+    "moduleResolution": "classic",
+    "module": "es6",
+    "noEmitOnError": true,
+    "sourceMap": true
+  },
+  "include": ["./src/ts/**/*"],
+  "exclude": ["**/node_modules/**/*", "node_modules/**/*"]
+}
