@@ -1,0 +1,378 @@
+{
+  "type": "player_cards",
+  "cards": [
+    {
+      "name" : "wounded",
+      "cost": 0,
+      "type": "status",
+      "art": "pistol",
+      "levels": null
+    },
+    {
+      "name": "open fire",
+      "cost": 0,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 1"
+      ]
+    },
+    {
+      "name": "electrical interference",
+      "cost": 0,
+      "type": "action",
+      "art": "weak_emp",
+      "levels" : [
+        "disrupt 1"
+      ]
+    },
+    {
+      "name": "funds",
+      "cost": 0,
+      "type": "action",
+      "art": "bonds",
+      "levels" : [
+        "gain 1"
+      ]
+    },
+    {
+      "name": "barrage",
+      "cost": 1,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 2",
+        "attack 3",
+        "attack 4",
+        "attack 5",
+        "attack 6",
+        "attack 7"
+      ]
+    },
+    {
+      "name": "emp burst",
+      "cost": 1,
+      "type": "action",
+      "art": "weak_emp",
+      "levels" : [
+        "disrupt 2",
+        "disrupt 3",
+        "disrupt 4",
+        "disrupt 5",
+        "disrupt 6",
+        "disrupt 7"
+      ]
+    },
+    {
+      "name": "taxation",
+      "cost": 1,
+      "type": "action",
+      "art": "bonds",
+      "levels" : [
+        "gain 2",
+        "gain 3",
+        "gain 4",
+        "gain 5",
+        "gain 6",
+        "gain 7"
+      ]
+    },
+    {
+      "name": "supressive fire",
+      "cost": 1,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 1, disrupt 1",
+        "attack 2, disrupt 1",
+        "attack 2, disrupt 2",
+        "attack 3, disrupt 2",
+        "attack 3, disrupt 3",
+        "attack 4, disrupt 3"
+      ]
+    },
+    {
+      "name": "bounty",
+      "cost": 1,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 1, gain 1",
+        "attack 2, gain 1",
+        "attack 2, gain 2",
+        "attack 3, gain 2",
+        "attack 3, gain 3",
+        "attack 4, gain 3"
+      ]
+    },
+    {
+      "name": "reevaluate",
+      "cost": 2,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "draw 1, discard 1",
+        "draw 2, discard 2",
+        "draw 3, discard 3",
+        "draw 3, discard 2",
+        "draw 3, discard 1",
+        "draw 3, discard 0"
+      ]
+    },
+    {
+      "name": "recruitment",
+      "cost": 2,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "gain 1, draw 1",
+        "gain 2, draw 1",
+        "gain 3, draw 1",
+        "gain 3, draw 2",
+        "gain 4, draw 2",
+        "gain 5, draw 2"
+      ]
+    },
+    {
+      "name": "psychic offensive",
+      "cost": 2,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 1, draw 1",
+        "attack 2, draw 1",
+        "attack 3, draw 1",
+        "attack 3, draw 2",
+        "attack 4, draw 2",
+        "attack 5, draw 2"
+      ]
+    },
+    {
+      "name": "psychic interference",
+      "cost": 2,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "disrupt 4",
+        "disrupt 5",
+        "disrupt 6",
+        "disrupt 7",
+        "disrupt 8",
+        "disrupt 9"
+      ]
+    },
+    {
+      "name": "old one's wrath",
+      "cost": 2,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "disrupt 1, spawn 1",
+        "disrupt 2, spawn 1",
+        "disrupt 3, spawn 1",
+        "disrupt 4, spawn 1",
+        "disrupt 5, spawn 1",
+        "disrupt 6, spawn 1"
+      ]
+    },
+    {
+      "name": "dark pact",
+      "cost": 2,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "draw 1, spawn 1",
+        "draw 2, spawn 2",
+        "draw 3, spawn 3",
+        "draw 3, spawn 2",
+        "draw 3, spawn 1",
+        "draw 3, spawn 0"
+      ]
+    },
+    {
+      "name": "experimental rifle",
+      "cost": 2,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 6, stabilize 1",
+        "attack 7, stabilize 1",
+        "attack 8, stabilize 1",
+        "attack 9, stabilize 2",
+        "attack 10, stabilize 2",
+        "attack 11, stabilize 2"
+      ]
+    },
+    {
+      "name": "collect samples",
+      "cost": 2,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 1, gain 3",
+        "attack 2, gain 3",
+        "attack 2, gain 4",
+        "attack 3, gain 4",
+        "attack 3, gain 5",
+        "attack 4, gain 5"
+      ]
+    },
+    {
+      "name": "sentry",
+      "cost": 4,
+      "type": "permanent",
+      "art": "pistol",
+      "levels" : [
+        "attack 1",
+        "attack 2",
+        "attack 3"
+      ]
+    },
+    {
+      "name": "only the best",
+      "cost": 3,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "destroy 1, draw 1",
+        "destroy 1, draw 2",
+        "destroy 1, draw 3"
+      ]
+    },
+    {
+      "name": "public funding",
+      "cost": 4,
+      "type": "permanent",
+      "art": "pistol",
+      "levels" : [
+        "gain 1",
+        "gain 2",
+        "gain 3"
+      ]
+    },
+    {
+      "name": "rift stitch",
+      "cost": 3,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "stitch 1"
+      ]
+    },
+    {
+      "name": "will of mind",
+      "cost": 4,
+      "type": "permanent",
+      "art": "action",
+      "levels" : [
+        "draw 1",
+        "draw 2",
+        "draw 3"
+      ]
+    },
+    {
+      "name": "abyss take me",
+      "cost": 3,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 2, destory 1",
+        "attack 3, destory 1",
+        "attack 4, destory 1",
+        "attack 5, destory 1",
+        "attack 6, destory 1",
+        "attack 7, destory 1"
+      ]
+    },
+    {
+      "name": "blood ritual",
+      "cost": 3,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 3, disrupt 3",
+        "attack 4, disrupt 3",
+        "attack 4, disrupt 4",
+        "attack 5, disrupt 4",
+        "attack 5, disrupt 5",
+        "attack 6, disrupt 5"
+      ]
+    },
+    {
+      "name": "emp bomb",
+      "cost": 3,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "disrupt 6",
+        "disrupt 7",
+        "disrupt 8",
+        "disrupt 9",
+        "disrupt 10",
+        "disrupt 11"
+      ]
+    },
+    {
+      "name": "live samples",
+      "cost": 4,
+      "type": "permanent",
+      "art": "pistol",
+      "levels" : [
+        "gain 2, stabilize 1",
+        "gain 4, stabilize 2",
+        "gain 6, stabilize 3"
+      ]
+    },
+    {
+      "name": "anti-matter bomb",
+      "cost": 4,
+      "type": "attack",
+      "art": "pistol",
+      "levels" : [
+        "attack 5, disrupt 4",
+        "attack 6, disrupt 4",
+        "attack 6, disrupt 5",
+        "attack 7, disrupt 5",
+        "attack 7, disrupt 6",
+        "attack 8, disrupt 6"
+      ]
+    },
+    {
+      "name": "psychic destruction",
+      "cost": 4,
+      "type": "action",
+      "art": "pistol",
+      "levels" : [
+        "disrupt 3, recall 1",
+        "disrupt 4, recall 1",
+        "disrupt 5, recall 1",
+        "disrupt 6, recall 1",
+        "disrupt 7, recall 1",
+        "disrupt 8, recall 1"
+      ]
+    },
+    {
+      "name": "old one's favor",
+      "cost": 4,
+      "type": "permanent",
+      "art": "pistol",
+      "levels" : [
+        "oldOne 1"
+      ]
+    },
+    {
+      "name": "containment field",
+      "cost": 4,
+      "type": "permanent",
+      "art": "pistol",
+      "levels" : [
+        "disrupt 1",
+        "disrupt 2",
+        "disrupt 3",
+        "disrupt 4",
+        "disrupt 5",
+        "disrupt 6"
+      ]
+    }
+  ]
+}

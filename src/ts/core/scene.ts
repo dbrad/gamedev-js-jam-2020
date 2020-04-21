@@ -31,7 +31,7 @@ export abstract class Scene implements State {
       if (isInteractiveSceneNode(node)) {
         if (!node.hover) {
           node.hover = true;
-          node.onHover();
+          node.onHover(mouseDown);
         }
         newMap.set(node.id, node);
       }
@@ -54,7 +54,7 @@ export abstract class Scene implements State {
   }
   private onMouseUp = () => {
     for (const [id, node] of this.nodesPressed) {
-      if (this.nodesUnderPointer.has(id)) {
+      if (this.nodesUnderPointer.has(id) && node.pressed) {
         node.onMouseUp();
       }
       node.pressed = false;

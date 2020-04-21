@@ -11,12 +11,12 @@ import { on } from "../core/events";
 
 type DiscardAnim = { position: V2, fn: (now: number) => boolean };
 export const toBeDiscarded: [PlayerCard, DiscardAnim][] = [];
-export class PlayerDiscardPileNode extends SceneNode {
-  constructor(initializer: Partial<PlayerDiscardPileNode> = {}) {
-    super(initializer, "player_discard_pile");
+export class StoreDiscardPileNode extends SceneNode {
+  constructor(initializer: Partial<StoreDiscardPileNode> = {}) {
+    super(initializer, "store_discard_pile");
     Object.assign(this, initializer);
     this.size = { x: 32, y: 48 };
-    on("card_discarded", (card: PlayerCard) => {
+    on("store_card_discarded", (card: PlayerCard) => {
       const position: V2 = { x: 0, y: -40 };
       const origin: V2 = V2.copy(position);
 
@@ -29,7 +29,7 @@ export class PlayerDiscardPileNode extends SceneNode {
           if (i.done) {
             position.x = 0;
             position.y = 0;
-            GameState.playerDiscardPile.push(card);
+            GameState.storeDiscard.push(card);
             toBeDiscarded.shift();
           }
           return i.done;
@@ -53,8 +53,8 @@ export class PlayerDiscardPileNode extends SceneNode {
     super.draw(now, delta);
 
     // Top card of the discard pile
-    if (GameState.playerDiscardPile.length > 0) {
-      const lastCard: PlayerCard = GameState.playerDiscardPile[GameState.playerDiscardPile.length - 1];
+    if (GameState.storeDiscard.length > 0) {
+      const lastCard: PlayerCard = GameState.storeDiscard[GameState.storeDiscard.length - 1];
       drawPlayerCard(lastCard, this.topLeft, this.size);
       gl.colour(0x99222222);
       drawTexture("solid", this.topLeft.x, this.topLeft.y, 32, 48);
@@ -70,6 +70,6 @@ export class PlayerDiscardPileNode extends SceneNode {
       drawTexture("solid", this.topLeft.x + pos.x, this.topLeft.y + pos.y, 32, 48);
       gl.colour(0xFFFFFFFF);
     }
-    // drawText(`${GameState.playerDiscardPile.length}`, this.topLeft.x, this.topLeft.y - 6);
+    // drawText(`${GameState.storeDiscard.length}`, this.topLeft.x, this.topLeft.y - 6);
   }
 }

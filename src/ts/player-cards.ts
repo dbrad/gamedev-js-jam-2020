@@ -1,11 +1,15 @@
-export type PlayerCardType = "action" | "status" | "permanent";
+import { GameState, drawFromEncounterDeck, drawFromPlayerDeck } from "./game-state";
+
+import { EncounterCard } from "./encounter-cards";
+import { emit } from "./core/events";
+
+export type PlayerCardType = "attack" | "action" | "status" | "permanent";
 export type PlayerCardData = {
   name: string;
   cost: number;
-  value: number;
   type: PlayerCardType;
   art: string;
-  effects: string;
+  levels: string[];
 };
 
 export type PlayerCardAssetJson = {
@@ -34,23 +38,43 @@ export class PlayerCard {
   public name: string;
   public level: number;
   public cost: number;
-  public value: number;
   public type: PlayerCardType;
   public art: string;
-  public effects: PlayerCardEffect[];
+  public levelsText: string[] = [];
+  public effects: PlayerCardEffect[] = [];
   public description: string[];
 
   constructor(cardData: PlayerCardData) {
     this.name = cardData.name;
-    this.cost = cardData.cost;
-    this.value = cardData.value;
+    this.cost = +cardData.cost;
     this.type = cardData.type;
     this.art = cardData.art;
-    this.parseEffects(cardData.effects);
+    this.level = 0;
+
+    this.description = ["unplayable"];
+
+    if (cardData.levels) {
+      this.parseEffects(cardData.levels[this.level]);
+      if (cardData.levels.length > 1) {
+        for (let level: number = 1; level <= 5; level++) {
+          this.levelsText.push(`LV${level}: ${cardData.levels[level]}`);
+        }
+      }
+    }
+  }
+
+  public levelUp(): void {
+    this.level++;
+    if (this.level > 5) {
+      this.level = 5;
+    }
+    const cardData: PlayerCardData = PLAYER_CARD_CACHE.get(this.name);
+    this.cost = +cardData.cost + this.level;
+    this.parseEffects(cardData.levels[this.level]);
   }
 
   private parseEffects(effectsString: string): void {
-    const effects: string[] = effectsString.split(",");
+    const effects: string[] = effectsString.split(", ");
     this.effects = [];
     this.description = [];
     for (const effectString of effects) {
@@ -59,11 +83,67 @@ export class PlayerCard {
         (target: any) => {
           this[effect](...param, target);
         });
-        this.description.push(`${effect} for ${param}`);
+      this.description.push(`${effect} ${param}`);
     }
   }
 
-  private attack(value: number, target: any): void {
+  private attack(value: number, target: EncounterCard): void {
+    target.hurt(+value);
+  }
 
+  private disrupt(value: number): void {
+    GameState.riftStability -= +value;
+    if (GameState.riftStability < 0) {
+      GameState.riftStability = 0;
+    }
+  }
+
+  private gain(value: number): void {
+    GameState.playerMoney += +value;
+  }
+
+  private draw(value: number): void {
+    const total: number = +value;
+    for (let i: number = 0; i < total; i++) {
+      drawFromPlayerDeck();
+    }
+  }
+  private recall(value: number): void {
+    if (GameState.encountersActive.length > 0) {
+      GameState.encounterDeck.push(GameState.encountersActive.pop());
+    }
+  }
+  private stitch(value: number): void {
+    GameState.stitchCounter += +value;
+  }
+  private oldOne(value: number): void {
+    GameState.oldOnesFavourInPlay = true;
+  }
+  private discard(value: number): void {
+    if (GameState.playerHand.length <= value) {
+      while (GameState.playerHand.length > 0) {
+        const card: PlayerCard = GameState.playerHand.pop();
+        emit("card_discarded", card);
+      }
+      return;
+    }
+    GameState.playerMode = "discard";
+    GameState.discardsRequired = +value;
+  }
+  private destroy(value: number): void {
+    if (GameState.playerHand.length <= value) {
+      while (GameState.playerHand.length > 0) {
+        GameState.playerHand.pop();
+      }
+      return;
+    }
+    GameState.playerMode = "destroy";
+    GameState.destroysRequired = +value;
+  }
+  private spawn(value: number): void {
+    drawFromEncounterDeck();
+  }
+  private stabilize(value: number): void {
+    GameState.riftStability = Math.min(GameState.riftStabilityMax, GameState.riftStability + +value);
   }
 }

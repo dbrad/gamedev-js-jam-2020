@@ -1,13 +1,16 @@
-export type EncounterCardType = "enemy" | "boss" | "event";
+import { GameState, drawFromEncounterDeck } from "./game-state";
+import { PLAYER_CARD_CACHE, PlayerCard, PlayerCardData } from "./player-cards";
+
+import { emit } from "./core/events";
+
 export type EncounterSetType = "all" | "yellow_king";
 export type EncounterCardData = {
   name: string;
-  health: number;
-  damage: number;
-  set: EncounterSetType;
-  type: EncounterCardType;
   art: string;
-  conditions: string;
+  set: EncounterSetType;
+  health: number;
+  armor: number;
+  effects: string;
 };
 
 export type EncounterCardAssetJson = {
@@ -31,38 +34,76 @@ export const loadEncounterCards: (cardsData: EncounterCardAssetJson) => Promise<
     });
   };
 
-export type EncounterCardEffect = (target: any) => void;
+export type EncounterCardEffect = () => void;
 export class EncounterCard {
   public name: string;
+  public maxHealth: number;
   public health: number;
-  public damage: number;
   public set: EncounterSetType;
-  public type: EncounterCardType;
   public art: string;
-  public conditions: EncounterCardEffect[];
-  public description: string[];
+  public armor: number;
+  public effects: EncounterCardEffect[] = [];
+  public description: string[] = [];
 
   constructor(cardData: EncounterCardData) {
     this.name = cardData.name;
-    this.health = cardData.health;
-    this.damage = cardData.damage;
-    this.set = cardData.set;
-    this.type = cardData.type;
     this.art = cardData.art;
-    this.parseConditions(cardData.conditions);
-  }
+    this.set = cardData.set;
+    this.maxHealth = cardData.health;
+    this.health = cardData.health;
+    this.armor = cardData.armor;
 
-  private parseConditions(conditionsString: string): void {
-    const conditions: string[] = conditionsString.split(",");
-    this.conditions = [];
-    this.description = [];
-    for (const conditionString of conditions) {
-      const [condition, param] = conditionString.split(" ");
-      this.conditions.push(
-        (target: any) => {
-          this[condition](...param, target);
-        });
-      this.description.push(`${condition} for ${param}`);
+    if (cardData.effects) {
+      this.parseEffects(cardData.effects);
     }
   }
+
+  public hurt(value: number): void {
+    this.health = Math.max(this.health - Math.max(+value - this.armor, 0), 0);
+  }
+
+  private parseEffects(effectsString: string): void {
+    const effects: string[] = effectsString.split(", ");
+    this.effects = [];
+    this.description = [];
+    for (const effectString of effects) {
+      const [effect, param] = effectString.split(" ");
+      this.effects.push(
+        () => {
+          this[effect](param);
+        });
+      this.description.push(`${effect} ${param.replace("_", " ")}`);
+    }
+  }
+
+  private discard(value: number): void {
+    GameState.playerMode = "discard";
+    GameState.discardsRequired = +value;
+  }
+
+  private regenerate(value: number): void {
+    this.health = Math.min(this.maxHealth, this.health + +value);
+  }
+
+  private spawn(value: number): void {
+    drawFromEncounterDeck();
+  }
+
+  private summon(name: string): void {
+    name = name.replace("_", " ");
+    const cardData: EncounterCardData = ENCOUNTER_CARD_CACHE.get(name);
+    const card: EncounterCard = new EncounterCard(cardData);
+    GameState.encountersActive.push(card);
+  }
+
+  private stabilize(value: number): void {
+    GameState.riftStability = Math.min(GameState.riftStabilityMax, GameState.riftStability + +value);
+  }
+
+  private wound(value: number): void {
+    const cardData: PlayerCardData = PLAYER_CARD_CACHE.get("wounded");
+    const card: PlayerCard = new PlayerCard(cardData);
+    emit("card_discarded", card);
+  }
+
 }

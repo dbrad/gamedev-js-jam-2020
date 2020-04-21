@@ -56,7 +56,7 @@ export class MainMenuScene extends Scene {
     this.root.add(this.settings);
   }
   public transitionIn(): Promise<any> {
-    this.changeBackground(0, 87, 132, 500);
+    this.changeBackground(0, 35, 65, 500);
     return this.root.moveBy({ x: 0, y: -this.root.size.y }).then(() => {
       return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() => {
         return Promise.all([

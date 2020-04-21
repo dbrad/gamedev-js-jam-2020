@@ -5,7 +5,7 @@ html {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #323335;
+  background-color: #001937;
 }
 
 #stage {
@@ -21,7 +21,7 @@ html {
 
 canvas,
 img {
-  padding: 0;
+  padding: 1px;
   margin: 0;
   image-rendering: optimizeSpeed;
   image-rendering: auto;
@@ -32,5 +32,6 @@ img {
   image-rendering: -o-crisp-edges;
   -ms-interpolation-mode: nearest-neighbor;
   overflow: hidden;
-  background-color: #9b9b9b;
+  background-color: #001937;
+  border: 1px white solid;
 }

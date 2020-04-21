@@ -1,12 +1,14 @@
 import { Align, drawText, drawTexture } from "./core/draw.js";
 import { MainMenuScene, MainMenuSceneName } from "./scenes/main-menu-scene.js";
-import { initPointer, inputFocus, pointer } from "./core/pointer.js";
+import { initPointer, inputFocus, mouseDown, pointer } from "./core/pointer.js";
 import { initStats, tickStats } from "./stats.js";
 
 import { GameDifficultyScene } from "./scenes/game-difficulty-scene.js";
 import { GameScene } from "./scenes/game-scene.js";
 import { PLAYER_CARD_CACHE } from "./player-cards.js";
 import { SceneManager } from "./core/scene-manager.js";
+import { V2 } from "./core/v2.js";
+import { emit } from "./core/events.js";
 import { gl } from "./core/gl.js";
 import { loadAsset } from "./core/assets.js";
 
@@ -46,6 +48,7 @@ window.addEventListener("load", async (): Promise<any> => {
     } else {
       gl.colour(0xFFFFFFFF);
       drawTexture("pointer", pointer.x, pointer.y, 1, 1);
+      emit("mouse_move", V2.copy(pointer), mouseDown);
     }
 
     gl.flush();
@@ -55,8 +58,8 @@ window.addEventListener("load", async (): Promise<any> => {
 
   const stage: HTMLDivElement = document.querySelector("#stage");
   const canvas: HTMLCanvasElement = document.querySelector("canvas");
-  stage.style.width = `${SCREEN_WIDTH}px`;
-  stage.style.height = `${SCREEN_HEIGHT}px`;
+  // stage.style.width = `${SCREEN_WIDTH}px`;
+  // stage.style.height = `${SCREEN_HEIGHT}px`;
   canvas.width = SCREEN_WIDTH;
   canvas.height = SCREEN_HEIGHT;
 
@@ -82,7 +85,8 @@ window.addEventListener("load", async (): Promise<any> => {
   gl.initialize(canvas);
   gl.background(50, 51, 53);
   await loadAsset("sheet.json");
-  await loadAsset("cards.json");
+  await loadAsset("player-cards.json");
+  await loadAsset("encounter-cards.json");
   initPointer(canvas);
   SceneManager.register(new MainMenuScene());
   SceneManager.register(new GameDifficultyScene());

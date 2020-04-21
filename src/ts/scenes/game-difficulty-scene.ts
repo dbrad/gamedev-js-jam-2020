@@ -1,3 +1,5 @@
+import { ENCOUNTER_CARD_CACHE, EncounterCard } from "../encounter-cards";
+import { GameState, resetGameState } from "../game-state";
 import { PLAYER_CARD_CACHE, PlayerCard } from "../player-cards";
 
 import { Align } from "../core/draw";
@@ -5,10 +7,10 @@ import { Builder } from "../core/builder";
 import { ButtonNode } from "../scene-nodes/button-node";
 import { Easing } from "../core/interpolation";
 import { GameSceneName } from "./game-scene";
-import { GameState } from "../game-state";
 import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { TextNode } from "../scene-nodes/text-node";
+import { rand } from "../core/random";
 
 export const GameDifficultySceneName: string = "GameDifficulty";
 export class GameDifficultyScene extends Scene {
@@ -31,18 +33,78 @@ export class GameDifficultyScene extends Scene {
         .with("anchor", { x: 0.5, y: 0.5 })
         .with("colour", 0xFF44AA44)
         .with("onMouseUp", () => {
-          GameState.playerDeck = [
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-            new PlayerCard(PLAYER_CARD_CACHE.get("pistol")),
-          ];
+          resetGameState();
+
+          GameState.playerDeck = rand.shuffle([
+            new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("funds")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("funds")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("funds")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("funds")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("funds")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("electrical interference")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("electrical interference")),
+          ]);
+
+          const enemies: EncounterCard[] =[];
+          for(const [name, card] of ENCOUNTER_CARD_CACHE) {
+            enemies.push(new EncounterCard(card));
+          }
+          GameState.encounterDeck = rand.shuffle(enemies);
+          
+          GameState.storeDeck = rand.shuffle([
+            // Tier 0
+            new PlayerCard(PLAYER_CARD_CACHE.get("barrage")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("barrage")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("emp burst")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("emp burst")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("taxation")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("taxation")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("supressive fire")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("supressive fire")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("bounty")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("bounty")),
+
+            // Tier 1
+            new PlayerCard(PLAYER_CARD_CACHE.get("reevaluate")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("reevaluate")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("recruitment")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("recruitment")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("psychic offensive")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("psychic offensive")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("psychic offensive")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("psychic interference")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("psychic interference")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("psychic interference")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("old one's wrath")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("old one's wrath")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("old one's wrath")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("dark pact")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("dark pact")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("dark pact")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("experimental rifle")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("experimental rifle")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("experimental rifle")),
+
+            new PlayerCard(PLAYER_CARD_CACHE.get("collect samples")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("collect samples")),
+            new PlayerCard(PLAYER_CARD_CACHE.get("collect samples")),
+
+          ]);
           SceneManager.pop();
           SceneManager.push(GameSceneName);
         })

@@ -1,0 +1,77 @@
+{
+  "type": "encounter_cards",
+  "cards": [
+    {
+      "name": "timelost creature",
+      "art": "curse",
+      "set": "all",
+      "health": 3,
+      "armor": 0,
+      "effects": null
+    },
+    {
+      "name": "shapeless threat",
+      "art": "curse",
+      "set": "all",
+      "health": 3,
+      "armor": 0,
+      "effects": "regenerate 1"
+    },
+    {
+      "name": "sentient rock",
+      "art": "curse",
+      "set": "all",
+      "health": 2,
+      "armor": 1,
+      "effects": null
+    },
+    {
+      "name": "cultist",
+      "art": "curse",
+      "set": "yellow_king",
+      "health": 3,
+      "armor": 0,
+      "effects": "spawn 1"
+    },
+    {
+      "name": "unspeakable horror",
+      "art": "curse",
+      "set": "yellow_king",
+      "health": 5,
+      "armor": 0,
+      "effects": "discard 1"
+    },
+    {
+      "name": "faceless one",
+      "art": "curse",
+      "set": "yellow_king",
+      "health": 4,
+      "armor": 0,
+      "effects": "regenerate 1"
+    },
+    {
+      "name": "creeping feeler",
+      "art": "curse",
+      "set": "yellow_king",
+      "health": 5,
+      "armor": 1,
+      "effects": "stabilize 1"
+    },
+    {
+      "name": "the king in yellow",
+      "art": "curse",
+      "set": "yellow_king",
+      "health": 9,
+      "armor": 2,
+      "effects": "summon thrashing_tenticle"
+    },
+    {
+      "name": "thrashing tenticle",
+      "art": "curse",
+      "set": "yellow_king",
+      "health": 2,
+      "armor": 0,
+      "effects": "wound 1"
+    }
+  ]
+}

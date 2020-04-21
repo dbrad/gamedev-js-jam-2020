@@ -20,6 +20,14 @@
     },
     {
       "type": "sprite",
+      "name": "money_icon",
+      "x": 8,
+      "y": 10,
+      "w": 8,
+      "h": 8
+    },
+    {
+      "type": "sprite",
       "name": "pistol_small",
       "x": 0,
       "y": 18,
@@ -28,19 +36,35 @@
     },
     {
       "type": "sprite",
-      "name": "pistol_large",
-      "x": 0,
-      "y": 290,
-      "w": 96,
-      "h": 96
+      "name": "cultist_small",
+      "x": 32,
+      "y": 18,
+      "w": 32,
+      "h": 32
     },
     {
       "type": "sprite",
-      "name": "card_large",
-      "x": 0,
-      "y": 146,
-      "w": 96,
-      "h": 144
+      "name": "curse_small",
+      "x": 64,
+      "y": 18,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "weak_emp_small",
+      "x": 96,
+      "y": 18,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "bonds_small",
+      "x": 128,
+      "y": 18,
+      "w": 32,
+      "h": 32
     },
     {
       "type": "sprite",
@@ -52,9 +76,25 @@
     },
     {
       "type": "sprite",
-      "name": "card_small",
+      "name": "card_player_small",
       "x": 128,
       "y": 146,
+      "w": 32,
+      "h": 48
+    },
+    {
+      "type": "sprite",
+      "name": "card_empty_space",
+      "x": 96,
+      "y": 194,
+      "w": 32,
+      "h": 48
+    },
+    {
+      "type": "sprite",
+      "name": "card_enemy_small",
+      "x": 128,
+      "y": 194,
       "w": 32,
       "h": 48
     },

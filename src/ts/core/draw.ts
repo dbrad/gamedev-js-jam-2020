@@ -31,7 +31,7 @@ export function textWidth(characterCount: number, scale: number): number {
 }
 
 export function textHeight(lineCount: number, scale: number): number {
-  return 6 * scale * lineCount;
+  return (6 * scale + scale) * lineCount;
 }
 
 export function parseText(text: string, params: TextParams = { colour: 0xFFFFFFFF, textAlign: Align.Left, scale: 1, wrap: 0 }): number {
@@ -89,7 +89,7 @@ export function drawText(text: string, x: number, y: number, params: TextParams 
 
     let alignmentOffset: number = 0;
     if (params.textAlign === Align.Center) {
-      alignmentOffset = ~~(-(lineLength - 1) / 2);
+      alignmentOffset = ~~(-(lineLength) / 2);
     } else if (params.textAlign === Align.Right) {
       alignmentOffset = ~~-lineLength;
     }
@@ -108,7 +108,7 @@ export function drawText(text: string, x: number, y: number, params: TextParams 
       }
       offx += letterSize;
     }
-    y += letterSize + (params.scale);
+    y += letterSize + params.scale;
     offx = 0;
   }
   gl.colour(0xFFFFFFFF);

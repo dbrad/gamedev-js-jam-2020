@@ -1,0 +1,24 @@
+DeckNode
+  deck shuffle animation? (similar to discard?)
+
+PlayerPermanentCardNode
+  Render card
+  onhover to tooltip
+
+Update the store deck generation
+Update the enemy deck generation
+
+Art
+Art
+Art
+
+!!!GameOver States!!!!
+
+turn Thermo
+  current turn
+  show overrun turn based on spots left / any extra draws
+  show rift stability turn based on turns & any extras from creatures, minus any permanents in play
+ !!!calculate the estimated number of cards in deck at that point, whether an instant overrun with happen!!!
+
+
+ Animate damage numbers?

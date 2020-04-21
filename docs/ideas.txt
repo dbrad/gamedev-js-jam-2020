@@ -9,38 +9,7 @@ Ideas...
     Needs to play cards to make things happen, also need to expand / alter deck to win
     Cards are actions AND currency?
     Need some sort of automated threat system
-
-
-Game Objects to Make
-- Deck
-- Card
-- Turn Tracker
-
-Cards in Hand need to be pick-up-able
-Cands in Store need to be clickable
-Deck shows number of cards in deck
-deck => hand => discard => deck
-player health and some secondary health/pool/resource
-lose if either hits 0
-some cards are player oriented, some objective oriented, some both?
-some growing / constant threat against the secondary pool
-each turn an encounter deck / source add a random additional threat to the player to be dealt with
-some cards that stay in play once played? (can no longer spend them, but constant benefit going forward)
-
-cards have: cost, value, type, effects
-
-card meta data in json format?
-  name: name of the card
-  cost: how much currency it takes to obtain a copy of the card
-  value: how much the card adds to this turn's currency pool if spent instead of played
-  type: action, constant, ?? (also determines border color)
-  art: name of sprite to render as the card art
-  effects: some sort of tokens or script that tells the engine what to do when the card is played
-
-some sort of simple scripting language to safely define card effects?
-  maybe just tokenized function calls and parameters (ie drawCards 2, addCurrency 5, addDefense 5, etc..)
-
-encounter deck only "attacks" the player?
+s the engine what to do when the card is played
 
 rift in space time stabilizing
 trying to keep rift from becoming stable,
@@ -48,9 +17,6 @@ trying to keep rift from becoming stable,
 each turn add that turn's worth of stability to the rift if unmitigate
 rift open at ___ stability, player start losing at turn 10? (50 default? can change for difficulty)
 stability to the rift can get out of hand if the player doesn't act quickly enough
-
-what spawns from the encounter deck?
-things to defeat? (certain hp & cause damage each turn they are alive?)
 
 monsters (hp/atk) - 3 factions (hopefully)
   Rift Denizens
@@ -68,16 +34,11 @@ monsters (hp/atk) - 3 factions (hopefully)
   wanderer = 2/6 - may take multiple turns to kill
   the traveler = 2/15
 
-anomolies - events rather than enemies, maybe some effect player and others the rift
-  gravity wave ?
 
 Victory conditions?
   defeat boss of encounter without rift stabilizing (depends on size of encounter deck, maybe some cards can speed this up? draw more or the encounter deck at risk of needing to deal with it)
-  seal the rift (still need a mechanics for this, point system? seals? stitches?)
 
 Loss Conditions?
-  Rift stabilized
-  Player HP <= 0
   Player is overrun (too many active encounter cards unresolved)
 
 Cards
@@ -86,48 +47,3 @@ Status Cards
   Anger
   Wound
   Scar
-
-General Cards
-  First Aid (Player heal or remove a wound from hand or discard pile)
-  Public Funding [const]($$$ each turn)
-  Investments (gain $$$ next turn)
-
-  ... moooore
-
-Conventional Weapons
-  0 Pistol [default]
-  0 Kevlar [default]
-  1 Rifle
-  1 Bunker [const]
-  2 Rocket 
-  2 Sentry Turret [const]
-  3 Air Strike
-
-Enery Weapons (Sciene)
-  0 Plasma Pistol [defualt]
-  1 Force Field
-  2 Particle Cannon
-  3 Kinetic Dampening Field [const]
-  3 Containment Field [const] - Win Condition (Upgrade 5 times) (costs card + 1+2+3+4+5, so 15+ $$$) (kind of an economy win condition)
-
-Psychic Reseach (Psyonics)
-  0 Psychic Lash
-  1 Psychic Blast
-  2 Evasive Projections [const]
-  3 Psychic Destruction
-  3 Rift Stitch (play x times to win) - Victory Condition (Deck Manip win)
-
-Forbidden Arts (Occult)
-  0 Forbidden Scriptures
-  1 Forced Delusions
-  2 Thrashing Abyss
-  3 Old One's Wrath
-  3 Old One's Favour [const] - Win Condition (Keep in play for 10 turns) (Endurance win)
-
-Store
- Cash in a card: gain its value this turn instead of playing it
- Scrape: Pay the card's cost the remove it from your deck permanently (cannot play it or gain $$$ from it)
- Buy a card: pay a cards cost to gain it
- Refresh stock: pay 1 $ to replace all 5 cards with new cards from the store deck
-
-R&D

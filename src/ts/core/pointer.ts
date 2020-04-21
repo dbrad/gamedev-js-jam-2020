@@ -3,7 +3,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, screenScale } from "../game";
 import { V2 } from "./v2";
 import { emit } from "./events";
 
-let mouseDown: boolean = false;
+export let mouseDown: boolean = false;
 export const pointer: V2 = { x: 0, y: 0 };
 export let inputFocus: boolean = false;
 export let mouseSensitivity: number = 1.0;
@@ -11,7 +11,7 @@ export let mouseSensitivity: number = 1.0;
 export interface Interactive {
   hover: boolean;
   pressed: boolean;
-  onHover(): void;
+  onHover(mouseDown: boolean): void;
   onBlur(): void;
   onMouseDown(): void;
   onMouseUp(): void;
@@ -65,7 +65,7 @@ export function initPointer(canvas: HTMLCanvasElement): void {
     }
     if (timer >= POLL_RATE) {
       timer = 0;
-      emit("mouse_move", V2.copy(pointer), mouseDown);
+      // emit("mouse_move", V2.copy(pointer), mouseDown);
     }
   };
 
