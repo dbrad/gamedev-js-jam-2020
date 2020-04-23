@@ -1,18 +1,32 @@
+Update the store deck generation
+  mix all t0 + t1 for first half, all t2 + t3 for second half
+
+sound effects
+  Card fwip sound for draw, discard, pickup?
+  bash sound for attacks
+  Some sort of sound for disrupt
+
+Player Card Art
+
+ Add Cheat sheet / help screen
+  Quick reference screen explaining the nouns and verbs and the gist of the game
+
+ deck select screen?
+
+ opening text scroll screen?
+
+ settings screen?
+  mouse sensitivity
+
+make game over suck less
+add all win conditions
+
+
 DeckNode
   deck shuffle animation? (similar to discard?)
 
-PlayerPermanentCardNode
-  Render card
-  onhover to tooltip
 
-Update the store deck generation
-Update the enemy deck generation
 
-Art
-Art
-Art
-
-!!!GameOver States!!!!
 
 turn Thermo
   current turn
@@ -20,5 +34,14 @@ turn Thermo
   show rift stability turn based on turns & any extras from creatures, minus any permanents in play
  !!!calculate the estimated number of cards in deck at that point, whether an instant overrun with happen!!!
 
+foreach turn
+  add 1 encounter, add extra spawns / summons from encounters on board
+    if > 10, mark as overrun loss
 
- Animate damage numbers?
+  calc turn stab + on board stab - ongoing stab removeal, add to running stab
+    if >=50, , check if remaining deck + active encounter cards is > 10, if so mark as a loss on that turn
+
+    if old one is in play mark the win turn
+    if lvl 5 containment in play, mark the next turn as a win turn
+
+  

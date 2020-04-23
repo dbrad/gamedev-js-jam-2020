@@ -11,6 +11,8 @@ type GameState = {
 
   encounterDeck: EncounterCard[];
   encountersActive: EncounterCard[];
+  encounterPlayingIndex: number,
+  encounterPlaying: EncounterCard,
   encounterTarget: EncounterCard;
 
   discardsRequired: number;
@@ -21,7 +23,12 @@ type GameState = {
   playerHand: PlayerCard[];
   playerDiscardPile: PlayerCard[];
   playerPermanents: PlayerCard[];
+  playerPermanentPlayingIndex: number;
+  playerPermanentPlaying: PlayerCard;
   playerMoney: number;
+  playerSelectedCard: PlayerCard;
+
+  discardPileMode: "player" | "store";
 
   storeDeck: PlayerCard[];
   storeActive: PlayerCard[];
@@ -41,6 +48,8 @@ export const GameState: GameState = {
 
   encounterDeck: [],
   encountersActive: [],
+  encounterPlayingIndex: 0,
+  encounterPlaying: null,
   encounterTarget: null,
 
   discardsRequired: 0,
@@ -51,7 +60,12 @@ export const GameState: GameState = {
   playerHand: [],
   playerDiscardPile: [],
   playerPermanents: [],
+  playerPermanentPlayingIndex: 0,
+  playerPermanentPlaying: null,
   playerMoney: 0,
+  playerSelectedCard: null,
+
+  discardPileMode: "player",
 
   storeDeck: [],
   storeActive: [],
@@ -71,6 +85,8 @@ export function resetGameState(): void {
 
   GameState.encounterDeck = [];
   GameState.encountersActive = [];
+  GameState.encounterPlayingIndex = 0;
+  GameState.encounterPlaying = null;
   GameState.encounterTarget = null;
 
   GameState.discardsRequired = 0;
@@ -81,7 +97,12 @@ export function resetGameState(): void {
   GameState.playerHand = [];
   GameState.playerDiscardPile = [];
   GameState.playerPermanents = [];
+  GameState.playerPermanentPlayingIndex = 0;
+  GameState.playerPermanentPlaying = null;
   GameState.playerMoney = 0;
+  GameState.playerSelectedCard = null;
+
+  GameState.discardPileMode = "player";
 
   GameState.storeDeck = [];
   GameState.storeActive = [];

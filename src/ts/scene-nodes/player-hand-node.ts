@@ -39,6 +39,11 @@ export class PlayerHandNode extends SceneNode {
   }
 
   public update(now: number, delta: number): void {
+    if (this.cardSelected) {
+      GameState.playerSelectedCard = this.cardSelected.card;
+    } else {
+      GameState.playerSelectedCard = null;
+    }
     const cardNodes: PlayerHandCardNode[] = this.cards();
     const handSize: number = GameState.playerHand.length;
     let xOffset: number = (338 - (((handSize - 1) * 34) + 32)) / 2;

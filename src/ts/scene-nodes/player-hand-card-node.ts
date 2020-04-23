@@ -2,6 +2,7 @@ import { Interactive, pointer } from "../core/pointer";
 import { drawText, drawTexture } from "../core/draw";
 
 import { Easing } from "../core/interpolation";
+import { EncounterCard } from "../encounter-cards";
 import { GameState } from "../game-state";
 import { PlayerCard } from "../player-cards";
 import { PlayerHandNode } from "./player-hand-node";
@@ -30,7 +31,7 @@ export class PlayerHandCardNode extends SceneNode implements Interactive {
   public card: PlayerCard;
   public parent: PlayerHandNode;
   constructor(initializer: Partial<PlayerHandCardNode> = {}) {
-    super(initializer, "small_card_node");
+    super(initializer, "player_card_node");
     Object.assign(this, initializer);
     this.size = { x: 32, y: 48 };
   }
@@ -60,7 +61,7 @@ export class PlayerHandCardNode extends SceneNode implements Interactive {
           break;
         case "destroy":
           if (this.willBePlayed) {
-            // destroyd logic
+            // destroy logic
             this.moveTo({ x: this.relativeOrigin.x, y: 0 });
             this.movementAnimation = null;
             this.willBePlayed = false;
@@ -80,18 +81,24 @@ export class PlayerHandCardNode extends SceneNode implements Interactive {
         default:
           if (this.willBePlayed
             && (this.card.type === "action" || this.card.type === "permanent" || (this.card.type === "attack" && GameState.encounterTarget))) {
-
+            const target: EncounterCard = GameState.encounterTarget;
+            const abs: V2 = this.absoluteOrigin;
+            const cardIndex: number = GameState.playerHand.indexOf(this.card);
+            GameState.playerHand.splice(cardIndex, 1);
+            
             // Play card logic
             this.moveTo({ x: this.relativeOrigin.x, y: 0 });
             this.movementAnimation = null;
             this.willBePlayed = false;
             this.hover = false;
-
-            const cardIndex: number = GameState.playerHand.indexOf(this.card);
-            GameState.playerHand.splice(cardIndex, 1);
-            emit("card_discarded", this.card);
-
-            this.card.effects.map(fn => fn(GameState.encounterTarget));
+            this.pressed = false;
+            
+            if(this.card.type === "permanent") {
+              emit("play_permanent_card", this.card, abs);
+            } else {
+              emit("card_discarded", this.card);
+              this.card.effects.map(fn => fn(target));
+            }
 
             this.parent.add(this);
             this.parent.update(now, delta);
@@ -124,7 +131,7 @@ export class PlayerHandCardNode extends SceneNode implements Interactive {
       drawTexture("solid", this.topLeft.x - 1, this.topLeft.y - 1, this.size.x + 2, this.size.y + 2);
       gl.colour(0xFFFFFFFF);
     }
-    
+
     drawPlayerCard(this.card, this.topLeft, this.size);
 
     if (this.card

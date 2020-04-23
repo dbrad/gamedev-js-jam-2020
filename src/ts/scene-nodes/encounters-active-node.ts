@@ -40,7 +40,7 @@ export class EncountersActiveNode extends SceneNode {
     const handSize: number = GameState.encountersActive.length;
     let xOffset: number = 0;
 
-    for (let i: number = handSize - 1; i >= 0; i--) {
+    for (let i: number = Math.min(cardNodes.length - 1, handSize - 1); i >= 0; i--) {
       cardNodes[i].card = GameState.encountersActive[i];
       if (!cardNodes[i].movementAnimation) {
         cardNodes[i].moveTo({ x: xOffset, y: 0 }, 250 + (25 * i), Easing.easeOutQuad);
@@ -64,7 +64,7 @@ export class EncountersActiveNode extends SceneNode {
 
     if (this.tooltipCard) {
       // tooltipCard
-      const topLeft: V2 = { x: this.tooltipPosition.x - 34, y: this.tooltipPosition.y + 49 };
+      const topLeft: V2 = { x: this.tooltipPosition.x - 34, y: this.tooltipPosition.y + 50 };
       const nameLines: number = parseText(`${this.tooltipCard.name}`, { textAlign: Align.Center, wrap: 98 });
       let height: number = 3;
       height += textHeight(nameLines, 1);

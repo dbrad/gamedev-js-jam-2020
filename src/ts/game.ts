@@ -3,9 +3,6 @@ import { MainMenuScene, MainMenuSceneName } from "./scenes/main-menu-scene.js";
 import { initPointer, inputFocus, mouseDown, pointer } from "./core/pointer.js";
 import { initStats, tickStats } from "./stats.js";
 
-import { GameDifficultyScene } from "./scenes/game-difficulty-scene.js";
-import { GameScene } from "./scenes/game-scene.js";
-import { PLAYER_CARD_CACHE } from "./player-cards.js";
 import { SceneManager } from "./core/scene-manager.js";
 import { V2 } from "./core/v2.js";
 import { emit } from "./core/events.js";
@@ -18,7 +15,7 @@ export let screenScale: number = 1;
 
 let blinkTimer: number = 0;
 window.addEventListener("load", async (): Promise<any> => {
-  document.title = `Count on it`;
+  document.title = `Beyond The Rift`;
   let then: number = 0;
   function tick(now: number): void {
     const delta: number = now - then;
@@ -35,7 +32,7 @@ window.addEventListener("load", async (): Promise<any> => {
     SceneManager.draw(now, delta);
 
     if (!inputFocus) {
-      gl.colour(0x99000000);
+      gl.colour(0xCC000000);
       drawTexture("solid", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT + 1);
       blinkTimer += delta;
       if (blinkTimer > 0) {
@@ -58,8 +55,6 @@ window.addEventListener("load", async (): Promise<any> => {
 
   const stage: HTMLDivElement = document.querySelector("#stage");
   const canvas: HTMLCanvasElement = document.querySelector("canvas");
-  // stage.style.width = `${SCREEN_WIDTH}px`;
-  // stage.style.height = `${SCREEN_HEIGHT}px`;
   canvas.width = SCREEN_WIDTH;
   canvas.height = SCREEN_HEIGHT;
 
@@ -72,7 +67,7 @@ window.addEventListener("load", async (): Promise<any> => {
       screenScale = tempScale < 1 ? 1 : tempScale;
       const size: number[] = [canvas.clientWidth * screenScale, canvas.clientHeight * screenScale];
       const offset: number[] = [(window.innerWidth - size[0]) / 2, (window.innerHeight - size[1]) / 2];
-      const rule: string = "translate(" + ~~offset[0] + "px, " + ~~offset[1] + "px) scale(" + screenScale + ")";
+      const rule: string = "translate(" + ~~offset[0] + "px, " + ~~offset[1] + "px) scale(" + screenScale + ") translateZ(0)";
       stage.style.transform = rule;
       stage.style.webkitTransform = rule;
     }
@@ -83,14 +78,12 @@ window.addEventListener("load", async (): Promise<any> => {
   // @endif
 
   gl.initialize(canvas);
-  gl.background(50, 51, 53);
+  gl.setBackground(0, 25, 55);
   await loadAsset("sheet.json");
   await loadAsset("player-cards.json");
   await loadAsset("encounter-cards.json");
   initPointer(canvas);
   SceneManager.register(new MainMenuScene());
-  SceneManager.register(new GameDifficultyScene());
-  SceneManager.register(new GameScene());
   SceneManager.push(MainMenuSceneName);
 
   requestAnimationFrame(tick);

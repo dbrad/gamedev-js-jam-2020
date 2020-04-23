@@ -3,7 +3,7 @@ import { Align, drawText, drawTexture, textHeight } from "../core/draw";
 import { Easing } from "../core/interpolation";
 import { GameState } from "../game-state";
 import { PlayerCard } from "../player-cards";
-import { PlayerHandCardNode } from "./player-hand-card-node";
+import { PlayerPermanentCardNode } from "./player-permanent-card-node";
 import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
 import { gl } from "../core/gl";
@@ -18,20 +18,28 @@ export class PlayerPermanentSlotsNode extends SceneNode {
     Object.assign(this, initializer);
     this.size = { x: 406, y: 48 };
     for (let i: number = 0; i < 12; i++) {
-      this.add(new PlayerHandCardNode());
+      this.add(new PlayerPermanentCardNode());
     }
     on("permanent_card_tooltip", (card: PlayerCard, position: V2) => {
       this.tooltipCard = card;
       this.tooltipPosition = position;
     });
+    on("play_permanent_card", (card: PlayerCard, absStartPos: V2) => {
+      const relStartPos: V2 = {x: absStartPos.x - this.absoluteOrigin.x, y: absStartPos.y - this.absoluteOrigin.y};
+      const cardNodes: PlayerPermanentCardNode[] = this.cards();
+      const cardNode: PlayerPermanentCardNode = cardNodes[GameState.playerPermanents.length];
+      GameState.playerPermanents.push(card);
+      cardNode.card = card;
+      cardNode.moveTo(relStartPos);
+    });
   }
 
-  public cardSelected: PlayerHandCardNode = null;
+  public cardSelected: PlayerPermanentCardNode = null;
 
-  public cards(): PlayerHandCardNode[] {
-    const result: PlayerHandCardNode[] = [];
+  public cards(): PlayerPermanentCardNode[] {
+    const result: PlayerPermanentCardNode[] = [];
     for (const [id, node] of this.nodes) {
-      if (node instanceof PlayerHandCardNode) {
+      if (node instanceof PlayerPermanentCardNode) {
         result.push(node);
       }
     }
@@ -39,14 +47,14 @@ export class PlayerPermanentSlotsNode extends SceneNode {
   }
 
   public update(now: number, delta: number): void {
-    const cardNodes: PlayerHandCardNode[] = this.cards();
+    const cardNodes: PlayerPermanentCardNode[] = this.cards();
     const cardCount: number = GameState.playerPermanents.length;
     let xOffset: number = (406 - (((cardCount - 1) * 34) + 32)) / 2;
 
     for (let i: number = 0; i < cardCount; i++) {
       cardNodes[i].card = GameState.playerPermanents[i];
-      if (!cardNodes[i].hover && !cardNodes[i].pressed && !cardNodes[i].movementAnimation) {
-        cardNodes[i].moveTo({ x: xOffset, y: 0 }, 250 + (25 * i), Easing.easeOutQuad);
+      if (!cardNodes[i].movementAnimation) {
+        cardNodes[i].moveTo({ x: xOffset, y: 0 }, 250, Easing.easeOutQuad);
       }
       xOffset += 34;
     }
@@ -58,20 +66,15 @@ export class PlayerPermanentSlotsNode extends SceneNode {
   }
 
   public draw(now: number, delta: number): void {
-    gl.colour(0x66FFFFFF);
-    for (let i: number = 0; i < 12; i++) {
-      drawTexture("card_empty_space", this.topLeft.x + 34 * i, this.topLeft.y);
-    }
-    gl.colour(0xFFFFFFFF);
     super.draw(now, delta);
 
-    if (this.tooltipCard) {
+    if (this.tooltipCard && !GameState.playerSelectedCard) {
       // HOVER TOOLTIP
-      const topLeft: V2 = { x: this.tooltipPosition.x - 34, y: this.tooltipPosition.y - 49 };
+      const topLeft: V2 = { x: this.tooltipPosition.x +34, y: this.tooltipPosition.y - 1 };
       gl.colour(0XFFEEEEEE);
-      drawTexture("solid", topLeft.x, topLeft.y, 102, 44);
+      drawTexture("solid", topLeft.x, topLeft.y, 102, 50);
       gl.colour(0xFF0E0803);
-      drawTexture("solid", topLeft.x + 1, topLeft.y + 1, 100, 42);
+      drawTexture("solid", topLeft.x + 1, topLeft.y + 1, 100, 48);
 
       // Card Name
       let yTooltipOffset: number = 3;

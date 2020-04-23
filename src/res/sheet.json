@@ -28,7 +28,7 @@
     },
     {
       "type": "sprite",
-      "name": "pistol_small",
+      "name": "pistol",
       "x": 0,
       "y": 18,
       "w": 32,
@@ -36,23 +36,7 @@
     },
     {
       "type": "sprite",
-      "name": "cultist_small",
-      "x": 32,
-      "y": 18,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "curse_small",
-      "x": 64,
-      "y": 18,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "weak_emp_small",
+      "name": "weak_emp",
       "x": 96,
       "y": 18,
       "w": 32,
@@ -60,7 +44,7 @@
     },
     {
       "type": "sprite",
-      "name": "bonds_small",
+      "name": "bonds",
       "x": 128,
       "y": 18,
       "w": 32,
@@ -68,7 +52,79 @@
     },
     {
       "type": "sprite",
-      "name": "card_small_back",
+      "name": "timelost_creature",
+      "x": 0,
+      "y": 82,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "shapeless_threat",
+      "x": 32,
+      "y": 82,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "sentient_rock",
+      "x": 64,
+      "y": 82,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "cultist",
+      "x": 0,
+      "y": 114,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "unspeakable_horror",
+      "x": 32,
+      "y": 114,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "faceless_one",
+      "x": 64,
+      "y": 114,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "creeping_feeler",
+      "x": 96,
+      "y": 114,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "the_king_in_yellow",
+      "x": 128,
+      "y": 114,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "thrashing_tenticle",
+      "x": 160,
+      "y": 114,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "card_back",
       "x": 96,
       "y": 146,
       "w": 32,
@@ -76,7 +132,7 @@
     },
     {
       "type": "sprite",
-      "name": "card_player_small",
+      "name": "card_player",
       "x": 128,
       "y": 146,
       "w": 32,
@@ -92,7 +148,7 @@
     },
     {
       "type": "sprite",
-      "name": "card_enemy_small",
+      "name": "card_enemy",
       "x": 128,
       "y": 194,
       "w": 32,

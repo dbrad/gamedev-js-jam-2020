@@ -43,6 +43,7 @@ export class PlayerCard {
   public levelsText: string[] = [];
   public effects: PlayerCardEffect[] = [];
   public description: string[];
+  public attackValue: number = 0;
 
   constructor(cardData: PlayerCardData) {
     this.name = cardData.name;
@@ -77,13 +78,20 @@ export class PlayerCard {
     const effects: string[] = effectsString.split(", ");
     this.effects = [];
     this.description = [];
+
     for (const effectString of effects) {
       const [effect, param] = effectString.split(" ");
       this.effects.push(
         (target: any) => {
           this[effect](...param, target);
         });
+      if (effect === "attack") {
+        this.attackValue = +param;
+      }
       this.description.push(`${effect} ${param}`);
+      if(this.type === "permanent") {
+        this.description.push(`(per turn)`);
+      }
     }
   }
 
@@ -118,6 +126,7 @@ export class PlayerCard {
   }
   private oldOne(value: number): void {
     GameState.oldOnesFavourInPlay = true;
+    GameState.oldOnesFavourCounter++;
   }
   private discard(value: number): void {
     if (GameState.playerHand.length <= value) {

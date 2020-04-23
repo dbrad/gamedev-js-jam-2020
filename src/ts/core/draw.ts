@@ -4,6 +4,9 @@ import { gl } from "./gl.js";
 
 export function drawTexture(textureName: string, x: number, y: number, sx: number = 1, sy: number = 1): void {
   const t: Texture = TEXTURE_CACHE.get(textureName);
+  if (!t) {
+    throw new Error(`No such texture as ${textureName}`);
+  }
   gl.push();
   gl.translate(x, y);
   gl.scale(sx, sy);

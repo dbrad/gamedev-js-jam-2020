@@ -111,8 +111,14 @@ export namespace gl {
     c = AABBGGRR;
   }
 
-  export function background(r: number, g: number, b: number): void {
-    ctx.clearColor(r / 255, g / 255, b / 255, 1);
+  let background: [number, number, number] = [0, 0, 0];
+  export function setBackground(r: number, g: number, b: number): void {
+    background = [r / 255, g / 255, b / 255];
+    ctx.clearColor(background[0], background[1], background[2], 1);
+  }
+
+  export function getBackground(): [number, number, number] {
+    return [background[0] * 255, background[1] * 255, background[2] * 255];
   }
 
   export function clear(): void {

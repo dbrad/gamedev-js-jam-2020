@@ -7,7 +7,7 @@ import { gl } from "./core/gl";
 export function drawPlayerCard(card: PlayerCard, topLeft: V2, size: V2): void {
   // Art
   if (card) {
-    drawTexture(card.art + "_small", topLeft.x, topLeft.y);
+    drawTexture(card.art, topLeft.x, topLeft.y);
   } else {
     gl.colour(0xFF0000FF);
     drawTexture("solid", topLeft.x, topLeft.y + 1, 32, 32);
@@ -15,7 +15,7 @@ export function drawPlayerCard(card: PlayerCard, topLeft: V2, size: V2): void {
   }
   
   // Card Skin
-  drawTexture("card_player_small", topLeft.x, topLeft.y);
+  drawTexture("card_player", topLeft.x, topLeft.y);
 
   if (card) {
     // Name + Level

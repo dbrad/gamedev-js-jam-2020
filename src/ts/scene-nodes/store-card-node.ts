@@ -46,6 +46,11 @@ export class StoreCardNode extends SceneNode implements Interactive {
     super.update(now, delta);
   }
   public draw(now: number, delta: number): void {
+    if (this.card && this.hover) {
+      gl.colour(0xFFEEEEEE);
+      drawTexture("solid", this.topLeft.x - 1, this.topLeft.y - 1, this.size.x + 2, this.size.y + 2);
+      gl.colour(0xFFFFFFFF);
+    }
     drawPlayerCard(this.card, this.topLeft, this.size);
     if (this.card && GameState.playerMoney < this.card.cost) {
       drawText(`${this.card.cost}`, this.topLeft.x + this.size.x - 11, this.topLeft.y + this.size.y - 9, { colour: 0xFF0000FF });

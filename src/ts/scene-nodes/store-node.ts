@@ -11,8 +11,10 @@ import { on } from "../core/events";
 
 export class StoreNode extends SceneNode {
   public tooltipCard: PlayerCard;
-
   public tooltipPosition: V2 = { x: 0, y: 0 };
+
+  public showRefreshTooltip: boolean = false;
+  public showUpgradeTooltip: boolean = false;
   constructor(initializer: Partial<StoreNode> = {}) {
     super(initializer, "store_node");
     Object.assign(this, initializer);
@@ -23,6 +25,12 @@ export class StoreNode extends SceneNode {
     on("store_card_tooltip", (card: PlayerCard, position: V2) => {
       this.tooltipCard = card;
       this.tooltipPosition = position;
+    });
+    on("refresh_store_tooltip", (show: boolean) => {
+      this.showRefreshTooltip = show;
+    });
+    on("upgrade_store_tooltip", (show: boolean) => {
+      this.showUpgradeTooltip = show;
     });
   }
 
@@ -63,11 +71,31 @@ export class StoreNode extends SceneNode {
     drawTexture("card_empty_space", this.topLeft.x + 170, this.topLeft.y);
     super.draw(now, delta);
 
-    drawTexture("card_small_back", this.topLeft.x, this.topLeft.y);
+    drawTexture("card_back", this.topLeft.x, this.topLeft.y);
     drawText("hq", this.topLeft.x + 16, this.topLeft.y + 3, { textAlign: Align.Center });
     drawText(`${GameState.storeDeck.length}`.padStart(2, "0"), this.topLeft.x + 16, this.topLeft.y + this.size.y - 12, { textAlign: Align.Center, colour: 0x88FFFFFF });
 
-    // STORE CARD TOOLTIP
+    //#region Store Button ToolTips
+    if (this.showRefreshTooltip || this.showUpgradeTooltip) {
+      const topLeft: V2 = { x: this.topLeft.x + 197, y: this.topLeft.y - 45 };
+      gl.colour(0XFFEEEEEE);
+      drawTexture("solid", topLeft.x, topLeft.y, 80, 40);
+      gl.colour(0xFF0E0803);
+      drawTexture("solid", topLeft.x + 1, topLeft.y + 1, 78, 38);
+      if (this.showRefreshTooltip) {
+        drawText("replace the cards in hq", topLeft.x + 40, topLeft.y + 6, { textAlign: Align.Center, wrap: 74 });
+      } else {
+        drawText("upgrade the cards in hq", topLeft.x + 40, topLeft.y + 6, { textAlign: Align.Center, wrap: 74 });
+      }
+      if (GameState.playerMoney < 1) {
+        drawText("cost: 1", topLeft.x + 40, topLeft.y + 31, { textAlign: Align.Center, colour: 0XFF2222FF });
+      } else {
+        drawText("cost: 1", topLeft.x + 40, topLeft.y + 31, { textAlign: Align.Center, colour: 0XFFEEEEEE });
+      }
+    }
+    //#endregion Store Button ToolTips
+
+    //#region STORE CARD TOOLTIP
     if (this.tooltipCard) {
       const topLeft: V2 = { x: this.tooltipPosition.x - 34, y: this.tooltipPosition.y - 65 };
       gl.colour(0XFFEEEEEE);
@@ -118,5 +146,6 @@ export class StoreNode extends SceneNode {
         }
       }
     }
+    //#endregion STORE CARD TOOLTIP
   }
 }

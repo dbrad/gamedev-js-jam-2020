@@ -191,7 +191,7 @@
     },
     {
       "name": "experimental rifle",
-      "cost": 2,
+      "cost": 3,
       "type": "attack",
       "art": "pistol",
       "levels" : [
@@ -218,7 +218,7 @@
       ]
     },
     {
-      "name": "sentry",
+      "name": "sentry_DNU",
       "cost": 4,
       "type": "permanent",
       "art": "pistol",

@@ -17,21 +17,23 @@ html {
   -webkit-user-select: none;
   display: inline-block;
   overflow: hidden;
+  backface-visibility: hidden;
 }
 
 canvas,
 img {
   padding: 1px;
   margin: 0;
-  image-rendering: optimizeSpeed;
   image-rendering: auto;
-  image-rendering: pixelated;
   image-rendering: crisp-edges;
   image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: -o-crisp-edges;
   -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: pixelated;
   overflow: hidden;
-  background-color: #001937;
+  background-color: #000000;
   border: 1px white solid;
+  backface-visibility: hidden;
 }

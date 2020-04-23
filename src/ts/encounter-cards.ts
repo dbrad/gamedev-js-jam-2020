@@ -78,7 +78,7 @@ export class EncounterCard {
 
   private discard(value: number): void {
     GameState.playerMode = "discard";
-    GameState.discardsRequired = +value;
+    GameState.discardsRequired += +value;
   }
 
   private regenerate(value: number): void {

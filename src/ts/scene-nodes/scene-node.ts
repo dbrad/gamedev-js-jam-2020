@@ -249,16 +249,6 @@ export class SceneNode {
 
   public draw(now: number, delta: number): void {
     if (this.visible && this.enabled) {
-      // // Debug volumes
-      // const topLeft: V2 = V2.copy(this.topLeft);
-      // const topRight: V2 = V2.add(topLeft, { x: this.size.x - 1, y: 0 });
-      // const bottomLeft: V2 = V2.add(topLeft, { x: 0, y: this.size.y - 1 });
-      // gl.colour(0x8800ff00);
-      // drawTexture("solid", topLeft.x, topLeft.y, this.size.x, 1);
-      // drawTexture("solid", topLeft.x, topLeft.y, 1, this.size.y);
-      // drawTexture("solid", topRight.x, topRight.y, 1, this.size.y);
-      // drawTexture("solid", bottomLeft.x, bottomLeft.y, this.size.x, 1);
-
       for (const [id, node] of this.nodes) {
         node.draw(now, delta);
       }

@@ -29,9 +29,10 @@ class SceneStateMachine implements StateMachine<Scene> {
         });
     } else {
       this.stack.push(newScene);
-      this.stack[this.stack.length - 1].transitionIn().then(() => {
-        emit("mouse_move", V2.copy(pointer), false);
-      });
+      this.stack[this.stack.length - 1].transitionIn()
+        .then(() => {
+          emit("mouse_move", V2.copy(pointer), false);
+        });
     }
   }
 
@@ -40,11 +41,22 @@ class SceneStateMachine implements StateMachine<Scene> {
       .then(() => {
         this.stack.pop();
         if (this.stack.length > 0) {
-          this.stack[this.stack.length - 1].transitionIn().then(() => {
-            emit("mouse_move", V2.copy(pointer), false);
-          });
+          this.stack[this.stack.length - 1].transitionIn()
+            .then(() => {
+              emit("mouse_move", V2.copy(pointer), false);
+            });
         }
       });
+  }
+
+  public popTo(id: string): void {
+    while (this.current && this.current.id !== id) {
+      this.stack[this.stack.length - 1].transitionOut();
+      this.stack.pop();
+      if (this.stack.length > 0) {
+        this.stack[this.stack.length - 1].transitionIn();
+      }
+    }
   }
 
   public clear(): void {
@@ -55,11 +67,15 @@ class SceneStateMachine implements StateMachine<Scene> {
   }
 
   public update(now: number, delta: number): void {
-    this.stack[this.stack.length - 1].update(now, delta);
+    if(this.current) {
+      this.current.update(now, delta);
+    }
   }
 
   public draw(now: number, delta: number): void {
-    this.stack[this.stack.length - 1].draw(now, delta);
+    if(this.current) {
+      this.current.draw(now, delta);
+    }
   }
 }
 

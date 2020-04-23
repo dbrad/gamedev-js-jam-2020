@@ -1,8 +1,11 @@
 import { Easing, Interpolator } from "../core/interpolation";
 import { drawText, drawTexture } from "../core/draw";
 
+import { DiscardPileSceneName } from "../scenes/discard-pile-scene";
 import { GameState } from "../game-state";
+import { Interactive } from "../core/pointer";
 import { PlayerCard } from "../player-cards";
+import { SceneManager } from "../core/scene-manager";
 import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
 import { drawPlayerCard } from "../common";
@@ -11,7 +14,7 @@ import { on } from "../core/events";
 
 type DiscardAnim = { position: V2, fn: (now: number) => boolean };
 export const toBeDiscarded: [PlayerCard, DiscardAnim][] = [];
-export class StoreDiscardPileNode extends SceneNode {
+export class StoreDiscardPileNode extends SceneNode implements Interactive {
   constructor(initializer: Partial<StoreDiscardPileNode> = {}) {
     super(initializer, "store_discard_pile");
     Object.assign(this, initializer);
@@ -37,6 +40,16 @@ export class StoreDiscardPileNode extends SceneNode {
       const anim: DiscardAnim = { position, fn };
       toBeDiscarded.push([card, anim]);
     });
+  }
+
+  public hover: boolean;
+  public pressed: boolean;
+  public onHover(mouseDown: boolean): void { }
+  public onBlur(): void { }
+  public onMouseDown(): void { }
+  public onMouseUp(): void {
+    GameState.discardPileMode = "store";
+    SceneManager.push(DiscardPileSceneName);
   }
 
   public update(now: number, delta: number): void {
