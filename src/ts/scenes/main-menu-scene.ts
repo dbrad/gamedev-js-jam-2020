@@ -88,10 +88,10 @@ export class MainMenuScene extends Scene {
   public update(now: number, delta: number): void {
     if (this.backgroundAnimation === null) {
       if (this.toBlue) {
-        this.changeBackground(0, 25, 55, 5000);
+        this.changeBackground(0, 25, 55, 2500);
         this.toBlue = false;
       } else {
-        this.changeBackground(67, 21, 174, 5000);
+        this.changeBackground(67, 21, 174, 2500);
         this.toBlue = true;
       }
     }

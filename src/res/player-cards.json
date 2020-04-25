@@ -223,9 +223,9 @@
       "type": "action",
       "art": "the_best",
       "levels" : [
-        "destroy 1, draw 1",
-        "destroy 1, draw 2",
-        "destroy 1, draw 3"
+        "draw 1, destroy 1",
+        "draw 2, destroy 1",
+        "draw 3, destroy 1"
       ]
     },
     {

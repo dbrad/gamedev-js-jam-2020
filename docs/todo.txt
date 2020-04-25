@@ -1,4 +1,2 @@
-opening text scroll screen
-
 settings screen?
   mouse sensitivity

@@ -1,5 +1,6 @@
 import { Align, drawText, drawTexture } from "./core/draw.js";
 import { MainMenuScene, MainMenuSceneName } from "./scenes/main-menu-scene.js";
+import { OpeningScene, OpeningSceneName } from "./scenes/opening-scene.js";
 import { initPointer, inputFocus, mouseDown, pointer } from "./core/pointer.js";
 import { initStats, tickStats } from "./stats.js";
 
@@ -89,6 +90,7 @@ window.addEventListener("load", async (): Promise<any> => {
   await loadAsset("player-cards.json");
   await loadAsset("encounter-cards.json");
   initPointer(canvas);
+  SceneManager.register(new OpeningScene());
   SceneManager.register(new MainMenuScene());
   SceneManager.register(new GameDifficultyScene());
   SceneManager.register(new DeckSelectScene());
@@ -96,7 +98,7 @@ window.addEventListener("load", async (): Promise<any> => {
   SceneManager.register(new HelpScene());
   SceneManager.register(new DiscardPileScene());
   SceneManager.register(new GameOverScene());
-  SceneManager.push(MainMenuSceneName);
+  SceneManager.push(OpeningSceneName);
 
   requestAnimationFrame(tick);
   window.dispatchEvent(new Event("resize"));
