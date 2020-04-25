@@ -55,7 +55,7 @@ export class GameOverScene extends Scene {
       case "stitch":
         this.titleColour = 0xFFE00DBD;
         this.gameOverTitle = "rift temporarily close";
-        this.gameOverText = "as the final psychic stitch comes into place, humanity's defenders have earned themselves a reprieve... how long will these hold this time...";
+        this.gameOverText = "as the final psychic stitch comes into place, humanity's defenders have earned themselves a reprieve... how long will they hold this time...";
         break;
       case "none":
       default:

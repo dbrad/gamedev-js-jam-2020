@@ -58,9 +58,7 @@
         "disrupt 2",
         "disrupt 3",
         "disrupt 4",
-        "disrupt 5",
-        "disrupt 6",
-        "disrupt 7"
+        "disrupt 5"
       ]
     },
     {
@@ -153,12 +151,12 @@
       "type": "action",
       "art": "psy_interference",
       "levels" : [
+        "disrupt 3",
         "disrupt 4",
         "disrupt 5",
         "disrupt 6",
         "disrupt 7",
-        "disrupt 8",
-        "disrupt 9"
+        "disrupt 8"
       ]
     },
     {
@@ -250,13 +248,11 @@
     },
     {
       "name": "will of mind",
-      "cost": 4,
+      "cost": 5,
       "type": "permanent",
       "art": "mind",
       "levels" : [
-        "draw 1",
-        "draw 2",
-        "draw 3"
+        "draw 1"
       ]
     },
     {
@@ -279,12 +275,12 @@
       "type": "attack",
       "art": "blood_ritual",
       "levels" : [
-        "attack 3, disrupt 3",
+        "attack 3, disrupt 2",
+        "attack 4, disrupt 2",
         "attack 4, disrupt 3",
-        "attack 4, disrupt 4",
+        "attack 5, disrupt 3",
         "attack 5, disrupt 4",
-        "attack 5, disrupt 5",
-        "attack 6, disrupt 5"
+        "attack 6, disrupt 4"
       ]
     },
     {
@@ -293,12 +289,12 @@
       "type": "action",
       "art": "emp_bomb",
       "levels" : [
+        "disrupt 5",
         "disrupt 6",
         "disrupt 7",
         "disrupt 8",
         "disrupt 9",
-        "disrupt 10",
-        "disrupt 11"
+        "disrupt 10"
       ]
     },
     {
@@ -307,9 +303,9 @@
       "type": "permanent",
       "art": "live_samples",
       "levels" : [
-        "gain 2, stabilize 1",
-        "gain 4, stabilize 2",
-        "gain 6, stabilize 3"
+        "gain 1, stabilize 1",
+        "gain 3, stabilize 2",
+        "gain 5, stabilize 3"
       ]
     },
     {
@@ -318,12 +314,12 @@
       "type": "attack",
       "art": "am_bomb",
       "levels" : [
-        "attack 3, disrupt 4",
+        "attack 3, disrupt 3",
+        "attack 4, disrupt 3",
         "attack 4, disrupt 4",
-        "attack 4, disrupt 5",
+        "attack 5, disrupt 4",
         "attack 5, disrupt 5",
-        "attack 5, disrupt 6",
-        "attack 6, disrupt 6"
+        "attack 6, disrupt 5"
       ]
     },
     {
@@ -358,9 +354,7 @@
         "disrupt 1",
         "disrupt 2",
         "disrupt 3",
-        "disrupt 4",
-        "disrupt 5",
-        "disrupt 6"
+        "disrupt 4"
       ]
     }
   ]
