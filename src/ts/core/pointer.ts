@@ -41,7 +41,7 @@ export interface Interactive {
   onMouseDown(): void;
   onMouseUp(): void;
 }
-type mouseListener = (this: HTMLCanvasElement, ev: MouseEvent) => any;
+type mouseListener = (this: HTMLCanvasElement, e: MouseEvent | PointerEvent | TouchEvent) => any;
 
 export function initPointer(canvas: HTMLCanvasElement): void {
   const mouseClickHandler: mouseListener = (event: MouseEvent): void => {
@@ -50,9 +50,9 @@ export function initPointer(canvas: HTMLCanvasElement): void {
       pointer.y = ~~((event.clientY - canvasBounds.top) / screenScale);
 
       canvas.removeEventListener("click", mouseClickHandler, false);
-      canvas.addEventListener("mousedown", mouseDownHandler, false);
-      canvas.addEventListener("mouseup", mouseUpHandler, false);
-      document.addEventListener("mousemove", updatePosition, false);
+      canvas.addEventListener("pointerdown", mouseDownHandler, false);
+      canvas.addEventListener("pointerup", mouseUpHandler, false);
+      document.addEventListener("pointermove", updatePosition, false);
       inputFocus = true;
     } else {
       canvas.removeEventListener("click", mouseClickHandler, false);
@@ -63,7 +63,7 @@ export function initPointer(canvas: HTMLCanvasElement): void {
     }
   };
 
-  const mouseDownHandler: mouseListener = (e: MouseEvent | TouchEvent): void => {
+  const mouseDownHandler: mouseListener = (e: PointerEvent | TouchEvent): void => {
     if (isTouch) {
       e = e as TouchEvent;
       e.preventDefault();
@@ -75,14 +75,14 @@ export function initPointer(canvas: HTMLCanvasElement): void {
     emit("mouse_down", V2.copy(pointer));
   };
 
-  const mouseUpHandler: mouseListener = (e: MouseEvent | TouchEvent): void => {
+  const mouseUpHandler: mouseListener = (e: PointerEvent | TouchEvent): void => {
     mouseDown = false;
     emit("mouse_up", V2.copy(pointer));
   };
 
   canvas.addEventListener("click", mouseClickHandler, false);
 
-  const updatePosition: mouseListener = (e: MouseEvent | TouchEvent): void => {
+  const updatePosition: mouseListener = (e: PointerEvent | TouchEvent): void => {
     if (isTouch) {
       e = e as TouchEvent;
       e.preventDefault();
@@ -90,7 +90,7 @@ export function initPointer(canvas: HTMLCanvasElement): void {
       pointer.x = ~~((touch.clientX - canvasBounds.left) / screenScale);
       pointer.y = ~~((touch.clientY - canvasBounds.top) / screenScale);
     } else {
-      e = e as MouseEvent;
+      e = e as PointerEvent;
       pointer.x = ~~((e.clientX - canvasBounds.left) / screenScale);
       pointer.y = ~~((e.clientY - canvasBounds.top) / screenScale);
       if (pointer.x >= SCREEN_WIDTH) {
