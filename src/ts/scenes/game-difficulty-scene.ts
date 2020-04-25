@@ -7,7 +7,6 @@ import { Builder } from "../core/builder";
 import { ButtonNode } from "../scene-nodes/button-node";
 import { DeckSelectSceneName } from "./deck-select-scene";
 import { Easing } from "../core/interpolation";
-import { GameSceneName } from "./game-scene";
 import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { TextNode } from "../scene-nodes/text-node";
@@ -78,7 +77,7 @@ export class GameDifficultyScene extends Scene {
 
   private setupGame(): void {
     resetGameState();
-
+    
     GameState.playerDeck = rand.shuffle([
       new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
       new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),

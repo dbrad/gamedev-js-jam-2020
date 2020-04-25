@@ -67,12 +67,17 @@ export class EncounterCard {
     this.effects = [];
     this.description = [];
     for (const effectString of effects) {
-      const [effect, param] = effectString.split(" ");
+      const [effect, ...param] = effectString.split(" ");
       this.effects.push(
         () => {
-          this[effect](param);
+          this[effect](...param);
         });
-      this.description.push(`${effect} ${param.replace("_", " ")}`);
+      if (effect === "summon") {
+        this.description.push(`${effect} ${param[0]} ${param[1].replace("_", " ")}`);
+      } else {
+        this.description.push(`${effect} ${param[0]}`);
+
+      }
     }
   }
 
@@ -89,11 +94,13 @@ export class EncounterCard {
     drawFromEncounterDeck();
   }
 
-  private summon(name: string): void {
+  private summon(value: number, name: string): void {
     name = name.replace("_", " ");
     const cardData: EncounterCardData = ENCOUNTER_CARD_CACHE.get(name);
-    const card: EncounterCard = new EncounterCard(cardData);
-    GameState.encountersActive.push(card);
+    for (let i: number = 0; i < value; i++) {
+      const card: EncounterCard = new EncounterCard(cardData);
+      GameState.encountersActive.push(card);
+    }
   }
 
   private stabilize(value: number): void {

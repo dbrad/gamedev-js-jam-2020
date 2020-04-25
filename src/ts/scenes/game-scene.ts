@@ -1,16 +1,16 @@
 import { Align, drawText, drawTexture } from "../core/draw";
+import { ENCOUNTER_CARD_CACHE, EncounterCard, EncounterCardData } from "../encounter-cards";
 import { GameState, drawFromEncounterDeck, drawFromPlayerDeck } from "../game-state";
-import { HelpScene, HelpSceneName } from "./help-scene";
 import { PlayerDiscardPileNode, toBeDiscarded } from "../scene-nodes/player-discard-pile-node";
 import { buttonHover, buttonMouseUp, cardFwip } from "../core/zzfx";
 
 import { Builder } from "../core/builder";
 import { ButtonNode } from "../scene-nodes/button-node";
 import { Easing } from "../core/interpolation";
-import { EncounterCard } from "../encounter-cards";
 import { EncounterDeckNode } from "../scene-nodes/encounter-deck-node";
 import { EncountersActiveNode } from "../scene-nodes/encounters-active-node";
 import { GameOverSceneName } from "./game-over-scene";
+import { HelpSceneName } from "./help-scene";
 import { PlayerCard } from "../player-cards";
 import { PlayerDeckNode } from "../scene-nodes/player-deck-node";
 import { PlayerHandNode } from "../scene-nodes/player-hand-node";
@@ -276,22 +276,30 @@ export class GameScene extends Scene {
         if (this.awaitingPhase) {
           break;
         }
-        if (GameState.encountersActive.length >= 10 && GameState.encounterDeck.length > 0) {
+        if (GameState.encountersActive.length > 10
+          || (GameState.encountersActive.length === 10 && GameState.encounterDeck.length > 0)) {
           GameState.gameOverReason = "overrun";
           SceneManager.push(GameOverSceneName); // LOSE - OVERRUN
           this.phase = GamePhase.GameOver;
           break;
         } else {
           if (GameState.riftStability >= GameState.riftStabilityMax) {
-            // DRAW ALL REMAINING ENCOUNTER CARDS
-            while (GameState.encounterDeck.length > 0) {
-              drawFromEncounterDeck();
-              if (GameState.encountersActive.length >= 10 && GameState.encounterDeck.length > 0) {
-                GameState.gameOverReason = "overrun";
-                SceneManager.push(GameOverSceneName); // LOSE - OVERRUN
-                this.phase = GamePhase.GameOver;
-                break;
+            if (GameState.encounterDeck.length > 0) {
+              // DRAW ALL REMAINING ENCOUNTER CARDS
+              while (GameState.encounterDeck.length > 0) {
+                drawFromEncounterDeck();
+                if (GameState.encountersActive.length >= 10 && GameState.encounterDeck.length > 0) {
+                  GameState.gameOverReason = "overrun";
+                  SceneManager.push(GameOverSceneName); // LOSE - OVERRUN
+                  this.phase = GamePhase.GameOver;
+                  break;
+                }
               }
+            } else {
+              // summon rift horror
+              const cardData: EncounterCardData = ENCOUNTER_CARD_CACHE.get("rift horror");
+              const card: EncounterCard = new EncounterCard(cardData);
+              GameState.encountersActive.push(card);
             }
           } else {
             drawFromEncounterDeck();
@@ -457,9 +465,9 @@ export class GameScene extends Scene {
       if (this.phase === phase) {
         gl.colour(0xFF448844);
       } else {
-        gl.colour(0xFF202020); 
+        gl.colour(0xFF202020);
       }
-      drawTexture("solid", this.root.topLeft.x + this.root.size.x - 93, this.root.topLeft.y + this.root.size.y - 105 + (i * 10) - 2, 84, 9);
+      drawTexture("solid", this.root.topLeft.x + this.root.size.x - 92, this.root.topLeft.y + this.root.size.y - 105 + (i * 10) - 2, 85, 9);
       drawText(`${text} phase`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + this.root.size.y - 105 + (i * 10), { colour: 0xFFEEEEEE, textAlign: Align.Center });
       i++;
     }

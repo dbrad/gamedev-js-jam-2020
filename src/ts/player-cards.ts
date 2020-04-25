@@ -38,6 +38,7 @@ export type PlayerCardEffect = (target: any) => void;
 export class PlayerCard {
   public name: string;
   public level: number;
+  public maxLevel: number;
   public cost: number;
   public type: PlayerCardType;
   public art: string;
@@ -52,6 +53,7 @@ export class PlayerCard {
     this.type = cardData.type;
     this.art = cardData.art;
     this.level = 0;
+    this.maxLevel = cardData.levels ? cardData.levels.length - 1 : 0;
 
     this.description = ["unplayable"];
 
@@ -67,8 +69,9 @@ export class PlayerCard {
 
   public levelUp(): void {
     this.level++;
-    if (this.level > 5) {
-      this.level = 5;
+    if (this.level > this.maxLevel) {
+      this.level = this.maxLevel;
+      return;
     }
     const cardData: PlayerCardData = PLAYER_CARD_CACHE.get(this.name);
     this.cost = +cardData.cost + this.level;
@@ -80,8 +83,12 @@ export class PlayerCard {
     this.effects = [];
     this.description = [];
 
+    if (this.type === "permanent") {
+      this.description.push(`(per turn)`);
+    }
+
     for (const effectString of effects) {
-      const [effect, param] = effectString.split(" ");
+      const [effect, ...param] = effectString.split(" ");
       this.effects.push(
         (target: any) => {
           this[effect](...param, target);
@@ -95,9 +102,6 @@ export class PlayerCard {
         this.description.push(`apply stitch`);
       } else {
         this.description.push(`${effect} ${param}`);
-      }
-      if (this.type === "permanent") {
-        this.description.push(`(per turn)`);
       }
     }
   }

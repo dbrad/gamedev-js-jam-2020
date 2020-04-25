@@ -1,8 +1,7 @@
 import { EasingFn, Interpolator } from "./interpolation";
-import { Interactive, pointer } from "./pointer";
+import { Interactive, isTouch, pointer } from "./pointer";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../game";
 import { SceneNode, isInteractiveScenenode as isInteractiveSceneNode } from "../scene-nodes/scene-node";
-import { drawText, drawTexture } from "./draw";
 import { off, on } from "./events";
 
 import { Builder } from "./builder";
@@ -47,6 +46,27 @@ export abstract class Scene implements State {
     this.nodesUnderPointer = newMap;
   }
   private onMouseDown = () => {
+    if (isTouch) {
+      const newMap: Map<number, SceneNode & Interactive> = new Map();
+      const nodes: (SceneNode | Interactive)[] = this.root.nodesAt(pointer);
+      for (const node of nodes) {
+        if (isInteractiveSceneNode(node)) {
+          if (!node.hover) {
+            node.hover = true;
+            node.onHover(true);
+          }
+          newMap.set(node.id, node);
+        }
+      }
+
+      for (const [id, node] of this.nodesUnderPointer) {
+        if (!newMap.has(id)) {
+          node.hover = false;
+          node.onBlur();
+        }
+      }
+      this.nodesUnderPointer = newMap;
+    }
     for (const [id, node] of this.nodesUnderPointer) {
       node.onMouseDown();
       node.pressed = true;
@@ -119,9 +139,9 @@ export abstract class Scene implements State {
         this.backgroundAnimation = null;
       }
     }
-    if(this.delays.length > 0) {
-      for(const delay of this.delays) {
-        if(delay(delta)) {
+    if (this.delays.length > 0) {
+      for (const delay of this.delays) {
+        if (delay(delta)) {
           const index: number = this.delays.indexOf(delay);
           this.delays.splice(index, 1);
         }

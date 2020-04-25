@@ -92,9 +92,9 @@ export function drawText(text: string, x: number, y: number, params: TextParams 
 
     let alignmentOffset: number = 0;
     if (params.textAlign === Align.Center) {
-      alignmentOffset = ~~(-(lineLength) / 2);
+      alignmentOffset = ~~((-lineLength + (1 * params.scale)) / 2);
     } else if (params.textAlign === Align.Right) {
-      alignmentOffset = ~~-lineLength;
+      alignmentOffset = ~~-(lineLength - (1 * params.scale));
     }
 
     for (const word of words) {

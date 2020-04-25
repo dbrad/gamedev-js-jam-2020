@@ -71,7 +71,7 @@
       "set": "yellow_king",
       "health": 9,
       "armor": 3,
-      "effects": "regenerate 1, summon thrashing_tenticle"
+      "effects": "regenerate 1, summon 2 thrashing_tenticle"
     },
     {
       "name": "thrashing tenticle",
@@ -80,6 +80,14 @@
       "health": 3,
       "armor": 0,
       "effects": "wound 1"
+    },
+    {
+      "name": "rift horror",
+      "art": "rift_horror",
+      "set": "all",
+      "health": 5,
+      "armor": 0,
+      "effects": "summon 1 shapeless_threat"
     }
   ]
 }

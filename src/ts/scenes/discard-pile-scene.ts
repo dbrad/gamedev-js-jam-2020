@@ -10,7 +10,6 @@ import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { V2 } from "../core/v2";
 import { buttonMouseUp } from "../core/zzfx";
-import { drawPlayerCard } from "../common";
 import { gl } from "../core/gl";
 import { on } from "../core/events";
 
@@ -108,6 +107,7 @@ export class DiscardPileScene extends Scene {
 
   public draw(now: number, delta: number): void {
     drawText("discard pile", this.root.topLeft.x + this.root.size.x / 2, this.root.topLeft.y + this.root.size.y / 2 - 8, { scale: 3, colour: 0x99DDDDDD, textAlign: Align.Center });
+    super.draw(now, delta);
     if (this.tooltipCard) {
       // HOVER TOOLTIP
       const topLeft: V2 = { x: this.tooltipPosition.x - 34, y: this.tooltipPosition.y + 50 };
@@ -137,6 +137,5 @@ export class DiscardPileScene extends Scene {
         drawText(`${10 - GameState.stitchCounter} more...`, topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
       }
     }
-    super.draw(now, delta);
   }
 }

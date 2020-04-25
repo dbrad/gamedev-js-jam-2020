@@ -1,7 +1,6 @@
 import { Align, drawText, drawTexture } from "./core/draw.js";
-import { MainMenuScene, MainMenuSceneName } from "./scenes/main-menu-scene.js";
 import { OpeningScene, OpeningSceneName } from "./scenes/opening-scene.js";
-import { initPointer, inputFocus, mouseDown, pointer } from "./core/pointer.js";
+import { initPointer, inputFocus, isTouch, mouseDown, pointer, updateCanvasBounds } from "./core/pointer.js";
 import { initStats, tickStats } from "./stats.js";
 
 import { DeckSelectScene } from "./scenes/deck-select-scene.js";
@@ -10,6 +9,7 @@ import { GameDifficultyScene } from "./scenes/game-difficulty-scene.js";
 import { GameOverScene } from "./scenes/game-over-scene.js";
 import { GameScene } from "./scenes/game-scene.js";
 import { HelpScene } from "./scenes/help-scene.js";
+import { MainMenuScene } from "./scenes/main-menu-scene.js";
 import { SceneManager } from "./core/scene-manager.js";
 import { V2 } from "./core/v2.js";
 import { emit } from "./core/events.js";
@@ -50,8 +50,6 @@ window.addEventListener("load", async (): Promise<any> => {
         }
       }
     } else {
-      gl.colour(0xFFFFFFFF);
-      drawTexture("pointer", pointer.x, pointer.y, 1, 1);
       emit("mouse_move", V2.copy(pointer), mouseDown);
     }
 
@@ -70,13 +68,14 @@ window.addEventListener("load", async (): Promise<any> => {
     (): void => {
       const scaleX: number = window.innerWidth / canvas.clientWidth;
       const scaleY: number = window.innerHeight / canvas.clientHeight;
-      const tempScale: number = ~~Math.min(scaleX, scaleY);
+      const tempScale: number = ~~(Math.min(scaleX, scaleY) / 0.5) * 0.5;
       screenScale = tempScale < 1 ? 1 : tempScale;
       const size: number[] = [canvas.clientWidth * screenScale, canvas.clientHeight * screenScale];
       const offset: number[] = [(window.innerWidth - size[0]) / 2, (window.innerHeight - size[1]) / 2];
       const rule: string = "translate(" + ~~offset[0] + "px, " + ~~offset[1] + "px) scale(" + screenScale + ") translateZ(0)";
       stage.style.transform = rule;
       stage.style.webkitTransform = rule;
+      updateCanvasBounds(canvas);
     }
   );
 
@@ -100,6 +99,6 @@ window.addEventListener("load", async (): Promise<any> => {
   SceneManager.register(new GameOverScene());
   SceneManager.push(OpeningSceneName);
 
-  requestAnimationFrame(tick);
   window.dispatchEvent(new Event("resize"));
+  requestAnimationFrame(tick);
 });

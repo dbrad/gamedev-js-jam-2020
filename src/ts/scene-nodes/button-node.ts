@@ -29,7 +29,7 @@ export class ButtonNode extends SceneNode implements Interactive {
   }
 
   public draw(now: number, delta: number): void {
-    const textX: number = this.topLeft.x + this.size.x / 2;
+    const textX: number = ~~(this.topLeft.x + this.size.x / 2);
     const textY: number = ~~(this.topLeft.y + this.size.y / 2 - (this.textScale * 3));
     if (!this.pressed) {
       if (!this.hover) {

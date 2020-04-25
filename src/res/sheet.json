@@ -110,6 +110,14 @@
     },
     {
       "type": "sprite",
+      "name": "rift_horror",
+      "x": 128,
+      "y": 82,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
       "name": "cultist",
       "x": 0,
       "y": 114,
