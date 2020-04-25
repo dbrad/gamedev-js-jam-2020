@@ -98,6 +98,11 @@ export class PlayerHandNode extends SceneNode {
         const lines: number = drawText(this.cardSelected.card.description[i], topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
         yTooltipOffset += textHeight(lines, 1);
       }
+
+      if (this.cardSelected.card.name === "rift stitch") {
+        yTooltipOffset += 3;
+        drawText(`${10 - GameState.stitchCounter} more...`, topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
+      }
     } else if (this.tooltipCard) {
       // HOVER TOOLTIP
       const topLeft: V2 = { x: this.tooltipPosition.x - 34, y: this.tooltipPosition.y - 49 };

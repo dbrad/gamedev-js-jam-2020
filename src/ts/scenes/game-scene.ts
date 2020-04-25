@@ -188,7 +188,7 @@ export class GameScene extends Scene {
   public transitionIn(): Promise<any> {
     return this.root.moveTo({ x: 0, y: this.root.size.y }).then(() => {
       return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() => {
-        if (this.phase === GamePhase.Pregame) {
+        if (this.phase === GamePhase.Pregame || this.phase === GamePhase.GameOver) {
           this.phase = GamePhase.Begin;
         }
         return super.transitionIn();
