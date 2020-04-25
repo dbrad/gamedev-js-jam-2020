@@ -27,10 +27,10 @@
     },
     {
       "name": "dimensional vagabonds",
-      "art": "sentient_rock",
+      "art": "d_vagabonds",
       "set": "all",
       "health": 6,
-      "armor": 0,
+      "armor": 1,
       "effects": "stabilize 1"
     },
     {

@@ -1,5 +1,6 @@
 import { Align, drawText, drawTexture } from "../core/draw";
 import { GameState, drawFromEncounterDeck, drawFromPlayerDeck } from "../game-state";
+import { HelpScene, HelpSceneName } from "./help-scene";
 import { PlayerDiscardPileNode, toBeDiscarded } from "../scene-nodes/player-discard-pile-node";
 
 import { Builder } from "../core/builder";
@@ -28,7 +29,8 @@ enum GamePhase {
   Player,
   Rift,
   Discard,
-  End
+  End,
+  GameOver
 }
 
 export const GameSceneName: string = "Game";
@@ -46,6 +48,7 @@ export class GameScene extends Scene {
   private endTurnButton: ButtonNode;
   private clearStoreButton: ButtonNode;
   private upgradeStoreButton: ButtonNode;
+  private helpButton: ButtonNode;
 
   private tempActiveEncounters: EncounterCard[] = [];
   private phaseText: string = "";
@@ -151,9 +154,23 @@ export class GameScene extends Scene {
         .build();
     this.upgradeStoreButton.moveTo({ x: this.root.topLeft.x + 207, y: this.root.size.y / 2 + 2 });
     this.root.add(this.upgradeStoreButton);
+
+    this.helpButton =
+      new Builder(ButtonNode)
+        .with("size", { x: 60, y: 16 })
+        .with("colour", 0xFF448844)
+        .with("text", "help!")
+        .with("textScale", 1)
+        .with("onMouseUp", () => {
+          if (this.phase === GamePhase.Player && GameState.playerMode === "play") {
+            SceneManager.push(HelpSceneName);
+          }
+        })
+        .build();
+    this.helpButton.moveTo({ x: this.root.size.x - 80, y: this.root.size.y - 17 });
+    this.root.add(this.helpButton);
   }
   public transitionIn(): Promise<any> {
-
     return this.root.moveTo({ x: 0, y: this.root.size.y }).then(() => {
       return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() => {
         if (this.phase === GamePhase.Pregame) {
@@ -165,26 +182,18 @@ export class GameScene extends Scene {
   }
   public transitionOut(): Promise<any> {
     super.transitionOut();
-    return this.root.moveTo({ x: 0, y: this.root.size.y }, 500, Easing.easeOutQuad).then(() => {
-      if (this.phase === GamePhase.Pregame) {
-        this.phase = GamePhase.Begin;
-      }
-    });
+    return this.root.moveTo({ x: 0, y: this.root.size.y }, 500, Easing.easeOutQuad);
   }
 
   public update(now: number, delta: number): void {
     // Keep the store at 5 cards, if possible
     if (GameState.storeActive.length < 5) {
-      // if the store deck is out of cards...
       if (GameState.storeDeck.length === 0) {
-        // check the store's discard pule for card...
         if (GameState.storeDiscard.length > 0) {
-          // shuffle those card back into the deck
           GameState.storeDeck = rand.shuffle(GameState.storeDiscard);
           GameState.storeDiscard.length = 0;
         }
       } else {
-        // we will only add to the store is the store deck has cards to add
         GameState.storeActive.push(GameState.storeDeck.pop());
       }
     }
@@ -209,8 +218,7 @@ export class GameScene extends Scene {
       case GamePhase.Pregame:
         break;
       case GamePhase.Begin:
-        // check for level 5 containment field
-        // check counter on Old One's Favour
+        //#region Begin Phase
         if (this.awaitingPhase) {
           break;
         }
@@ -243,22 +251,27 @@ export class GameScene extends Scene {
           this.awaitingPhase = true;
         }
         break;
+      //#endregion Begin Phase
       case GamePhase.Draw:
         //#region Draw Phase
         if (this.awaitingPhase) {
           break;
         }
         if (GameState.encountersActive.length >= 10 && GameState.encounterDeck.length > 0) {
+          GameState.gameOverReason = "overrun";
           SceneManager.push(GameOverSceneName); // LOSE - OVERRUN
-          return;
+          this.phase = GamePhase.GameOver;
+          break;
         } else {
           if (GameState.riftStability >= GameState.riftStabilityMax) {
             // DRAW ALL REMAINING ENCOUNTER CARDS
             while (GameState.encounterDeck.length > 0) {
               drawFromEncounterDeck();
               if (GameState.encountersActive.length >= 10 && GameState.encounterDeck.length > 0) {
+                GameState.gameOverReason = "overrun";
                 SceneManager.push(GameOverSceneName); // LOSE - OVERRUN
-                return;
+                this.phase = GamePhase.GameOver;
+                break;
               }
             }
           } else {
@@ -279,16 +292,35 @@ export class GameScene extends Scene {
         break;
       //#endregion Draw Phase
       case GamePhase.Player:
+        //#region Player Phase
         if (GameState.playerMode === "discard" && GameState.discardsRequired <= 0) {
           GameState.playerMode = "play";
         }
         if (GameState.playerMode === "destroy" && GameState.destroysRequired <= 0) {
           GameState.playerMode = "play";
         }
-        // check for rift stitches count - VC
-        // check for all encounters done - VC
+        if (GameState.encounterDeck.length === 0 && GameState.encountersActive.length === 0) {
+          GameState.gameOverReason = "clear";
+          SceneManager.push(GameOverSceneName); // WIN - STANDARD
+          this.phase = GamePhase.GameOver;
+          break;
+        }
+        if (GameState.stitchCounter >= 10) {
+          GameState.gameOverReason = "stitch";
+          SceneManager.push(GameOverSceneName); // WIN - Rift stitched closed
+          this.phase = GamePhase.GameOver;
+          break;
+        }
+        if (GameState.oldOnesFavourCounter >= 10) {
+          GameState.gameOverReason = "oldOne";
+          SceneManager.push(GameOverSceneName); // WIN - Old One Summoned
+          this.phase = GamePhase.GameOver;
+          break;
+        }
         break;
+      //#endregion Player Phase
       case GamePhase.Rift:
+        //#region Rift Phase
         if (this.awaitingPhase) {
           break;
         }
@@ -323,7 +355,6 @@ export class GameScene extends Scene {
               GameState.riftStability = GameState.riftStabilityMax;
             }
             this.delay(() => {
-              GameState.turn++;
               this.phase = GamePhase.Discard;
               this.phaseText = "discard";
               this.awaitingPhase = false;
@@ -332,7 +363,9 @@ export class GameScene extends Scene {
           }
         }
         break;
+      //#endregion Rift Phase
       case GamePhase.Discard:
+        //#region Discard Phase
         GameState.playerMoney = 0;
         while (GameState.playerHand.length > 0) {
           const card: PlayerCard = GameState.playerHand.pop();
@@ -349,7 +382,9 @@ export class GameScene extends Scene {
           }
         }
         break;
+      //#endregion Discard Phase
       case GamePhase.End:
+        //#region End Phase
         if (!this.awaitingPhase) {
           this.delay(() => {
             this.phase = GamePhase.Begin;
@@ -359,15 +394,15 @@ export class GameScene extends Scene {
           this.awaitingPhase = true;
         }
         break;
+      //#endregion End Phase
       default:
     }
-
     super.update(now, delta);
   }
 
   public draw(now: number, delta: number): void {
-    gl.colour(0x99000000);
-    drawTexture("solid", this.root.topLeft.x, this.root.topLeft.y, this.root.size.x, 50);
+    gl.colour(0x33000000);
+    drawTexture("solid", this.root.topLeft.x, this.root.topLeft.y, this.root.size.x, 51);
     drawTexture("solid", this.root.topLeft.x, this.root.topLeft.y + this.root.size.y - 110, this.root.size.x, 110);
     drawTexture("solid", this.root.topLeft.x, this.root.topLeft.y + this.root.size.y / 2 - 25, this.root.size.x, 50);
     gl.colour(0xFFFFFFFF);
@@ -378,11 +413,20 @@ export class GameScene extends Scene {
       this.root.topLeft.x + this.root.size.x - 69,
       this.root.topLeft.y + 8,
       { textAlign: Align.Center });
+
+    let colour: number = 0xFFCCFFCC;
+    if (GameState.riftStability / GameState.riftStabilityMax >= 0.75) {
+      colour = 0xFFCCCCFF;
+    } else if (GameState.riftStability / GameState.riftStabilityMax >= 0.50) {
+      colour = 0xFFCCFFFF;
+    }
+
     drawText(
       `${GameState.riftStability}`.padStart(2, "0") + `/${GameState.riftStabilityMax}`,
       this.root.topLeft.x + this.root.size.x - 69,
       this.root.topLeft.y + 18,
-      { textAlign: Align.Center, scale: 4 });
+      { textAlign: Align.Center, scale: 4, colour });
+
     drawText(
       `current rate: +${~~((GameState.turn - 1) / 5) + 1}`,
       this.root.topLeft.x + this.root.size.x - 69,
@@ -390,8 +434,8 @@ export class GameScene extends Scene {
       { textAlign: Align.Center });
     //#endregion Rift Stability
 
-    drawText(`turn ${GameState.turn}`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + 187, { scale: 2, textAlign: Align.Center });
-    drawText(`${this.phaseText} phase`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + 200, { scale: 1, textAlign: Align.Center });
+    drawText(`turn ${GameState.turn}`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + this.root.size.y - 38, { scale: 2, textAlign: Align.Center });
+    drawText(`${this.phaseText} phase`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + this.root.size.y - 25, { scale: 1, textAlign: Align.Center });
 
     super.draw(now, delta);
 
@@ -406,7 +450,7 @@ export class GameScene extends Scene {
     this.encounterDeck.draw(now, delta);
 
     if (this.phase === GamePhase.Player && GameState.playerMode !== "play") {
-      gl.colour(0xFF000000);
+      gl.colour(0x88000000);
       drawTexture("solid", this.root.topLeft.x, this.root.topLeft.y, this.root.size.x, this.root.size.y - 110);
       if (GameState.playerMode === "destroy") {
         drawText(`destroy ${GameState.destroysRequired} more cards`, this.root.topLeft.x + this.root.size.x / 2, this.root.topLeft.y + this.root.size.y / 2, { textAlign: Align.Center, scale: 3 });

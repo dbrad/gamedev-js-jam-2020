@@ -89,7 +89,7 @@
   "typescriptHero.imports.organizeOnSave": true,
   "typescriptHero.imports.stringQuoteStyle": "\"",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  "window.zoomLevel": -2,
+  "window.zoomLevel": -1,
   "workbench.activityBar.visible": true,
   "workbench.colorCustomizations": {
       "activityBar.background": "#161616",
@@ -180,5 +180,6 @@
 "editor.cursorBlinking": "solid",
 "editor.minimap.renderCharacters": false,
 "editor.minimap.side": "left",
-"editor.minimap.showSlider": "always"
+"editor.minimap.showSlider": "always",
+"editor.minimap.enabled": false
 }

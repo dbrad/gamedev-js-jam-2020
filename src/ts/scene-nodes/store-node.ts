@@ -127,7 +127,7 @@ export class StoreNode extends SceneNode {
       }
 
       // STORE CARD LEVEL TOOLTIP
-      if (this.tooltipCard.level < 5) {
+      if (this.tooltipCard.levelsText.length > 0 && this.tooltipCard.level < 5) {
         const height: number = textHeight(this.tooltipCard.levelsText.length, 1) + 4 + this.tooltipCard.levelsText.length;
         const width: number = textWidth(this.tooltipCard.levelsText[this.tooltipCard.levelsText.length - 1].length, 1) + 4;
 

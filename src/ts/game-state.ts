@@ -30,6 +30,7 @@ type GameState = {
 
   discardPileMode: "player" | "store";
 
+  decksPicked: ("occult" | "psy" | "tech")[];
   storeDeck: PlayerCard[];
   storeActive: PlayerCard[];
   storeDiscard: PlayerCard[];
@@ -38,6 +39,8 @@ type GameState = {
   oldOnesFavourCounter: number;
 
   stitchCounter: number;
+
+  gameOverReason: "none" | "overrun" | "oldOne" | "clear" | "stitch";
 };
 
 export const GameState: GameState = {
@@ -67,6 +70,7 @@ export const GameState: GameState = {
 
   discardPileMode: "player",
 
+  decksPicked: [],
   storeDeck: [],
   storeActive: [],
   storeDiscard: [],
@@ -74,7 +78,9 @@ export const GameState: GameState = {
   oldOnesFavourInPlay: false,
   oldOnesFavourCounter: 0,
 
-  stitchCounter: 0
+  stitchCounter: 0,
+
+  gameOverReason: "none"
 };
 
 export function resetGameState(): void {
@@ -104,6 +110,7 @@ export function resetGameState(): void {
 
   GameState.discardPileMode = "player";
 
+  GameState.decksPicked = [];
   GameState.storeDeck = [];
   GameState.storeActive = [];
   GameState.storeDiscard = [];
@@ -112,6 +119,7 @@ export function resetGameState(): void {
   GameState.oldOnesFavourCounter = 0;
 
   GameState.stitchCounter = 0;
+  GameState.gameOverReason = "none";
 }
 
 export function drawFromPlayerDeck(): void {

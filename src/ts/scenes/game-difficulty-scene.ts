@@ -5,6 +5,7 @@ import { PLAYER_CARD_CACHE, PlayerCard } from "../player-cards";
 
 import { Builder } from "../core/builder";
 import { ButtonNode } from "../scene-nodes/button-node";
+import { DeckSelectSceneName } from "./deck-select-scene";
 import { Easing } from "../core/interpolation";
 import { GameSceneName } from "./game-scene";
 import { Scene } from "../core/scene";
@@ -25,7 +26,7 @@ export class GameDifficultyScene extends Scene {
         .with("scale", 3)
         .with("textAlign", Align.Center)
         .build();
-    title.moveTo({ x: this.root.size.x / 2, y: 20 });
+    title.moveTo({ x: this.root.size.x / 2, y: 40 });
     this.root.add(title);
 
     const easyButton: ButtonNode =
@@ -36,10 +37,10 @@ export class GameDifficultyScene extends Scene {
         .with("onMouseUp", () => {
           this.setupGame();
           GameState.riftStabilityMax = 75;
-          SceneManager.push(GameSceneName);
+          SceneManager.push(DeckSelectSceneName);
         })
         .build();
-    easyButton.moveTo({ x: this.root.size.x / 2 - 190, y: this.root.size.y / 2 + 50 });
+    easyButton.moveTo({ x: this.root.size.x / 2 - 190, y: this.root.size.y / 2 + 20 });
     this.root.add(easyButton);
 
     const normalButton: ButtonNode =
@@ -50,10 +51,10 @@ export class GameDifficultyScene extends Scene {
         .with("onMouseUp", () => {
           this.setupGame();
           GameState.riftStabilityMax = 50;
-          SceneManager.push(GameSceneName);
+          SceneManager.push(DeckSelectSceneName);
         })
         .build();
-    normalButton.moveTo({ x: this.root.size.x / 2 - 60, y: this.root.size.y / 2 + 50 });
+    normalButton.moveTo({ x: this.root.size.x / 2 - 60, y: this.root.size.y / 2 + 20 });
     this.root.add(normalButton);
 
     const hardButton: ButtonNode =
@@ -64,10 +65,10 @@ export class GameDifficultyScene extends Scene {
         .with("onMouseUp", () => {
           this.setupGame();
           GameState.riftStabilityMax = 30;
-          SceneManager.push(GameSceneName);
+          SceneManager.push(DeckSelectSceneName);
         })
         .build();
-    hardButton.moveTo({ x: this.root.size.x / 2 + 70, y: this.root.size.y / 2 + 50 });
+    hardButton.moveTo({ x: this.root.size.x / 2 + 70, y: this.root.size.y / 2 + 20 });
     this.root.add(hardButton);
   }
 
@@ -88,56 +89,7 @@ export class GameDifficultyScene extends Scene {
       new PlayerCard(PLAYER_CARD_CACHE.get("electrical interference")),
       new PlayerCard(PLAYER_CARD_CACHE.get("electrical interference")),
     ]);
-
-    GameState.storeDeck = rand.shuffle([
-      // Tier 0
-      new PlayerCard(PLAYER_CARD_CACHE.get("barrage")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("barrage")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("emp burst")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("emp burst")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("taxation")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("taxation")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("supressive fire")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("supressive fire")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("bounty")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("bounty")),
-
-      // Tier 1
-      new PlayerCard(PLAYER_CARD_CACHE.get("reevaluate")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("reevaluate")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("recruitment")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("recruitment")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("psychic offensive")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("psychic offensive")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("psychic offensive")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("psychic interference")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("psychic interference")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("psychic interference")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("old one's wrath")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("old one's wrath")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("old one's wrath")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("dark pact")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("dark pact")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("dark pact")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("experimental rifle")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("experimental rifle")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("experimental rifle")),
-
-      new PlayerCard(PLAYER_CARD_CACHE.get("collect samples")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("collect samples")),
-      new PlayerCard(PLAYER_CARD_CACHE.get("collect samples")),
-
-    ]);
+    
     this.createEncounterDeck();
   }
 
@@ -211,24 +163,24 @@ export class GameDifficultyScene extends Scene {
   }
 
   public draw(now: number, delta: number): void {
-    const easyTextPos: V2 = { x: this.root.topLeft.x + this.root.size.x / 2 - 130, y: this.root.topLeft.y + this.root.size.y / 2 };
+    const easyTextPos: V2 = { x: this.root.topLeft.x + this.root.size.x / 2 - 130, y: this.root.topLeft.y + this.root.size.y / 2 - 30 };
     gl.colour(0x66000000);
-    drawTexture("solid", easyTextPos.x - 62, easyTextPos.y - 2, 124, 79);
+    drawTexture("solid", easyTextPos.x - 62, easyTextPos.y - 4, 124, 81);
     drawText("the rift takes longer to stabilize (about 25 turns)", easyTextPos.x, easyTextPos.y, { wrap: 120, textAlign: Align.Center });
-    drawText("you can select 2 of the card sets to use.", easyTextPos.x, easyTextPos.y + 26, { wrap: 120, textAlign: Align.Center });
+    drawText("you can select 2 card sets to use", easyTextPos.x, easyTextPos.y + 26, { wrap: 120, textAlign: Align.Center });
 
-    const normalTextPos: V2 = { x: this.root.topLeft.x + this.root.size.x / 2, y: this.root.topLeft.y + this.root.size.y / 2 };
+    const normalTextPos: V2 = { x: this.root.topLeft.x + this.root.size.x / 2, y: this.root.topLeft.y + this.root.size.y / 2 - 30 };
     gl.colour(0x66000000);
-    drawTexture("solid", normalTextPos.x - 62, normalTextPos.y - 2, 124, 79);
+    drawTexture("solid", normalTextPos.x - 62, normalTextPos.y - 4, 124, 81);
     drawText("the rift stabilizes at a standard rate (about 20 turns)", normalTextPos.x, normalTextPos.y, { wrap: 120, textAlign: Align.Center });
-    drawText("you can select 2 of the card sets to use.", normalTextPos.x, normalTextPos.y + 26, { wrap: 120, textAlign: Align.Center });
+    drawText("you can select 2 card sets to use", normalTextPos.x, normalTextPos.y + 26, { wrap: 120, textAlign: Align.Center });
 
-    const hardTextPos: V2 = { x: this.root.topLeft.x + this.root.size.x / 2 + 130, y: this.root.topLeft.y + this.root.size.y / 2 };
+    const hardTextPos: V2 = { x: this.root.topLeft.x + this.root.size.x / 2 + 130, y: this.root.topLeft.y + this.root.size.y / 2 - 30 };
     gl.colour(0x66000000);
-    drawTexture("solid", hardTextPos.x - 62, hardTextPos.y - 2, 124, 79);
+    drawTexture("solid", hardTextPos.x - 62, hardTextPos.y - 4, 124, 81);
     drawText("the rift stabilizes much sooner", hardTextPos.x, hardTextPos.y, { wrap: 120, textAlign: Align.Center });
     drawText("(about 15 turn)", hardTextPos.x, hardTextPos.y + 14, { wrap: 120, textAlign: Align.Center });
-    drawText("you can select 1 of the card sets to use.", hardTextPos.x, hardTextPos.y + 26, { wrap: 120, textAlign: Align.Center });
+    drawText("you can select 1 card set to use", hardTextPos.x, hardTextPos.y + 26, { wrap: 120, textAlign: Align.Center });
     super.draw(now, delta);
   }
 }

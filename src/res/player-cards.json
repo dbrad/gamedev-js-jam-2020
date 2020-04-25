@@ -5,7 +5,7 @@
       "name" : "wounded",
       "cost": 0,
       "type": "status",
-      "art": "pistol",
+      "art": "wound",
       "levels": null
     },
     {
@@ -30,7 +30,7 @@
       "name": "funds",
       "cost": 0,
       "type": "action",
-      "art": "bonds",
+      "art": "funds",
       "levels" : [
         "gain 1"
       ]
@@ -39,7 +39,7 @@
       "name": "barrage",
       "cost": 1,
       "type": "attack",
-      "art": "pistol",
+      "art": "barrage",
       "levels" : [
         "attack 2",
         "attack 3",
@@ -53,7 +53,7 @@
       "name": "emp burst",
       "cost": 1,
       "type": "action",
-      "art": "weak_emp",
+      "art": "emp_burst",
       "levels" : [
         "disrupt 2",
         "disrupt 3",
@@ -67,7 +67,7 @@
       "name": "taxation",
       "cost": 1,
       "type": "action",
-      "art": "bonds",
+      "art": "taxes",
       "levels" : [
         "gain 2",
         "gain 3",
@@ -81,7 +81,7 @@
       "name": "supressive fire",
       "cost": 1,
       "type": "attack",
-      "art": "pistol",
+      "art": "machine_gun",
       "levels" : [
         "attack 1, disrupt 1",
         "attack 2, disrupt 1",
@@ -95,7 +95,7 @@
       "name": "bounty",
       "cost": 1,
       "type": "attack",
-      "art": "pistol",
+      "art": "bounty",
       "levels" : [
         "attack 1, gain 1",
         "attack 2, gain 1",
@@ -109,7 +109,7 @@
       "name": "reevaluate",
       "cost": 2,
       "type": "action",
-      "art": "pistol",
+      "art": "reevaluate",
       "levels" : [
         "draw 1, discard 1",
         "draw 2, discard 2",
@@ -123,7 +123,7 @@
       "name": "recruitment",
       "cost": 2,
       "type": "action",
-      "art": "pistol",
+      "art": "recruitment",
       "levels" : [
         "gain 1, draw 1",
         "gain 2, draw 1",
@@ -137,7 +137,7 @@
       "name": "psychic offensive",
       "cost": 2,
       "type": "attack",
-      "art": "pistol",
+      "art": "psy_offense",
       "levels" : [
         "attack 1, draw 1",
         "attack 2, draw 1",
@@ -151,7 +151,7 @@
       "name": "psychic interference",
       "cost": 2,
       "type": "action",
-      "art": "pistol",
+      "art": "psy_interference",
       "levels" : [
         "disrupt 4",
         "disrupt 5",
@@ -165,7 +165,7 @@
       "name": "old one's wrath",
       "cost": 2,
       "type": "action",
-      "art": "pistol",
+      "art": "oo_wrath",
       "levels" : [
         "disrupt 1, spawn 1",
         "disrupt 2, spawn 1",
@@ -179,7 +179,7 @@
       "name": "dark pact",
       "cost": 2,
       "type": "action",
-      "art": "pistol",
+      "art": "pact",
       "levels" : [
         "draw 1, spawn 1",
         "draw 2, spawn 2",
@@ -193,46 +193,35 @@
       "name": "experimental rifle",
       "cost": 3,
       "type": "attack",
-      "art": "pistol",
+      "art": "ex_rifle",
       "levels" : [
-        "attack 6, stabilize 1",
-        "attack 7, stabilize 1",
-        "attack 8, stabilize 1",
-        "attack 9, stabilize 2",
-        "attack 10, stabilize 2",
-        "attack 11, stabilize 2"
+        "attack 5, stabilize 2",
+        "attack 6, stabilize 2",
+        "attack 7, stabilize 2",
+        "attack 8, stabilize 3",
+        "attack 9, stabilize 3",
+        "attack 10, stabilize 3"
       ]
     },
     {
       "name": "collect samples",
       "cost": 2,
       "type": "attack",
-      "art": "pistol",
+      "art": "collect_samples",
       "levels" : [
-        "attack 1, gain 3",
+        "attack 1, gain 2",
+        "attack 2, gain 2",
         "attack 2, gain 3",
-        "attack 2, gain 4",
+        "attack 3, gain 3",
         "attack 3, gain 4",
-        "attack 3, gain 5",
-        "attack 4, gain 5"
-      ]
-    },
-    {
-      "name": "sentry_DNU",
-      "cost": 4,
-      "type": "permanent",
-      "art": "pistol",
-      "levels" : [
-        "attack 1",
-        "attack 2",
-        "attack 3"
+        "attack 4, gain 4"
       ]
     },
     {
       "name": "only the best",
       "cost": 3,
       "type": "action",
-      "art": "pistol",
+      "art": "the_best",
       "levels" : [
         "destroy 1, draw 1",
         "destroy 1, draw 2",
@@ -243,7 +232,7 @@
       "name": "public funding",
       "cost": 4,
       "type": "permanent",
-      "art": "pistol",
+      "art": "public_funding",
       "levels" : [
         "gain 1",
         "gain 2",
@@ -252,9 +241,9 @@
     },
     {
       "name": "rift stitch",
-      "cost": 3,
+      "cost": 5,
       "type": "action",
-      "art": "pistol",
+      "art": "stitch",
       "levels" : [
         "stitch 1"
       ]
@@ -263,7 +252,7 @@
       "name": "will of mind",
       "cost": 4,
       "type": "permanent",
-      "art": "action",
+      "art": "mind",
       "levels" : [
         "draw 1",
         "draw 2",
@@ -274,21 +263,21 @@
       "name": "abyss take me",
       "cost": 3,
       "type": "attack",
-      "art": "pistol",
+      "art": "abyss",
       "levels" : [
-        "attack 2, destory 1",
-        "attack 3, destory 1",
-        "attack 4, destory 1",
-        "attack 5, destory 1",
-        "attack 6, destory 1",
-        "attack 7, destory 1"
+        "attack 2, destroy 1",
+        "attack 3, destroy 1",
+        "attack 4, destroy 1",
+        "attack 5, destroy 1",
+        "attack 6, destroy 1",
+        "attack 7, destroy 1"
       ]
     },
     {
       "name": "blood ritual",
       "cost": 3,
       "type": "attack",
-      "art": "pistol",
+      "art": "blood_ritual",
       "levels" : [
         "attack 3, disrupt 3",
         "attack 4, disrupt 3",
@@ -302,7 +291,7 @@
       "name": "emp bomb",
       "cost": 3,
       "type": "action",
-      "art": "pistol",
+      "art": "emp_bomb",
       "levels" : [
         "disrupt 6",
         "disrupt 7",
@@ -316,7 +305,7 @@
       "name": "live samples",
       "cost": 4,
       "type": "permanent",
-      "art": "pistol",
+      "art": "live_samples",
       "levels" : [
         "gain 2, stabilize 1",
         "gain 4, stabilize 2",
@@ -327,7 +316,7 @@
       "name": "anti-matter bomb",
       "cost": 4,
       "type": "attack",
-      "art": "pistol",
+      "art": "am_bomb",
       "levels" : [
         "attack 5, disrupt 4",
         "attack 6, disrupt 4",
@@ -341,7 +330,7 @@
       "name": "psychic destruction",
       "cost": 4,
       "type": "action",
-      "art": "pistol",
+      "art": "psy_destro",
       "levels" : [
         "disrupt 3, recall 1",
         "disrupt 4, recall 1",
@@ -352,10 +341,10 @@
       ]
     },
     {
-      "name": "old one's favor",
-      "cost": 4,
+      "name": "old one's favour",
+      "cost": 5,
       "type": "permanent",
-      "art": "pistol",
+      "art": "oo_favour",
       "levels" : [
         "oldOne 1"
       ]
@@ -364,7 +353,7 @@
       "name": "containment field",
       "cost": 4,
       "type": "permanent",
-      "art": "pistol",
+      "art": "containment_field",
       "levels" : [
         "disrupt 1",
         "disrupt 2",

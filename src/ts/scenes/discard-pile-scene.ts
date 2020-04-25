@@ -47,7 +47,7 @@ export class DiscardPileScene extends Scene {
   }
 
   public transitionIn(): Promise<any> {
-    if(GameState.discardPileMode === "store") {
+    if (GameState.discardPileMode === "store") {
       this.data = [...GameState.storeDiscard].reverse();
     } else {
       this.data = [...GameState.playerDiscardPile].reverse();
@@ -86,7 +86,7 @@ export class DiscardPileScene extends Scene {
     const numberOfRows: number = Math.ceil((this.data.length - (this.currentPage * 52)) / 15);
     const cards: PlayerDiscardCardNode[] = this.cards();
     let card: PlayerCard = null;
-    let index: number = 0;
+    let index: number = -1;
 
     for (let y: number = 0, ylen: number = Math.min(4, numberOfRows); y < ylen; y++) {
       const rowCards: number = this.data.length - (this.currentPage * 52) - (y * 13);

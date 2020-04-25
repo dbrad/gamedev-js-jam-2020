@@ -27,26 +27,52 @@
       "h": 8
     },
     {
-      "type": "sprite",
-      "name": "pistol",
+      "type": "row",
+      "name": [
+        "wound",
+        "pistol",
+        "weak_emp",
+        "funds",
+        "barrage",
+        "emp_burst",
+        "taxes",
+        "machine_gun",
+        "bounty",
+        "reevaluate",
+        "recruitment",
+        "psy_offense",
+        "psy_interference",
+        "oo_wrath",
+        "pact",
+        "ex_rifle"
+      ],
       "x": 0,
       "y": 18,
       "w": 32,
       "h": 32
     },
     {
-      "type": "sprite",
-      "name": "weak_emp",
-      "x": 96,
-      "y": 18,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "bonds",
-      "x": 128,
-      "y": 18,
+      "type": "row",
+      "name": [
+        "collect_samples",
+        "the_best",
+        "public_funding",
+        "stitch",
+        "mind",
+        "abyss",
+        "blood_ritual",
+        "emp_bomb",
+        "live_samples",
+        "am_bomb",
+        "psy_destro",
+        "oo_favour",
+        "containment_field",
+        "empty_01",
+        "empty_02",
+        "empty_03"
+      ],
+      "x": 0,
+      "y": 50,
       "w": 32,
       "h": 32
     },
@@ -70,6 +96,14 @@
       "type": "sprite",
       "name": "sentient_rock",
       "x": 64,
+      "y": 82,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "sprite",
+      "name": "d_vagabonds",
+      "x": 96,
       "y": 82,
       "w": 32,
       "h": 32

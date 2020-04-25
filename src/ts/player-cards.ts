@@ -57,7 +57,7 @@ export class PlayerCard {
     if (cardData.levels) {
       this.parseEffects(cardData.levels[this.level]);
       if (cardData.levels.length > 1) {
-        for (let level: number = 1; level <= 5; level++) {
+        for (let level: number = 1; level <= cardData.levels.length - 1; level++) {
           this.levelsText.push(`LV${level}: ${cardData.levels[level]}`);
         }
       }
@@ -88,8 +88,12 @@ export class PlayerCard {
       if (effect === "attack") {
         this.attackValue = +param;
       }
-      this.description.push(`${effect} ${param}`);
-      if(this.type === "permanent") {
+      if (effect === "oldOne") {
+        this.description.push(`call to it...`);
+      } else {
+        this.description.push(`${effect} ${param}`);
+      }
+      if (this.type === "permanent") {
         this.description.push(`(per turn)`);
       }
     }

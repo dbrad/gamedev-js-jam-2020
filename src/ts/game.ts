@@ -3,6 +3,12 @@ import { MainMenuScene, MainMenuSceneName } from "./scenes/main-menu-scene.js";
 import { initPointer, inputFocus, mouseDown, pointer } from "./core/pointer.js";
 import { initStats, tickStats } from "./stats.js";
 
+import { DeckSelectScene } from "./scenes/deck-select-scene.js";
+import { DiscardPileScene } from "./scenes/discard-pile-scene.js";
+import { GameDifficultyScene } from "./scenes/game-difficulty-scene.js";
+import { GameOverScene } from "./scenes/game-over-scene.js";
+import { GameScene } from "./scenes/game-scene.js";
+import { HelpScene } from "./scenes/help-scene.js";
 import { SceneManager } from "./core/scene-manager.js";
 import { V2 } from "./core/v2.js";
 import { emit } from "./core/events.js";
@@ -84,6 +90,12 @@ window.addEventListener("load", async (): Promise<any> => {
   await loadAsset("encounter-cards.json");
   initPointer(canvas);
   SceneManager.register(new MainMenuScene());
+  SceneManager.register(new GameDifficultyScene());
+  SceneManager.register(new DeckSelectScene());
+  SceneManager.register(new GameScene());
+  SceneManager.register(new HelpScene());
+  SceneManager.register(new DiscardPileScene());
+  SceneManager.register(new GameOverScene());
   SceneManager.push(MainMenuSceneName);
 
   requestAnimationFrame(tick);

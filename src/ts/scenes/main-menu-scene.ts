@@ -1,14 +1,14 @@
-import { Align } from "../core/draw";
+import { Align, drawText } from "../core/draw";
+
 import { Builder } from "../core/builder";
 import { ButtonNode } from "../scene-nodes/button-node";
-import { DiscardPileScene } from "./discard-pile-scene";
 import { Easing } from "../core/interpolation";
-import { GameDifficultyScene } from "./game-difficulty-scene";
-import { GameOverScene } from "./game-over-scene";
-import { GameScene } from "./game-scene";
+import { GameOverSceneName } from "./game-over-scene";
+import { GameState } from "../game-state";
 import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { TextNode } from "../scene-nodes/text-node";
+import { V2 } from "../core/v2";
 import { gl } from "../core/gl";
 
 export const MainMenuSceneName: string = "MainMenu";
@@ -21,7 +21,7 @@ export class MainMenuScene extends Scene {
     super();
     this.id = MainMenuSceneName;
 
-    this.menuOffset = this.root.size.y / 2 - 40;
+    this.menuOffset = this.root.size.y / 2 - 50;
     const title: TextNode = new Builder(TextNode)
       .with("text", "beyond the rift")
       .with("textAlign", Align.Center)
@@ -38,7 +38,7 @@ export class MainMenuScene extends Scene {
       .build();
     this.title.moveTo({ x: this.root.size.x / 2, y: this.menuOffset });
     this.root.add(this.title);
-    this.menuOffset += 37;
+    this.menuOffset += 50;
 
     this.newGame = new Builder(ButtonNode)
       .with("text", "new game")
@@ -48,7 +48,7 @@ export class MainMenuScene extends Scene {
         SceneManager.push("GameDifficulty");
       })
       .build();
-    this.newGame.moveTo({ x: -this.root.size.x / 2, y: this.menuOffset });
+    this.newGame.moveTo({ x: this.root.size.x / 2 - 72, y: this.menuOffset });
     this.root.add(this.newGame);
     this.menuOffset += 34;
 
@@ -56,9 +56,13 @@ export class MainMenuScene extends Scene {
       .with("text", "settings")
       .with("size", { x: 144, y: 30 })
       .with("colour", 0xFFFF5555)
+      .with("onMouseUp", () => {
+        GameState.gameOverReason = "oldOne";
+        SceneManager.push(GameOverSceneName);
+      })
       .build();
-    this.settings.moveTo({ x: this.root.size.x / 2 - 72, y: this.root.size.y * 2 });
-    this.root.add(this.settings);
+    this.settings.moveTo({ x: this.root.size.x / 2 - 72, y: this.menuOffset });
+    // this.root.add(this.settings);
   }
 
   private toBlue: boolean = false;
@@ -66,18 +70,9 @@ export class MainMenuScene extends Scene {
     this.backgroundColour = gl.getBackground();
     this.changeBackground(0, 25, 55, 500);
 
-    SceneManager.register(new GameDifficultyScene());
-    SceneManager.register(new GameScene());
-    SceneManager.register(new DiscardPileScene());
-    SceneManager.register(new GameOverScene());
-
     return this.root.moveBy({ x: 0, y: -this.root.size.y }).then(() => {
       return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() => {
-        return Promise.all([
-          this.newGame.moveTo({ x: this.root.size.x / 2 - 72, y: this.newGame.relativeOrigin.y }, 500, Easing.easeOutQuad),
-          this.settings.moveTo({ x: this.settings.relativeOrigin.x, y: this.menuOffset }, 500, Easing.easeOutQuad),
-          super.transitionIn()
-        ]);
+        return super.transitionIn();
       });
     });
   }
@@ -98,5 +93,17 @@ export class MainMenuScene extends Scene {
       }
     }
     super.update(now, delta);
+  }
+
+  public draw(now: number, delta: number): void {
+    const topLeft: V2 = this.root.topLeft;
+    const size: V2 = this.root.size;
+    drawText("a deck building game", topLeft.x + size.x / 2 + this.title.size.x / 2, topLeft.y + size.y / 2 - 20, { textAlign: Align.Right, scale: 2, colour: 0xCC000000 });
+    drawText("a deck building game", topLeft.x + size.x / 2 + this.title.size.x / 2, topLeft.y + size.y / 2 - 22, { textAlign: Align.Right, scale: 2 });
+
+    drawText("(c) 2020 david brad", topLeft.x + size.x, topLeft.y + size.y - 21, { textAlign: Align.Right });
+    drawText("Card art icons made by Lorc, Delapouite, and other contributors", topLeft.x + size.x, topLeft.y + size.y - 14, { textAlign: Align.Right });
+    drawText("Available on https://game-icons.net", topLeft.x + size.x, topLeft.y + size.y - 7, { textAlign: Align.Right });
+    super.draw(now, delta);
   }
 }
