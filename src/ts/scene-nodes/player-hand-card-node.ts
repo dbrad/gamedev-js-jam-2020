@@ -1,15 +1,17 @@
 import { Interactive, pointer } from "../core/pointer";
-import { drawText, drawTexture } from "../core/draw";
 
+import { Builder } from "../core/builder";
 import { Easing } from "../core/interpolation";
 import { EncounterCard } from "../encounter-cards";
 import { GameState } from "../game-state";
 import { PlayerCard } from "../player-cards";
+import { PlayerGhostCardNode } from "./player-ghost-card-node";
 import { PlayerHandNode } from "./player-hand-node";
 import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
 import { action } from "../core/zzfx";
 import { drawPlayerCard } from "../common";
+import { drawTexture } from "../core/draw";
 import { emit } from "../core/events";
 import { gl } from "../core/gl";
 
@@ -115,6 +117,10 @@ export class PlayerHandCardNode extends SceneNode implements Interactive {
         x: this.relativeOrigin.x,
         y: Math.max(pointer.y - this.parent.topLeft.y - 24, -62)
       };
+      if (!this.parent.ghostCard.movementAnimation) {
+        this.parent.ghostCard.moveTo({ x: this.relativeOrigin.x, y: 0 });
+        this.parent.ghostCard.moveTo({ x: this.relativeOrigin.x, y: -62 }, 1000, Easing.easeOutQuad);
+      }
       this.moveTo(target);
     } else if (!this.parent.cardSelected && this.hover && !this.movementAnimation) {
       this.moveTo({ x: this.relativeOrigin.x, y: -5 }, 25, Easing.easeOutQuad);

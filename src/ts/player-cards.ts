@@ -91,6 +91,8 @@ export class PlayerCard {
       }
       if (effect === "oldOne") {
         this.description.push(`call to it...`);
+      } else if (effect === "stitch") {
+        this.description.push(`apply stitch`);
       } else {
         this.description.push(`${effect} ${param}`);
       }

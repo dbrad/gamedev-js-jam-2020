@@ -8,6 +8,7 @@ import { MainMenuSceneName } from "./main-menu-scene";
 import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { V2 } from "../core/v2";
+import { buttonMouseUp } from "../core/zzfx";
 import { gl } from "../core/gl";
 
 export const GameOverSceneName: string = "GameOver";
@@ -25,6 +26,7 @@ export class GameOverScene extends Scene {
       .with("size", { x: 160, y: 30 })
       .with("colour", 0xFF2222AA)
       .with("onMouseUp", () => {
+        buttonMouseUp();
         SceneManager.popTo(MainMenuSceneName);
       })
       .build();

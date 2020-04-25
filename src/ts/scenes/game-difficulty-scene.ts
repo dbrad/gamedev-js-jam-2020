@@ -12,6 +12,7 @@ import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { TextNode } from "../scene-nodes/text-node";
 import { V2 } from "../core/v2";
+import { buttonMouseUp } from "../core/zzfx";
 import { gl } from "../core/gl";
 import { rand } from "../core/random";
 
@@ -35,6 +36,7 @@ export class GameDifficultyScene extends Scene {
         .with("size", { x: 120, y: 25 })
         .with("colour", 0xFF44AA44)
         .with("onMouseUp", () => {
+          buttonMouseUp();
           this.setupGame();
           GameState.riftStabilityMax = 75;
           SceneManager.push(DeckSelectSceneName);
@@ -49,6 +51,7 @@ export class GameDifficultyScene extends Scene {
         .with("size", { x: 120, y: 25 })
         .with("colour", 0xFF44AA44)
         .with("onMouseUp", () => {
+          buttonMouseUp();
           this.setupGame();
           GameState.riftStabilityMax = 50;
           SceneManager.push(DeckSelectSceneName);
@@ -63,6 +66,7 @@ export class GameDifficultyScene extends Scene {
         .with("size", { x: 120, y: 25 })
         .with("colour", 0xFF44AA44)
         .with("onMouseUp", () => {
+          buttonMouseUp();
           this.setupGame();
           GameState.riftStabilityMax = 30;
           SceneManager.push(DeckSelectSceneName);
@@ -89,7 +93,7 @@ export class GameDifficultyScene extends Scene {
       new PlayerCard(PLAYER_CARD_CACHE.get("electrical interference")),
       new PlayerCard(PLAYER_CARD_CACHE.get("electrical interference")),
     ]);
-    
+
     this.createEncounterDeck();
   }
 

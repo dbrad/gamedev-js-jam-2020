@@ -1,4 +1,5 @@
 import { Align, drawText, drawTexture } from "../core/draw";
+import { buttonHover, buttonMouseDown, buttonMouseUp } from "../core/zzfx";
 
 import { Interactive } from "../core/pointer";
 import { SceneNode } from "./scene-node";
@@ -7,10 +8,16 @@ import { gl } from "../core/gl";
 export class ButtonNode extends SceneNode implements Interactive {
   public hover: boolean = false;
   public pressed: boolean = false;
-  public onHover(): void { }
+  public onHover(): void {
+    buttonHover();
+  }
   public onBlur(): void { }
-  public onMouseDown(): void { }
-  public onMouseUp(): void { }
+  public onMouseDown(): void {
+    buttonMouseDown();
+  }
+  public onMouseUp(): void {
+    buttonMouseUp();
+  }
   public text: string = "";
   public textScale: number = 2;
   constructor(initializer: Partial<ButtonNode> = {}) {

@@ -3,11 +3,10 @@ import { Align, drawText } from "../core/draw";
 import { Builder } from "../core/builder";
 import { ButtonNode } from "../scene-nodes/button-node";
 import { Easing } from "../core/interpolation";
-import { GameSceneName } from "./game-scene";
-import { MainMenuSceneName } from "./main-menu-scene";
 import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { V2 } from "../core/v2";
+import { buttonMouseUp } from "../core/zzfx";
 import { gl } from "../core/gl";
 
 export const HelpSceneName: string = "Help";
@@ -41,13 +40,14 @@ export class HelpScene extends Scene {
 
     this.backButton = new Builder(ButtonNode)
       .with("text", "back")
-      .with("size", { x: 100, y: 30 })
+      .with("size", { x: 80, y: 20 })
       .with("colour", 0xFF55cc55)
       .with("onMouseUp", () => {
+        buttonMouseUp();
         SceneManager.pop();
       })
       .build();
-    this.backButton.moveTo({ x: this.root.size.x / 2 - 50, y: this.root.size.y - 33 });
+    this.backButton.moveTo({ x: this.root.size.x / 2 - 40, y: this.root.size.y - 23 });
     this.root.add(this.backButton);
   }
   public transitionIn(): Promise<any> {
@@ -69,19 +69,23 @@ export class HelpScene extends Scene {
   public draw(now: number, delta: number): void {
     const topLeft: V2 = this.root.topLeft;
     const size: V2 = this.root.size;
-    let yOffset: number = 25;
-    drawText("help", topLeft.x + size.x / 2, topLeft.y + 5, { scale: 3, textAlign: Align.Center });
+    let yOffset: number = 23;
+    drawText("help", topLeft.x + size.x / 2, topLeft.y + 3, { scale: 3, textAlign: Align.Center });
 
     for (const text of this.helpText) {
       drawText(text, topLeft.x + 5, topLeft.y + yOffset, { colour: 0xFFEEEEEE });
       yOffset += 9;
     }
     yOffset += 10;
-    drawText("objective", topLeft.x + size.x / 2, topLeft.y + yOffset, { scale: 2, textAlign: Align.Center });
-    yOffset += 19;
-    drawText("defeat all of the creatures that come to our world", topLeft.x + size.x / 2, topLeft.y + yOffset, { textAlign: Align.Center });
-    yOffset += 9;
-    drawText("or find a another way to end the enslaught...", topLeft.x + size.x / 2, topLeft.y + yOffset, { textAlign: Align.Center });
+    drawText("objective info", topLeft.x + size.x / 2, topLeft.y + yOffset, { scale: 2, textAlign: Align.Center });
+    yOffset += 15;
+    drawText("- defeat all of the creatures that come to our world", topLeft.x, topLeft.y + yOffset, { textAlign: Align.Left });
+    yOffset += 10;
+    drawText("- or find a another way to end the enslaught...", topLeft.x, topLeft.y + yOffset, { textAlign: Align.Left });
+    yOffset += 10;
+    drawText("- if the rift stabilizes, all remaining creature inside the rift will emerge", topLeft.x, topLeft.y + yOffset, { textAlign: Align.Left });
+    yOffset += 10;
+    drawText("- if 10 creatures are already active, and more emerge from the portal, we will be overrun", topLeft.x, topLeft.y + yOffset, { textAlign: Align.Left, wrap: 400 });
 
     super.draw(now, delta);
   }

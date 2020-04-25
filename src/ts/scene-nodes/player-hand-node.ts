@@ -1,8 +1,10 @@
 import { Align, drawText, drawTexture, textHeight } from "../core/draw";
 
+import { Builder } from "../core/builder";
 import { Easing } from "../core/interpolation";
 import { GameState } from "../game-state";
 import { PlayerCard } from "../player-cards";
+import { PlayerGhostCardNode } from "./player-ghost-card-node";
 import { PlayerHandCardNode } from "./player-hand-card-node";
 import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
@@ -13,11 +15,17 @@ import { on } from "../core/events";
 export class PlayerHandNode extends SceneNode {
   public tooltipCard: PlayerCard = null;
   public tooltipPosition: V2 = { x: 0, y: 0 };
+  public ghostCard: PlayerGhostCardNode;
 
   constructor(initializer: Partial<PlayerHandNode> = {}) {
     super(initializer, "player_hand");
     Object.assign(this, initializer);
     this.size = { x: 338, y: 48 };
+
+    this.ghostCard = new Builder(PlayerGhostCardNode).build();
+    this.ghostCard.moveTo({ x: -34, y: 0 });
+    this.add(this.ghostCard);
+
     for (let i: number = 0; i < 15; i++) {
       this.add(new PlayerHandCardNode());
     }
@@ -43,6 +51,8 @@ export class PlayerHandNode extends SceneNode {
     if (this.cardSelected) {
       GameState.playerSelectedCard = this.cardSelected.card;
     } else {
+      this.ghostCard.movementAnimation = null;
+      this.ghostCard.moveTo({ x: -34, y: 0 });
       GameState.playerSelectedCard = null;
     }
     const cardNodes: PlayerHandCardNode[] = this.cards();
@@ -111,7 +121,11 @@ export class PlayerHandNode extends SceneNode {
         const lines: number = drawText(this.tooltipCard.description[i], topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
         yTooltipOffset += textHeight(lines, 1);
       }
-    }
 
+      if (this.tooltipCard.name === "rift stitch") {
+        yTooltipOffset += 3;
+        drawText(`${10 - GameState.stitchCounter} more...`, topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
+      }
+    }
   }
 }

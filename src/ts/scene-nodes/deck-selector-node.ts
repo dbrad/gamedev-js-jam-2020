@@ -1,3 +1,4 @@
+import { buttonHover, buttonMouseDown, buttonMouseUp } from "../core/zzfx";
 import { drawText, drawTexture } from "../core/draw";
 
 import { GameState } from "../game-state";
@@ -14,10 +15,15 @@ export class DeckSelectorNode extends SceneNode implements Interactive {
   private markerSize: number = 0;
   public hover: boolean;
   public pressed: boolean;
-  public onHover(mouseDown: boolean): void { }
+  public onHover(mouseDown: boolean): void {
+    buttonHover();
+  }
   public onBlur(): void { }
-  public onMouseDown(): void { }
+  public onMouseDown(): void {
+    buttonMouseDown();
+  }
   public onMouseUp(): void {
+    buttonMouseUp();
     const index: number = GameState.decksPicked.indexOf(this.deckId);
     if (index === -1) {
       if (GameState.decksPicked.length >= this.deckLimit) {
@@ -55,10 +61,13 @@ export class DeckSelectorNode extends SceneNode implements Interactive {
     drawTexture("solid", topleft.x + 1, topleft.y + 1, size.x - 2, size.y - 2);
     gl.colour(0xFFFFFFFF);
     drawTexture("solid", topleft.x + ~~(this.markerSize / 2), topleft.y + ~~(this.markerSize / 2), this.markerSize, this.markerSize);
-    drawText(this.label, topleft.x + this.markerSize * 2, topleft.y + size.y / 2 - 4, { scale: 2 , colour: 0xCC000000});
+    drawText(this.label, topleft.x + this.markerSize * 2, topleft.y + size.y / 2 - 4, { scale: 2, colour: 0xCC000000 });
     drawText(this.label, topleft.x + this.markerSize * 2, topleft.y + size.y / 2 - 5, { scale: 2 });
     if (this.selected) {
       gl.colour(0xFF202020);
+      drawTexture("solid", topleft.x + ~~(this.markerSize / 2) + 3, topleft.y + ~~(this.markerSize / 2) + 3, this.markerSize - 6, this.markerSize - 6);
+    } else if (this.pressed) {
+      gl.colour(0xFF808080);
       drawTexture("solid", topleft.x + ~~(this.markerSize / 2) + 3, topleft.y + ~~(this.markerSize / 2) + 3, this.markerSize - 6, this.markerSize - 6);
     } else if (this.hover) {
       gl.colour(0xFFAAAAAA);

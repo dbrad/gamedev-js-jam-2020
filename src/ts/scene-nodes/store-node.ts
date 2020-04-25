@@ -64,11 +64,13 @@ export class StoreNode extends SceneNode {
   }
 
   public draw(now: number, delta: number): void {
+    gl.colour(0x66FFFFFF);
     drawTexture("card_empty_space", this.topLeft.x + 34, this.topLeft.y);
     drawTexture("card_empty_space", this.topLeft.x + 68, this.topLeft.y);
     drawTexture("card_empty_space", this.topLeft.x + 102, this.topLeft.y);
     drawTexture("card_empty_space", this.topLeft.x + 136, this.topLeft.y);
     drawTexture("card_empty_space", this.topLeft.x + 170, this.topLeft.y);
+    gl.colour(0xFFFFFFFF);
     super.draw(now, delta);
 
     drawTexture("card_back", this.topLeft.x, this.topLeft.y);

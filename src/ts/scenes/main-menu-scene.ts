@@ -9,6 +9,7 @@ import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { TextNode } from "../scene-nodes/text-node";
 import { V2 } from "../core/v2";
+import { buttonMouseUp } from "../core/zzfx";
 import { gl } from "../core/gl";
 
 export const MainMenuSceneName: string = "MainMenu";
@@ -45,6 +46,7 @@ export class MainMenuScene extends Scene {
       .with("size", { x: 144, y: 30 })
       .with("colour", 0xFF55cc55)
       .with("onMouseUp", () => {
+        buttonMouseUp();
         SceneManager.push("GameDifficulty");
       })
       .build();
@@ -57,6 +59,7 @@ export class MainMenuScene extends Scene {
       .with("size", { x: 144, y: 30 })
       .with("colour", 0xFFFF5555)
       .with("onMouseUp", () => {
+        buttonMouseUp();
         GameState.gameOverReason = "oldOne";
         SceneManager.push(GameOverSceneName);
       })

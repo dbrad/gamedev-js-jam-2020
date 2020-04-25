@@ -1,15 +1,4 @@
-sound effects
-  Card fwip sound for draw, discard, pickup?
-  sound for attacks
-  Some sort of sound for actions
-
 opening text scroll screen
-
-Add ghost card on hover / click
-
 
 settings screen?
   mouse sensitivity
-
-DeckNode
-  deck shuffle animation? (similar to discard?)

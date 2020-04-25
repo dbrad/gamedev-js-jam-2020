@@ -2,6 +2,7 @@ import { Align, drawText, drawTexture } from "../core/draw";
 import { GameState, drawFromEncounterDeck, drawFromPlayerDeck } from "../game-state";
 import { HelpScene, HelpSceneName } from "./help-scene";
 import { PlayerDiscardPileNode, toBeDiscarded } from "../scene-nodes/player-discard-pile-node";
+import { buttonHover, buttonMouseUp, cardFwip } from "../core/zzfx";
 
 import { Builder } from "../core/builder";
 import { ButtonNode } from "../scene-nodes/button-node";
@@ -18,7 +19,6 @@ import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { StoreDiscardPileNode } from "../scene-nodes/store-discard-pile";
 import { StoreNode } from "../scene-nodes/store-node";
-import { cardFwip } from "../core/zzfx";
 import { emit } from "../core/events";
 import { gl } from "../core/gl";
 import { rand } from "../core/random";
@@ -37,6 +37,14 @@ enum GamePhase {
 export const GameSceneName: string = "Game";
 export class GameScene extends Scene {
   private phase: GamePhase = GamePhase.Pregame;
+  private phases: Map<GamePhase, string> = new Map([
+    [GamePhase.Begin, "Begin"],
+    [GamePhase.Draw, "Draw"],
+    [GamePhase.Player, "Player"],
+    [GamePhase.Rift, "Rift"],
+    [GamePhase.Discard, "Discard"],
+    [GamePhase.End, "End"],
+  ]);
   private permanents: PlayerPermanentSlotsNode;
   private playerDeck: PlayerDeckNode;
   private hand: PlayerHandNode;
@@ -98,6 +106,7 @@ export class GameScene extends Scene {
         .with("colour", 0xFF448844)
         .with("text", "end turn")
         .with("onMouseUp", () => {
+          buttonMouseUp();
           if (this.phase === GamePhase.Player && GameState.playerMode === "play") {
             this.phase = GamePhase.Rift;
             this.phaseText = "rift";
@@ -114,12 +123,14 @@ export class GameScene extends Scene {
         .with("text", "refresh")
         .with("textScale", 1)
         .with("onHover", () => {
+          buttonHover();
           emit("refresh_store_tooltip", true);
         })
         .with("onBlur", () => {
           emit("refresh_store_tooltip", false);
         })
         .with("onMouseUp", () => {
+          buttonMouseUp();
           if (this.phase === GamePhase.Player && GameState.playerMode === "play" && GameState.playerMoney > 0) {
             GameState.playerMoney -= 1;
             for (let i: number = 0, len: number = GameState.storeActive.length; i < len; i++) {
@@ -139,12 +150,14 @@ export class GameScene extends Scene {
         .with("text", "upgrade")
         .with("textScale", 1)
         .with("onHover", () => {
+          buttonHover();
           emit("upgrade_store_tooltip", true);
         })
         .with("onBlur", () => {
           emit("upgrade_store_tooltip", false);
         })
         .with("onMouseUp", () => {
+          buttonMouseUp();
           if (this.phase === GamePhase.Player && GameState.playerMode === "play" && GameState.playerMoney > 0) {
             GameState.playerMoney -= 1;
             for (const card of GameState.storeActive) {
@@ -163,6 +176,7 @@ export class GameScene extends Scene {
         .with("text", "help!")
         .with("textScale", 1)
         .with("onMouseUp", () => {
+          buttonMouseUp();
           if (this.phase === GamePhase.Player && GameState.playerMode === "play") {
             SceneManager.push(HelpSceneName);
           }
@@ -438,9 +452,19 @@ export class GameScene extends Scene {
       this.root.topLeft.y + 43,
       { textAlign: Align.Center });
     //#endregion Rift Stability
+    let i: number = 0;
+    for (const [phase, text] of this.phases) {
+      if (this.phase === phase) {
+        gl.colour(0xFF448844);
+      } else {
+        gl.colour(0xFF202020); 
+      }
+      drawTexture("solid", this.root.topLeft.x + this.root.size.x - 93, this.root.topLeft.y + this.root.size.y - 105 + (i * 10) - 2, 84, 9);
+      drawText(`${text} phase`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + this.root.size.y - 105 + (i * 10), { colour: 0xFFEEEEEE, textAlign: Align.Center });
+      i++;
+    }
 
     drawText(`turn ${GameState.turn}`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + this.root.size.y - 38, { scale: 2, textAlign: Align.Center });
-    drawText(`${this.phaseText} phase`, this.root.topLeft.x + this.root.size.x - 50, this.root.topLeft.y + this.root.size.y - 25, { scale: 1, textAlign: Align.Center });
 
     super.draw(now, delta);
 

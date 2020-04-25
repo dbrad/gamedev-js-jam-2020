@@ -1,5 +1,5 @@
+import { Align, drawText, drawTexture } from "../core/draw";
 import { Easing, Interpolator } from "../core/interpolation";
-import { drawText, drawTexture } from "../core/draw";
 
 import { DiscardPileSceneName } from "../scenes/discard-pile-scene";
 import { GameState } from "../game-state";
@@ -86,5 +86,10 @@ export class StoreDiscardPileNode extends SceneNode implements Interactive {
       gl.colour(0xFFFFFFFF);
     }
     // drawText(`${GameState.storeDiscard.length}`, this.topLeft.x, this.topLeft.y - 6);
+    if (GameState.storeDiscard.length > 0) {
+      gl.colour(0xcc202020);
+      drawTexture("solid", this.topLeft.x + 10, this.topLeft.y + this.size.y - 13, 11, 7);
+    }
+    drawText(`${GameState.storeDiscard.length}`.padStart(2, "0"), this.topLeft.x + 16, this.topLeft.y + this.size.y - 12, { textAlign: Align.Center, colour: 0xFFFFFFFF });
   }
 }

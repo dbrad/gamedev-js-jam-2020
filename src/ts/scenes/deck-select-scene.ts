@@ -9,6 +9,7 @@ import { GameSceneName } from "./game-scene";
 import { GameState } from "../game-state";
 import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
+import { buttonMouseUp } from "../core/zzfx";
 import { rand } from "../core/random";
 
 export const DeckSelectSceneName: string = "DeckSelect";
@@ -55,6 +56,7 @@ export class DeckSelectScene extends Scene {
       .with("colour", 0xFF55cc55)
       .with("text", "let's go!")
       .with("onMouseUp", () => {
+        buttonMouseUp();
         this.generateStore();
         SceneManager.push(GameSceneName);
       })

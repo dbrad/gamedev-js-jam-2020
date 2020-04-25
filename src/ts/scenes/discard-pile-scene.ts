@@ -9,6 +9,7 @@ import { PlayerDiscardCardNode } from "../scene-nodes/player-discard-card-node";
 import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { V2 } from "../core/v2";
+import { buttonMouseUp } from "../core/zzfx";
 import { drawPlayerCard } from "../common";
 import { gl } from "../core/gl";
 import { on } from "../core/events";
@@ -30,6 +31,7 @@ export class DiscardPileScene extends Scene {
       .with("size", { x: 100, y: 30 })
       .with("colour", 0xFF55cc55)
       .with("onMouseUp", () => {
+        buttonMouseUp();
         SceneManager.pop();
       })
       .build();
@@ -128,6 +130,11 @@ export class DiscardPileScene extends Scene {
       for (let i: number = 0, l: number = this.tooltipCard.description.length; i < l; i++) {
         const lines: number = drawText(this.tooltipCard.description[i], topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
         yTooltipOffset += textHeight(lines, 1);
+      }
+
+      if (this.tooltipCard.name === "rift stitch") {
+        yTooltipOffset += 3;
+        drawText(`${10 - GameState.stitchCounter} more...`, topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
       }
     }
     super.draw(now, delta);

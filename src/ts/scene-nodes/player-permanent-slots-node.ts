@@ -91,6 +91,10 @@ export class PlayerPermanentSlotsNode extends SceneNode {
         const lines: number = drawText(this.tooltipCard.description[i], topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
         yTooltipOffset += textHeight(lines, 1);
       }
+      if(this.tooltipCard.name === "old one's favour") {
+        yTooltipOffset += 3;
+        drawText(`${10-GameState.oldOnesFavourCounter} more...`, topLeft.x + 51, topLeft.y + yTooltipOffset, { textAlign: Align.Center, colour: 0XFFEEEEEE, wrap: 96 });
+      }
     }
 
   }
