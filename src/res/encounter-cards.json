@@ -70,8 +70,8 @@
       "art": "the_king_in_yellow",
       "set": "yellow_king",
       "health": 9,
-      "armor": 2,
-      "effects": "summon thrashing_tenticle"
+      "armor": 3,
+      "effects": "regenerate 1, summon thrashing_tenticle"
     },
     {
       "name": "thrashing tenticle",

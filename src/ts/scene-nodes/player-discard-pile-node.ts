@@ -1,4 +1,5 @@
 import { Easing, Interpolator } from "../core/interpolation";
+import { cardFwip, zzfx } from "../core/zzfx";
 import { drawText, drawTexture } from "../core/draw";
 
 import { DiscardPileSceneName } from "../scenes/discard-pile-scene";
@@ -23,7 +24,7 @@ export class PlayerDiscardPileNode extends SceneNode implements Interactive{
       const position: V2 = { x: 0, y: -40 };
       const origin: V2 = V2.copy(position);
 
-      const interp: Iterator<number, number, number> = Interpolator(100 / (toBeDiscarded.length + 1), Easing.easeOutQuad);
+      const interp: Iterator<number, number, number> = Interpolator(125 / (toBeDiscarded.length + 1), Easing.easeOutQuad);
       const fn: (now: number) => boolean =
         (now: number): boolean => {
           const i: IteratorResult<number> = interp.next(now);
@@ -34,6 +35,7 @@ export class PlayerDiscardPileNode extends SceneNode implements Interactive{
             position.y = 0;
             GameState.playerDiscardPile.push(card);
             toBeDiscarded.shift();
+            cardFwip();
           }
           return i.done;
         };

@@ -1,5 +1,6 @@
 import { EncounterCard } from "./encounter-cards";
 import { PlayerCard } from "./player-cards";
+import { cardFwip } from "./core/zzfx";
 import { emit } from "./core/events";
 import { rand } from "./core/random";
 
@@ -130,6 +131,7 @@ export function drawFromPlayerDeck(): void {
   const cardData: PlayerCard = GameState.playerDeck.pop();
   if (GameState.playerHand.length < 10) {
     GameState.playerHand.push(cardData);
+    cardFwip();
   } else {
     emit("card_discarded", cardData);
   }
@@ -139,5 +141,6 @@ export function drawFromEncounterDeck(): void {
   if (GameState.encounterDeck.length > 0) {
     const cardData: EncounterCard = GameState.encounterDeck.pop();
     GameState.encountersActive.push(cardData);
+    cardFwip();
   }
 }

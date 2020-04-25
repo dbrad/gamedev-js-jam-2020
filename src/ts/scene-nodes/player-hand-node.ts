@@ -6,6 +6,7 @@ import { PlayerCard } from "../player-cards";
 import { PlayerHandCardNode } from "./player-hand-card-node";
 import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
+import { cardFwip } from "../core/zzfx";
 import { gl } from "../core/gl";
 import { on } from "../core/events";
 

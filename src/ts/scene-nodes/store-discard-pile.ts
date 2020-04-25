@@ -8,6 +8,7 @@ import { PlayerCard } from "../player-cards";
 import { SceneManager } from "../core/scene-manager";
 import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
+import { cardFwip } from "../core/zzfx";
 import { drawPlayerCard } from "../common";
 import { gl } from "../core/gl";
 import { on } from "../core/events";
@@ -23,7 +24,7 @@ export class StoreDiscardPileNode extends SceneNode implements Interactive {
       const position: V2 = { x: 0, y: -40 };
       const origin: V2 = V2.copy(position);
 
-      const interp: Iterator<number, number, number> = Interpolator(100 / (toBeDiscarded.length + 1), Easing.easeOutQuad);
+      const interp: Iterator<number, number, number> = Interpolator(125 / (toBeDiscarded.length + 1), Easing.easeOutQuad);
       const fn: (now: number) => boolean =
         (now: number): boolean => {
           const i: IteratorResult<number> = interp.next(now);
@@ -34,6 +35,7 @@ export class StoreDiscardPileNode extends SceneNode implements Interactive {
             position.y = 0;
             GameState.storeDiscard.push(card);
             toBeDiscarded.shift();
+            cardFwip();
           }
           return i.done;
         };

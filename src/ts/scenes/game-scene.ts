@@ -18,6 +18,7 @@ import { Scene } from "../core/scene";
 import { SceneManager } from "../core/scene-manager";
 import { StoreDiscardPileNode } from "../scene-nodes/store-discard-pile";
 import { StoreNode } from "../scene-nodes/store-node";
+import { cardFwip } from "../core/zzfx";
 import { emit } from "../core/events";
 import { gl } from "../core/gl";
 import { rand } from "../core/random";
@@ -192,15 +193,18 @@ export class GameScene extends Scene {
         if (GameState.storeDiscard.length > 0) {
           GameState.storeDeck = rand.shuffle(GameState.storeDiscard);
           GameState.storeDiscard.length = 0;
+          cardFwip();
         }
       } else {
         GameState.storeActive.push(GameState.storeDeck.pop());
+        cardFwip();
       }
     }
 
     // Make button looks diabled / enabled
     if (this.phase === GamePhase.Player && GameState.playerMode === "play") {
       this.endTurnButton.colour = 0xFF448844;
+      this.helpButton.colour = 0xFF448844;
       if (GameState.playerMoney < 1) {
         this.clearStoreButton.colour = 0xFF2d2d2d;
         this.upgradeStoreButton.colour = 0xFF2d2d2d;
@@ -212,6 +216,7 @@ export class GameScene extends Scene {
       this.endTurnButton.colour = 0xFF2d2d2d;
       this.clearStoreButton.colour = 0xFF2d2d2d;
       this.upgradeStoreButton.colour = 0xFF2d2d2d;
+      this.helpButton.colour = 0xFF2d2d2d;
     }
 
     switch (this.phase) {

@@ -318,12 +318,12 @@
       "type": "attack",
       "art": "am_bomb",
       "levels" : [
-        "attack 5, disrupt 4",
-        "attack 6, disrupt 4",
-        "attack 6, disrupt 5",
-        "attack 7, disrupt 5",
-        "attack 7, disrupt 6",
-        "attack 8, disrupt 6"
+        "attack 3, disrupt 4",
+        "attack 4, disrupt 4",
+        "attack 4, disrupt 5",
+        "attack 5, disrupt 5",
+        "attack 5, disrupt 6",
+        "attack 6, disrupt 6"
       ]
     },
     {

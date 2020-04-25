@@ -8,6 +8,7 @@ import { PlayerCard } from "../player-cards";
 import { PlayerHandNode } from "./player-hand-node";
 import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
+import { action } from "../core/zzfx";
 import { drawPlayerCard } from "../common";
 import { emit } from "../core/events";
 import { gl } from "../core/gl";
@@ -85,19 +86,23 @@ export class PlayerHandCardNode extends SceneNode implements Interactive {
             const abs: V2 = this.absoluteOrigin;
             const cardIndex: number = GameState.playerHand.indexOf(this.card);
             GameState.playerHand.splice(cardIndex, 1);
-            
+
             // Play card logic
             this.moveTo({ x: this.relativeOrigin.x, y: 0 });
             this.movementAnimation = null;
             this.willBePlayed = false;
             this.hover = false;
             this.pressed = false;
-            
-            if(this.card.type === "permanent") {
+
+            if (this.card.type === "permanent") {
               emit("play_permanent_card", this.card, abs);
+              action();
             } else {
               emit("card_discarded", this.card);
               this.card.effects.map(fn => fn(target));
+              if (this.card.type !== "attack") {
+                action();
+              }
             }
 
             this.parent.add(this);

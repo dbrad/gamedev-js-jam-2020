@@ -2,6 +2,7 @@ import { GameState, drawFromEncounterDeck, drawFromPlayerDeck } from "./game-sta
 
 import { EncounterCard } from "./encounter-cards";
 import { emit } from "./core/events";
+import { thwack } from "./core/zzfx";
 
 export type PlayerCardType = "attack" | "action" | "status" | "permanent";
 export type PlayerCardData = {
@@ -101,6 +102,7 @@ export class PlayerCard {
 
   private attack(value: number, target: EncounterCard): void {
     target.hurt(+value);
+    thwack();
   }
 
   private disrupt(value: number): void {
