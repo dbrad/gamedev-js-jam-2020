@@ -308,7 +308,7 @@ export class GameScene extends Scene {
             drawFromPlayerDeck();
           }
         }
-        if (!this.awaitingPhase) {
+        if (!this.awaitingPhase && this.phase === GamePhase.Draw) {
           this.delay(() => {
             this.phase = GamePhase.Player;
             this.phaseText = "player";
