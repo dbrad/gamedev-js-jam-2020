@@ -9,7 +9,7 @@ import { SceneNode } from "./scene-node";
 import { V2 } from "../core/v2";
 import { action as actionSound } from "../core/zzfx";
 import { drawPlayerCard } from "../common";
-import { drawTexture } from "../core/draw";
+import { drawTexture, drawQuad } from "../core/draw";
 import { emit } from "../core/events";
 import { gl } from "../core/gl";
 
@@ -18,14 +18,14 @@ export class PlayerHandCardNode extends SceneNode implements Interactive
   public willBePlayed: boolean = false;
   public hover: boolean;
   public pressed: boolean;
-  public onHover(_mouseDown: boolean): void { }
+  public onHover( _mouseDown: boolean ): void { }
   public onBlur(): void
   {
-    emit("player_card_tooltip", null, { x: 0, y: 0 });
+    emit( "player_card_tooltip", null, { x: 0, y: 0 } );
   }
   public onMouseDown(): void
   {
-    if (!this.parent.cardSelected)
+    if ( !this.parent.cardSelected )
     {
       this.parent.cardSelected = this;
     }
@@ -36,137 +36,137 @@ export class PlayerHandCardNode extends SceneNode implements Interactive
   }
   public card: PlayerCard;
   public parent: PlayerHandNode;
-  constructor(initializer: Partial<PlayerHandCardNode> = {})
+  constructor( initializer: Partial<PlayerHandCardNode> = {} )
   {
-    super(initializer, "player_card_node");
-    Object.assign(this, initializer);
+    super( initializer, "player_card_node" );
+    Object.assign( this, initializer );
     this.size = { x: 32, y: 48 };
   }
 
-  public update(now: number, delta: number): void
+  public update( now: number, delta: number ): void
   {
-    if (!this.pressed && this.parent.cardSelected === this)
+    if ( !this.pressed && this.parent.cardSelected === this )
     {
       this.parent.cardSelected = null;
-      switch (GameState.playerMode)
+      switch ( GameState.playerMode )
       {
         case "discard":
-          if (this.willBePlayed)
+          if ( this.willBePlayed )
           {
             // discard logic
-            this.moveTo({ x: this.relativeOrigin.x, y: 0 });
+            this.moveTo( { x: this.relativeOrigin.x, y: 0 } );
             this.movementAnimation = null;
             this.willBePlayed = false;
             this.hover = false;
 
-            const cardIndex: number = GameState.playerHand.indexOf(this.card);
-            GameState.playerHand.splice(cardIndex, 1);
-            emit("card_discarded", this.card);
+            const cardIndex: number = GameState.playerHand.indexOf( this.card );
+            GameState.playerHand.splice( cardIndex, 1 );
+            emit( "card_discarded", this.card );
 
             GameState.discardsRequired -= 1;
 
-            this.parent.add(this);
-            this.parent.update(now, delta);
+            this.parent.add( this );
+            this.parent.update( now, delta );
 
             return;
           }
           break;
         case "destroy":
-          if (this.willBePlayed)
+          if ( this.willBePlayed )
           {
             // destroy logic
-            this.moveTo({ x: this.relativeOrigin.x, y: 0 });
+            this.moveTo( { x: this.relativeOrigin.x, y: 0 } );
             this.movementAnimation = null;
             this.willBePlayed = false;
             this.hover = false;
 
-            const cardIndex: number = GameState.playerHand.indexOf(this.card);
-            GameState.playerHand.splice(cardIndex, 1);
+            const cardIndex: number = GameState.playerHand.indexOf( this.card );
+            GameState.playerHand.splice( cardIndex, 1 );
 
             GameState.destroysRequired -= 1;
 
-            this.parent.add(this);
-            this.parent.update(now, delta);
+            this.parent.add( this );
+            this.parent.update( now, delta );
 
             return;
           }
           break;
         case "play":
         default:
-          if (this.willBePlayed)
+          if ( this.willBePlayed )
           {
-            if (this.card.type === "action"
+            if ( this.card.type === "action"
               || this.card.type === "permanent"
-              || (this.card.type === "attack" && GameState.encounterTarget))
+              || ( this.card.type === "attack" && GameState.encounterTarget ) )
             {
 
               const target: EncounterCard = GameState.encounterTarget;
               const abs: V2 = this.absoluteOrigin;
-              const cardIndex: number = GameState.playerHand.indexOf(this.card);
-              GameState.playerHand.splice(cardIndex, 1);
+              const cardIndex: number = GameState.playerHand.indexOf( this.card );
+              GameState.playerHand.splice( cardIndex, 1 );
 
               // Play card logic
-              this.moveTo({ x: this.relativeOrigin.x, y: 0 });
+              this.moveTo( { x: this.relativeOrigin.x, y: 0 } );
               this.movementAnimation = null;
               this.willBePlayed = false;
               this.hover = false;
               this.pressed = false;
 
-              if (this.card.type === "permanent")
+              if ( this.card.type === "permanent" )
               {
-                emit("play_permanent_card", this.card, abs);
+                emit( "play_permanent_card", this.card, abs );
                 actionSound();
               } else
               {
-                emit("card_discarded", this.card);
-                this.card.effects.map(fn => fn(target));
-                if (this.card.type !== "attack")
+                emit( "card_discarded", this.card );
+                this.card.effects.map( fn => fn( target ) );
+                if ( this.card.type !== "attack" )
                 {
                   actionSound();
                 }
               }
 
-              this.parent.add(this);
-              this.parent.update(now, delta);
+              this.parent.add( this );
+              this.parent.update( now, delta );
 
               return;
             }
-            else if (this.card.type === "status")
+            else if ( this.card.type === "status" )
             {
-              if (this.card.effects.length > 0)
+              if ( this.card.effects.length > 0 )
               {
-                this.moveTo({ x: this.relativeOrigin.x, y: 0 });
+                this.moveTo( { x: this.relativeOrigin.x, y: 0 } );
                 this.movementAnimation = null;
                 this.willBePlayed = false;
                 this.hover = false;
                 this.pressed = false;
 
-                this.card.effects.map(fn => fn(this.card));
+                this.card.effects.map( fn => fn( this.card ) );
                 // TODO(dbrad): status sound
               }
             }
           }
       }
     }
-    else if (this.pressed && this.parent.cardSelected === this)
+    else if ( this.pressed && this.parent.cardSelected === this )
     {
       const target: V2 = {
         x: this.relativeOrigin.x,
-        y: Math.max(pointer.y - this.parent.topLeft.y - 24, -62)
+        y: Math.max( pointer.y - this.parent.topLeft.y - 24, -62 )
       };
-      if (!this.parent.ghostCard.movementAnimation)
+      if ( !this.parent.ghostCard.movementAnimation )
       {
-        this.parent.ghostCard.moveTo({ x: this.relativeOrigin.x, y: 0 });
-        this.parent.ghostCard.moveTo({ x: this.relativeOrigin.x, y: -62 }, 1000, Easing.easeOutQuad);
+        this.parent.ghostCard.moveTo( { x: this.relativeOrigin.x, y: 0 } );
+        this.parent.ghostCard.moveTo( { x: this.relativeOrigin.x, y: -62 }, 1000, Easing.easeOutQuad );
       }
-      this.moveTo(target);
-    } else if (!this.parent.cardSelected && this.hover && !this.movementAnimation)
+      this.moveTo( target );
+    } else if ( !this.parent.cardSelected && this.hover && !this.movementAnimation )
     {
-      this.moveTo({ x: this.relativeOrigin.x, y: -5 }, 25, Easing.easeOutQuad);
-      emit("player_card_tooltip", this.card, this.topLeft);
+      this.moveTo( { x: this.relativeOrigin.x, y: -5 }, 25, Easing.easeOutQuad );
+      emit( "player_card_tooltip", this.card, this.topLeft );
     }
 
-    if (this.relativeOrigin.y <= -48)
+    if ( this.relativeOrigin.y <= -48 )
     {
       this.willBePlayed = true;
     }
@@ -175,46 +175,46 @@ export class PlayerHandCardNode extends SceneNode implements Interactive
       this.willBePlayed = false;
     }
 
-    super.update(now, delta);
+    super.update( now, delta );
   }
 
-  public draw(now: number, delta: number): void
+  public draw( now: number, delta: number ): void
   {
-    if (this.willBePlayed)
+    if ( this.willBePlayed )
     {
-      gl.colour(0xFF22DD00);
-      drawTexture("solid", this.topLeft.x - 1, this.topLeft.y - 1, this.size.x + 2, this.size.y + 2);
-      gl.colour(0xFFFFFFFF);
+      gl.colour( 0xFF22DD00 );
+      drawQuad( this.topLeft.x - 1, this.topLeft.y - 1, this.size.x + 2, this.size.y + 2 );
+      gl.colour( 0xFFFFFFFF );
     }
 
-    drawPlayerCard(this.card, this.topLeft, this.size);
+    drawPlayerCard( this.card, this.topLeft, this.size );
 
-    if (this.card
+    if ( this.card
       && GameState.playerMode === "play"
       && this.card.type === "attack"
       && this.pressed
       && this.parent.cardSelected === this
       && this.relativeOrigin.y === -62
-      && pointer.y < this.topLeft.y - 5)
+      && pointer.y < this.topLeft.y - 5 )
     {
       // Bezier curve drawing to pointer!
-      const p0: V2 = V2.add(this.absoluteOrigin, { x: 15, y: -5 });
-      const p1: V2 = { x: this.absoluteOrigin.x + 15, y: pointer.y + (this.absoluteOrigin.y - pointer.y) / 2 };
-      const p2: V2 = V2.add(pointer, { x: 1, y: 3 });
-      for (let t: number = 0; t <= 0.9; t += 0.1)
+      const p0: V2 = V2.add( this.absoluteOrigin, { x: 15, y: -5 } );
+      const p1: V2 = { x: this.absoluteOrigin.x + 15, y: pointer.y + ( this.absoluteOrigin.y - pointer.y ) / 2 };
+      const p2: V2 = V2.add( pointer, { x: 1, y: 3 } );
+      for ( let t: number = 0; t <= 0.9; t += 0.1 )
       {
-        const pt: V2 = pointOnQuadraticBezier(p0, p1, p2, t);
-        drawTexture("solid", pt.x, pt.y, 2, 2);
+        const pt: V2 = pointOnQuadraticBezier( p0, p1, p2, t );
+        drawQuad( pt.x, pt.y, 2, 2 );
       }
     }
-    super.draw(now, delta);
+    super.draw( now, delta );
   }
 }
 
-function pointOnQuadraticBezier(p0: V2, p1: V2, p2: V2, t: number): V2
+function pointOnQuadraticBezier( p0: V2, p1: V2, p2: V2, t: number ): V2
 {
   return {
-    x: ~~((((1 - t) * (1 - t)) * p0.x) + (2 * (1 - t) * t * p1.x) + ((t * t) * p2.x)),
-    y: ~~((((1 - t) * (1 - t)) * p0.y) + (2 * (1 - t) * t * p1.y) + ((t * t) * p2.y))
+    x: ~~( ( ( ( 1 - t ) * ( 1 - t ) ) * p0.x ) + ( 2 * ( 1 - t ) * t * p1.x ) + ( ( t * t ) * p2.x ) ),
+    y: ~~( ( ( ( 1 - t ) * ( 1 - t ) ) * p0.y ) + ( 2 * ( 1 - t ) * t * p1.y ) + ( ( t * t ) * p2.y ) )
   };
 }

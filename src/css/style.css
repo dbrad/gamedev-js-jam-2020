@@ -1,39 +1,55 @@
 body,
 html {
+  font-size: 0em;
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #001937;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
 }
 
 #stage {
   padding: 0;
   margin: 0;
-  transform-origin: 0 0;
-  -webkit-transform-origin: 0 0;
-  user-select: none;
-  -webkit-user-select: none;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vw * (9/16));
+  max-height: 100vh;
+  width: 100vw;
   overflow: hidden;
+  backface-visibility: hidden;
+  min-height: 288px;
+  min-width: 512px;
+}
+
+canvas {
+  height: 100vh;
+  min-height: 288px;
+  min-width: 512px;
+}
+canvas,
+img {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background-color: #000000;
   backface-visibility: hidden;
 }
 
-canvas,
-img {
-  padding: 1px;
-  margin: 0;
-  image-rendering: auto;
-  image-rendering: crisp-edges;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-crisp-edges;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: -o-crisp-edges;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: pixelated;
-  overflow: hidden;
-  background-color: #000000;
-  border: 1px white solid;
-  backface-visibility: hidden;
+@media (min-height: 576px) and (min-width: 1024px) {
+  canvas,
+  img {
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -o-crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: pixelated;
+  }
 }

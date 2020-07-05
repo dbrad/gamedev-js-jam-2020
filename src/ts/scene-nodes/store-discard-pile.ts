@@ -1,4 +1,4 @@
-import { Align, drawText, drawTexture } from "../core/draw";
+import { Align, drawText, drawTexture, drawQuad } from "../core/draw";
 import { Easing, Interpolator } from "../core/interpolation";
 
 import { DiscardPileSceneName } from "../scenes/discard-pile-scene";
@@ -13,95 +13,95 @@ import { drawPlayerCard } from "../common";
 import { gl } from "../core/gl";
 import { on } from "../core/events";
 
-type DiscardAnim = { position: V2, fn: (now: number) => boolean };
-export const toBeDiscarded: [PlayerCard, DiscardAnim][] = [];
+type DiscardAnim = { position: V2, fn: ( now: number ) => boolean; };
+export const toBeDiscarded: [ PlayerCard, DiscardAnim ][] = [];
 export class StoreDiscardPileNode extends SceneNode implements Interactive
 {
-  constructor(initializer: Partial<StoreDiscardPileNode> = {})
+  constructor( initializer: Partial<StoreDiscardPileNode> = {} )
   {
-    super(initializer, "store_discard_pile");
-    Object.assign(this, initializer);
+    super( initializer, "store_discard_pile" );
+    Object.assign( this, initializer );
     this.size = { x: 32, y: 48 };
-    on("store_card_discarded", (card: PlayerCard) =>
+    on( "store_card_discarded", ( card: PlayerCard ) =>
     {
       const position: V2 = { x: 0, y: -40 };
-      const origin: V2 = V2.copy(position);
+      const origin: V2 = V2.copy( position );
 
-      const interp: Iterator<number, number, number> = Interpolator(125 / (toBeDiscarded.length + 1), Easing.easeOutQuad);
-      const fn: (now: number) => boolean =
-        (now: number): boolean =>
+      const interp: Iterator<number, number, number> = Interpolator( 125 / ( toBeDiscarded.length + 1 ), Easing.easeOutQuad );
+      const fn: ( now: number ) => boolean =
+        ( now: number ): boolean =>
         {
-          const i: IteratorResult<number> = interp.next(now);
-          position.x = origin.x + Math.round((0 - origin.x) * i.value);
-          position.y = origin.y + Math.round((0 - origin.y) * i.value);
-          if (i.done)
+          const i: IteratorResult<number> = interp.next( now );
+          position.x = origin.x + Math.round( ( 0 - origin.x ) * i.value );
+          position.y = origin.y + Math.round( ( 0 - origin.y ) * i.value );
+          if ( i.done )
           {
             position.x = 0;
             position.y = 0;
-            GameState.storeDiscard.push(card);
+            GameState.storeDiscard.push( card );
             toBeDiscarded.shift();
             cardFwip();
           }
           return i.done;
         };
       const anim: DiscardAnim = { position, fn };
-      toBeDiscarded.push([card, anim]);
-    });
+      toBeDiscarded.push( [ card, anim ] );
+    } );
   }
 
   public hover: boolean;
   public pressed: boolean;
-  public onHover(mouseDown: boolean): void { }
+  public onHover( mouseDown: boolean ): void { }
   public onBlur(): void { }
   public onMouseDown(): void { }
   public onMouseUp(): void
   {
     GameState.discardPileMode = "store";
-    SceneManager.push(DiscardPileSceneName);
+    SceneManager.push( DiscardPileSceneName );
   }
 
-  public update(now: number, delta: number): void
+  public update( now: number, delta: number ): void
   {
-    if (toBeDiscarded.length > 0)
+    if ( toBeDiscarded.length > 0 )
     {
-      toBeDiscarded[0][1].fn(now);
+      toBeDiscarded[ 0 ][ 1 ].fn( now );
     }
-    super.update(now, delta);
+    super.update( now, delta );
   }
 
-  public draw(now: number, delta: number): void
+  public draw( now: number, delta: number ): void
   {
-    gl.colour(0x66FFFFFF);
-    drawTexture("card_empty_space", this.topLeft.x, this.topLeft.y);
-    gl.colour(0xFFFFFFFF);
-    super.draw(now, delta);
+    gl.colour( 0x66FFFFFF );
+    drawTexture( "card_empty_space", this.topLeft.x, this.topLeft.y );
+    gl.colour( 0xFFFFFFFF );
+    super.draw( now, delta );
 
     // Top card of the discard pile
-    if (GameState.storeDiscard.length > 0)
+    if ( GameState.storeDiscard.length > 0 )
     {
-      const lastCard: PlayerCard = GameState.storeDiscard[GameState.storeDiscard.length - 1];
-      drawPlayerCard(lastCard, this.topLeft, this.size);
-      gl.colour(0x99111111);
-      drawTexture("solid", this.topLeft.x, this.topLeft.y, 32, 48);
-      gl.colour(0xFFFFFFFF);
+      const lastCard: PlayerCard = GameState.storeDiscard[ GameState.storeDiscard.length - 1 ];
+      drawPlayerCard( lastCard, this.topLeft, this.size );
+      gl.colour( 0x99111111 );
+      drawQuad( this.topLeft.x, this.topLeft.y, 32, 48 );
+      gl.colour( 0xFFFFFFFF );
     }
 
     // Card being discarded via animation
-    if (toBeDiscarded.length > 0)
+    if ( toBeDiscarded.length > 0 )
     {
-      const card: PlayerCard = toBeDiscarded[0][0];
-      const pos: V2 = toBeDiscarded[0][1].position;
-      drawPlayerCard(card, V2.add(this.topLeft, pos), this.size);
-      gl.colour(0x99111111);
-      drawTexture("solid", this.topLeft.x + pos.x, this.topLeft.y + pos.y, 32, 48);
-      gl.colour(0xFFFFFFFF);
+      const card: PlayerCard = toBeDiscarded[ 0 ][ 0 ];
+      const pos: V2 = toBeDiscarded[ 0 ][ 1 ].position;
+      drawPlayerCard( card, V2.add( this.topLeft, pos ), this.size );
+      gl.colour( 0x99111111 );
+      drawQuad( this.topLeft.x + pos.x, this.topLeft.y + pos.y, 32, 48 );
+      gl.colour( 0xFFFFFFFF );
     }
     // drawText(`${GameState.storeDiscard.length}`, this.topLeft.x, this.topLeft.y - 6);
-    if (GameState.storeDiscard.length > 0)
+    if ( GameState.storeDiscard.length > 0 )
     {
-      gl.colour(0xcc202020);
-      drawTexture("solid", this.topLeft.x + 10, this.topLeft.y + this.size.y - 13, 11, 7);
+      gl.colour( 0xcc202020 );
+      drawQuad( this.topLeft.x + 10, this.topLeft.y + this.size.y - 13, 11, 7 );
     }
-    drawText(`${ GameState.storeDiscard.length }`.padStart(2, "0"), this.topLeft.x + 16, this.topLeft.y + this.size.y - 12, { textAlign: Align.Center, colour: 0xFFFFFFFF, font: "gb" });
+    drawText( `${ GameState.storeDiscard.length }`.padStart( 2, "0" ), this.topLeft.x + 16, this.topLeft.y + this.size.y - 12, { textAlign: Align.Center, colour: 0xFFFFFFFF, font: "gb" } );
   }
 }
