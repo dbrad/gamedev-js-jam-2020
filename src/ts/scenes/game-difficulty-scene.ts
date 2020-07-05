@@ -16,8 +16,10 @@ import { gl } from "../core/gl";
 import { rand } from "../core/random";
 
 export const GameDifficultySceneName: string = "GameDifficulty";
-export class GameDifficultyScene extends Scene {
-  constructor() {
+export class GameDifficultyScene extends Scene
+{
+  constructor()
+  {
     super();
     this.id = GameDifficultySceneName;
     const title: TextNode =
@@ -34,7 +36,8 @@ export class GameDifficultyScene extends Scene {
         .with("text", "Easy")
         .with("size", { x: 120, y: 25 })
         .with("colour", 0xFF44AA44)
-        .with("onMouseUp", () => {
+        .with("onMouseUp", () =>
+        {
           buttonMouseUp();
           this.setupGame();
           GameState.riftStabilityMax = 75;
@@ -49,7 +52,8 @@ export class GameDifficultyScene extends Scene {
         .with("text", "Normal")
         .with("size", { x: 120, y: 25 })
         .with("colour", 0xFF44AA44)
-        .with("onMouseUp", () => {
+        .with("onMouseUp", () =>
+        {
           buttonMouseUp();
           this.setupGame();
           GameState.riftStabilityMax = 50;
@@ -64,7 +68,8 @@ export class GameDifficultyScene extends Scene {
         .with("text", "Hard")
         .with("size", { x: 120, y: 25 })
         .with("colour", 0xFF44AA44)
-        .with("onMouseUp", () => {
+        .with("onMouseUp", () =>
+        {
           buttonMouseUp();
           this.setupGame();
           GameState.riftStabilityMax = 30;
@@ -75,10 +80,13 @@ export class GameDifficultyScene extends Scene {
     this.root.add(hardButton);
   }
 
-  private setupGame(): void {
+  private setupGame(): void
+  {
     resetGameState();
-    
+
     GameState.playerDeck = rand.shuffle([
+      new PlayerCard(PLAYER_CARD_CACHE.get("wounded")),
+      new PlayerCard(PLAYER_CARD_CACHE.get("dazed")),
       new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
       new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
       new PlayerCard(PLAYER_CARD_CACHE.get("open fire")),
@@ -96,16 +104,20 @@ export class GameDifficultyScene extends Scene {
     this.createEncounterDeck();
   }
 
-  private createEncounterDeck(): void {
+  private createEncounterDeck(): void
+  {
     const bossData: EncounterCardData = ENCOUNTER_CARD_CACHE.get("the king in yellow");
     const boss: EncounterCard = new EncounterCard(bossData);
     const enemies: EncounterCard[] = [boss];
 
-    function populateEnemies(wave: Map<string, number>): void {
+    function populateEnemies(wave: Map<string, number>): void
+    {
       const temp: EncounterCard[] = [];
-      for (const [name, count] of wave) {
+      for (const [name, count] of wave)
+      {
         const cardData: EncounterCardData = ENCOUNTER_CARD_CACHE.get(name);
-        for (let i: number = 0; i < count; i++) {
+        for (let i: number = 0; i < count; i++)
+        {
           temp.push(new EncounterCard(cardData));
         }
       }
@@ -152,20 +164,25 @@ export class GameDifficultyScene extends Scene {
     GameState.encounterDeck = enemies;
   }
 
-  public transitionIn(): Promise<any> {
-    return this.root.moveTo({ x: 0, y: this.root.size.y }).then(() => {
-      return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() => {
+  public transitionIn(): Promise<any>
+  {
+    return this.root.moveTo({ x: 0, y: this.root.size.y }).then(() =>
+    {
+      return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() =>
+      {
         return super.transitionIn();
       });
     });
   }
 
-  public transitionOut(): Promise<any> {
+  public transitionOut(): Promise<any>
+  {
     super.transitionOut();
     return this.root.moveTo({ x: 0, y: -this.root.size.y }, 500, Easing.easeOutQuad);
   }
 
-  public draw(now: number, delta: number): void {
+  public draw(now: number, delta: number): void
+  {
     const easyTextPos: V2 = { x: this.root.topLeft.x + this.root.size.x / 2 - 130, y: this.root.topLeft.y + this.root.size.y / 2 - 30 };
     gl.colour(0x66000000);
     drawTexture("solid", easyTextPos.x - 62, easyTextPos.y - 4, 124, 81);

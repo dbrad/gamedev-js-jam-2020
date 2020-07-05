@@ -11,11 +11,13 @@ import { buttonMouseUp } from "../core/zzfx";
 import { gl } from "../core/gl";
 
 export const MainMenuSceneName: string = "MainMenu";
-export class MainMenuScene extends Scene {
+export class MainMenuScene extends Scene
+{
   private menuOffset: number;
   private title: TextNode;
   private newGame: ButtonNode;
-  constructor() {
+  constructor()
+  {
     super();
     this.id = MainMenuSceneName;
 
@@ -39,10 +41,11 @@ export class MainMenuScene extends Scene {
     this.menuOffset += 50;
 
     this.newGame = new Builder(ButtonNode)
-      .with("text", "new game")
+      .with("text", "New Game")
       .with("size", { x: 144, y: 30 })
       .with("colour", 0xFF55cc55)
-      .with("onMouseUp", () => {
+      .with("onMouseUp", () =>
+      {
         buttonMouseUp();
         SceneManager.push("GameDifficulty");
       })
@@ -53,28 +56,36 @@ export class MainMenuScene extends Scene {
   }
 
   private toBlue: boolean = false;
-  public transitionIn(): Promise<any> {
+  public transitionIn(): Promise<any>
+  {
     this.backgroundColour = gl.getBackground();
     this.changeBackground(0, 25, 55, 500);
 
-    return this.root.moveBy({ x: 0, y: -this.root.size.y }).then(() => {
-      return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() => {
+    return this.root.moveBy({ x: 0, y: -this.root.size.y }).then(() =>
+    {
+      return this.root.moveTo({ x: 0, y: 0 }, 500, Easing.easeOutQuad).then(() =>
+      {
         return super.transitionIn();
       });
     });
   }
-  public transitionOut(): Promise<any> {
+  public transitionOut(): Promise<any>
+  {
     this.changeBackground(0, 87, 132, 500);
     super.transitionOut();
     return this.root.moveTo({ x: 0, y: -this.root.size.y }, 500, Easing.easeOutQuad);
   }
 
-  public update(now: number, delta: number): void {
-    if (this.backgroundAnimation === null) {
-      if (this.toBlue) {
+  public update(now: number, delta: number): void
+  {
+    if (this.backgroundAnimation === null)
+    {
+      if (this.toBlue)
+      {
         this.changeBackground(0, 25, 55, 2500);
         this.toBlue = false;
-      } else {
+      } else
+      {
         this.changeBackground(67, 21, 174, 2500);
         this.toBlue = true;
       }
@@ -82,12 +93,13 @@ export class MainMenuScene extends Scene {
     super.update(now, delta);
   }
 
-  public draw(now: number, delta: number): void {
+  public draw(now: number, delta: number): void
+  {
     const topLeft: V2 = this.root.topLeft;
     const size: V2 = this.root.size;
-    drawText("a deck building game", topLeft.x + size.x / 2 + this.title.size.x / 2, topLeft.y + size.y / 2 - 20, { textAlign: Align.Right, scale: 2, colour: 0xCC000000 });
-    drawText("a deck building game", topLeft.x + size.x / 2 + this.title.size.x / 2, topLeft.y + size.y / 2 - 22, { textAlign: Align.Right, scale: 2 });
-    
+    drawText("A Deck Building Game", topLeft.x + size.x / 2 + this.title.size.x / 2, topLeft.y + size.y / 2 - 20, { textAlign: Align.Right, scale: 1, colour: 0xCC000000, font: "gb" });
+    drawText("A Deck Building Game", topLeft.x + size.x / 2 + this.title.size.x / 2, topLeft.y + size.y / 2 - 21, { textAlign: Align.Right, scale: 1, font: "gb" });
+
     drawText("(c) 2020 david brad", topLeft.x + size.x, topLeft.y + size.y - 21, { textAlign: Align.Right });
     drawText("Card art icons made by Lorc, Delapouite, and other contributors", topLeft.x + size.x, topLeft.y + size.y - 14, { textAlign: Align.Right });
     drawText("Available on https://game-icons.net", topLeft.x + size.x, topLeft.y + size.y - 7, { textAlign: Align.Right });

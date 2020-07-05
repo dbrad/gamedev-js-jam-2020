@@ -5,8 +5,10 @@ import { emit } from "./core/events";
 import { thwack } from "./core/zzfx";
 
 export type PlayerCardType = "attack" | "action" | "status" | "permanent";
+export type PlayerCardSet = "none" | "standard" | "occult" | "tech" | "psy";
 export type PlayerCardData = {
   name: string;
+  set: PlayerCardSet;
   cost: number;
   type: PlayerCardType;
   art: string;
@@ -21,21 +23,27 @@ export type PlayerCardAssetJson = {
 export const PLAYER_CARD_CACHE: Map<string, PlayerCardData> = new Map();
 
 export const loadPlayerCards: (cardsData: PlayerCardAssetJson) => Promise<any> =
-  (cardsData: PlayerCardAssetJson) => {
-    return new Promise((resolve, reject) => {
-      try {
-        for (const cardData of cardsData.cards) {
+  (cardsData: PlayerCardAssetJson) =>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      try
+      {
+        for (const cardData of cardsData.cards)
+        {
           PLAYER_CARD_CACHE.set(cardData.name, cardData);
         }
         resolve();
-      } catch (err) {
+      } catch (err)
+      {
         reject(err);
       }
     });
   };
 
 export type PlayerCardEffect = (target: any) => void;
-export class PlayerCard {
+export class PlayerCard
+{
   public name: string;
   public level: number;
   public maxLevel: number;
@@ -47,7 +55,8 @@ export class PlayerCard {
   public description: string[];
   public attackValue: number = 0;
 
-  constructor(cardData: PlayerCardData) {
+  constructor(cardData: PlayerCardData)
+  {
     this.name = cardData.name;
     this.cost = +cardData.cost;
     this.type = cardData.type;
@@ -57,19 +66,24 @@ export class PlayerCard {
 
     this.description = ["unplayable"];
 
-    if (cardData.levels) {
+    if (cardData.levels)
+    {
       this.parseEffects(cardData.levels[this.level]);
-      if (cardData.levels.length > 1) {
-        for (let level: number = 1; level <= cardData.levels.length - 1; level++) {
-          this.levelsText.push(`LV${level}: ${cardData.levels[level]}`);
+      if (cardData.levels.length > 1)
+      {
+        for (let level: number = 1; level <= cardData.levels.length - 1; level++)
+        {
+          this.levelsText.push(`LV${ level }: ${ cardData.levels[level] }`);
         }
       }
     }
   }
 
-  public levelUp(): void {
+  public levelUp(): void
+  {
     this.level++;
-    if (this.level > this.maxLevel) {
+    if (this.level > this.maxLevel)
+    {
       this.level = this.maxLevel;
       return;
     }
@@ -78,71 +92,109 @@ export class PlayerCard {
     this.parseEffects(cardData.levels[this.level]);
   }
 
-  private parseEffects(effectsString: string): void {
+  private parseEffects(effectsString: string): void
+  {
     const effects: string[] = effectsString.split(", ");
     this.effects = [];
     this.description = [];
 
-    if (this.type === "permanent") {
+    if (this.type === "permanent")
+    {
       this.description.push(`(per turn)`);
     }
 
-    for (const effectString of effects) {
+    for (const effectString of effects)
+    {
       const [effect, ...param] = effectString.split(" ");
       this.effects.push(
-        (target: any) => {
-          this[effect](...param, target);
+        (target: any) =>
+        {
+          if (param.length > 0)
+          {
+            this[effect](...param, target);
+          }
+          else
+          {
+            this[effect](target);
+          }
         });
-      if (effect === "attack") {
+      if (effect === "attack")
+      {
         this.attackValue = +param;
       }
-      if (effect === "oldOne") {
+      if (effect === "oldOne")
+      {
         this.description.push(`call to it...`);
-      } else if (effect === "stitch") {
+      }
+      else if (effect === "stitch")
+      {
         this.description.push(`apply stitch`);
-      } else {
-        this.description.push(`${effect} ${param}`);
+      }
+      else
+      {
+        if (param.length > 0)
+        {
+          this.description.push(`${ effect } ${ param }`);
+        }
+        else
+        {
+          this.description.push(`${ effect }`);
+
+        }
       }
     }
   }
 
-  private attack(value: number, target: EncounterCard): void {
+  private attack(value: number, target: EncounterCard): void
+  {
     target.hurt(+value);
     thwack();
   }
 
-  private disrupt(value: number): void {
+  private disrupt(value: number): void
+  {
     GameState.riftStability -= +value;
-    if (GameState.riftStability < 0) {
+    if (GameState.riftStability < 0)
+    {
       GameState.riftStability = 0;
     }
   }
 
-  private gain(value: number): void {
+  private gain(value: number): void
+  {
     GameState.playerMoney += +value;
   }
 
-  private draw(value: number): void {
+  private draw(value: number): void
+  {
     const total: number = +value;
-    for (let i: number = 0; i < total; i++) {
+    for (let i: number = 0; i < total; i++)
+    {
       drawFromPlayerDeck();
     }
   }
-  private recall(value: number): void {
-    if (GameState.encountersActive.length > 0) {
+  private recall(value: number): void
+  {
+    if (GameState.encountersActive.length > 0)
+    {
       GameState.encounterDeck.push(GameState.encountersActive.pop());
     }
   }
-  private stitch(value: number): void {
+  private stitch(value: number): void
+  {
     GameState.stitchCounter += +value;
   }
-  private oldOne(value: number): void {
+  private oldOne(value: number): void
+  {
     GameState.oldOnesFavourInPlay = true;
     GameState.oldOnesFavourCounter++;
   }
-  private discard(value: number): void {
-    if (GameState.playerHand.length <= value) {
-      while (GameState.playerHand.length > 0) {
+  private discard(value: number): void
+  {
+    if (GameState.playerHand.length <= value)
+    {
+      while (GameState.playerHand.length > 0)
+      {
         const card: PlayerCard = GameState.playerHand.pop();
         emit("card_discarded", card);
       }
@@ -151,9 +203,12 @@ export class PlayerCard {
     GameState.playerMode = "discard";
     GameState.discardsRequired = +value;
   }
-  private destroy(value: number): void {
-    if (GameState.playerHand.length <= value) {
-      while (GameState.playerHand.length > 0) {
+  private destroy(value: number): void
+  {
+    if (GameState.playerHand.length <= value)
+    {
+      while (GameState.playerHand.length > 0)
+      {
         GameState.playerHand.pop();
       }
       return;
@@ -161,10 +216,17 @@ export class PlayerCard {
     GameState.playerMode = "destroy";
     GameState.destroysRequired = +value;
   }
-  private spawn(value: number): void {
+  private spawn(value: number): void
+  {
     drawFromEncounterDeck();
   }
-  private stabilize(value: number): void {
+  private stabilize(value: number): void
+  {
     GameState.riftStability = Math.min(GameState.riftStabilityMax, GameState.riftStability + +value);
+  }
+  private exhaust(self: PlayerCard): void
+  {
+    const cardIndex: number = GameState.playerHand.indexOf(self);
+    GameState.playerHand.splice(cardIndex, 1);
   }
 }

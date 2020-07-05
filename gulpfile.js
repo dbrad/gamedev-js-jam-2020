@@ -80,6 +80,6 @@ function watch() {
   gulp.watch(["./src/css/*.css"], buildCss);
 }
 
-const build = exports.build = gulp.parallel(gulp.series(cleanPng, buildPng), gulp.series(cleanJson, buildJson),buildHtml, buildCss);
+const build = exports.build = gulp.parallel(gulp.series(cleanPng, buildPng), gulp.series(cleanJson, buildJson), buildHtml, buildCss);
 
 exports.watch = gulp.series(build, watch); 

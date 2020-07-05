@@ -2,360 +2,244 @@
   "type": "player_cards",
   "cards": [
     {
-      "name" : "wounded",
+      "name": "wounded",
+      "set": "none",
       "cost": 0,
       "type": "status",
       "art": "wound",
       "levels": null
     },
     {
+      "name": "dazed",
+      "set": "none",
+      "cost": 0,
+      "type": "status",
+      "art": "wound",
+      "levels": ["exhaust"]
+    },
+    {
       "name": "open fire",
+      "set": "none",
       "cost": 0,
       "type": "attack",
       "art": "pistol",
-      "levels" : [
-        "attack 1"
-      ]
+      "levels": ["attack 1"]
     },
     {
       "name": "electrical interference",
+      "set": "none",
       "cost": 0,
       "type": "action",
       "art": "weak_emp",
-      "levels" : [
-        "disrupt 1"
-      ]
+      "levels": ["disrupt 1"]
     },
     {
       "name": "funds",
+      "set": "none",
       "cost": 0,
       "type": "action",
       "art": "funds",
-      "levels" : [
-        "gain 1"
-      ]
+      "levels": ["gain 1"]
     },
     {
       "name": "barrage",
+      "set": "standard",
       "cost": 1,
       "type": "attack",
       "art": "barrage",
-      "levels" : [
-        "attack 2",
-        "attack 3",
-        "attack 4",
-        "attack 5",
-        "attack 6",
-        "attack 7"
-      ]
+      "levels": ["attack 2", "attack 3", "attack 4", "attack 5", "attack 6", "attack 7"]
     },
     {
       "name": "emp burst",
+      "set": "standard",
       "cost": 1,
       "type": "action",
       "art": "emp_burst",
-      "levels" : [
-        "disrupt 2",
-        "disrupt 3",
-        "disrupt 4",
-        "disrupt 5"
-      ]
+      "levels": ["disrupt 2", "disrupt 3", "disrupt 4", "disrupt 5"]
     },
     {
       "name": "taxation",
+      "set": "standard",
       "cost": 1,
       "type": "action",
       "art": "taxes",
-      "levels" : [
-        "gain 2",
-        "gain 3",
-        "gain 4",
-        "gain 5",
-        "gain 6",
-        "gain 7"
-      ]
+      "levels": ["gain 2", "gain 3", "gain 4", "gain 5", "gain 6", "gain 7"]
     },
     {
       "name": "supressive fire",
+      "set": "standard",
       "cost": 1,
       "type": "attack",
       "art": "machine_gun",
-      "levels" : [
-        "attack 1, disrupt 1",
-        "attack 2, disrupt 1",
-        "attack 2, disrupt 2",
-        "attack 3, disrupt 2",
-        "attack 3, disrupt 3",
-        "attack 4, disrupt 3"
-      ]
+      "levels": ["attack 1, disrupt 1", "attack 2, disrupt 1", "attack 2, disrupt 2", "attack 3, disrupt 2", "attack 3, disrupt 3", "attack 4, disrupt 3"]
     },
     {
       "name": "bounty",
+      "set": "standard",
       "cost": 1,
       "type": "attack",
       "art": "bounty",
-      "levels" : [
-        "attack 1, gain 1",
-        "attack 2, gain 1",
-        "attack 2, gain 2",
-        "attack 3, gain 2",
-        "attack 3, gain 3",
-        "attack 4, gain 3"
-      ]
+      "levels": ["attack 1, gain 1", "attack 2, gain 1", "attack 2, gain 2", "attack 3, gain 2", "attack 3, gain 3", "attack 4, gain 3"]
     },
     {
       "name": "reevaluate",
+      "set": "standard",
       "cost": 2,
       "type": "action",
       "art": "reevaluate",
-      "levels" : [
-        "draw 1, discard 1",
-        "draw 2, discard 2",
-        "draw 3, discard 3",
-        "draw 3, discard 2",
-        "draw 3, discard 1",
-        "draw 3, discard 0"
-      ]
+      "levels": ["draw 1, discard 1", "draw 2, discard 2", "draw 3, discard 3", "draw 3, discard 2", "draw 3, discard 1", "draw 3, discard 0"]
     },
     {
       "name": "recruitment",
+      "set": "standard",
       "cost": 2,
       "type": "action",
       "art": "recruitment",
-      "levels" : [
-        "gain 1, draw 1",
-        "gain 2, draw 1",
-        "gain 3, draw 1",
-        "gain 3, draw 2",
-        "gain 4, draw 2",
-        "gain 5, draw 2"
-      ]
+      "levels": ["gain 1, draw 1", "gain 2, draw 1", "gain 3, draw 1", "gain 3, draw 2", "gain 4, draw 2", "gain 5, draw 2"]
     },
     {
       "name": "psychic offensive",
+      "set": "psy",
       "cost": 2,
       "type": "attack",
       "art": "psy_offense",
-      "levels" : [
-        "attack 1, draw 1",
-        "attack 2, draw 1",
-        "attack 3, draw 1",
-        "attack 3, draw 2",
-        "attack 4, draw 2",
-        "attack 5, draw 2"
-      ]
+      "levels": ["attack 1, draw 1", "attack 2, draw 1", "attack 3, draw 1", "attack 3, draw 2", "attack 4, draw 2", "attack 5, draw 2"]
     },
     {
       "name": "psychic interference",
+      "set": "psy",
       "cost": 2,
       "type": "action",
       "art": "psy_interference",
-      "levels" : [
-        "disrupt 3",
-        "disrupt 4",
-        "disrupt 5",
-        "disrupt 6",
-        "disrupt 7",
-        "disrupt 8"
-      ]
+      "levels": ["disrupt 3", "disrupt 4", "disrupt 5", "disrupt 6", "disrupt 7", "disrupt 8"]
     },
     {
       "name": "old one's wrath",
+      "set": "occult",
       "cost": 2,
       "type": "action",
       "art": "oo_wrath",
-      "levels" : [
-        "disrupt 1, spawn 1",
-        "disrupt 2, spawn 1",
-        "disrupt 3, spawn 1",
-        "disrupt 4, spawn 1",
-        "disrupt 5, spawn 1",
-        "disrupt 6, spawn 1"
-      ]
+      "levels": ["disrupt 1, spawn 1", "disrupt 2, spawn 1", "disrupt 3, spawn 1", "disrupt 4, spawn 1", "disrupt 5, spawn 1", "disrupt 6, spawn 1"]
     },
     {
       "name": "dark pact",
+      "set": "occult",
       "cost": 2,
       "type": "action",
       "art": "pact",
-      "levels" : [
-        "draw 1, spawn 1",
-        "draw 2, spawn 2",
-        "draw 3, spawn 3",
-        "draw 3, spawn 2",
-        "draw 3, spawn 1",
-        "draw 3, spawn 0"
-      ]
+      "levels": ["draw 1, spawn 1", "draw 2, spawn 2", "draw 3, spawn 3", "draw 3, spawn 2", "draw 3, spawn 1", "draw 3, spawn 0"]
     },
     {
       "name": "experimental rifle",
+      "set": "tech",
       "cost": 3,
       "type": "attack",
       "art": "ex_rifle",
-      "levels" : [
-        "attack 5, stabilize 2",
-        "attack 6, stabilize 2",
-        "attack 7, stabilize 2",
-        "attack 8, stabilize 3",
-        "attack 9, stabilize 3",
-        "attack 10, stabilize 3"
-      ]
+      "levels": ["attack 5, stabilize 2", "attack 6, stabilize 2", "attack 7, stabilize 2", "attack 8, stabilize 3", "attack 9, stabilize 3", "attack 10, stabilize 3"]
     },
     {
       "name": "collect samples",
+      "set": "tech",
       "cost": 2,
       "type": "attack",
       "art": "collect_samples",
-      "levels" : [
-        "attack 1, gain 2",
-        "attack 2, gain 2",
-        "attack 2, gain 3",
-        "attack 3, gain 3",
-        "attack 3, gain 4",
-        "attack 4, gain 4"
-      ]
+      "levels": ["attack 1, gain 2", "attack 2, gain 2", "attack 2, gain 3", "attack 3, gain 3", "attack 3, gain 4", "attack 4, gain 4"]
     },
     {
       "name": "only the best",
+      "set": "standard",
       "cost": 3,
       "type": "action",
       "art": "the_best",
-      "levels" : [
-        "draw 1, destroy 1",
-        "draw 2, destroy 1",
-        "draw 3, destroy 1"
-      ]
+      "levels": ["draw 1, destroy 1", "draw 2, destroy 1", "draw 3, destroy 1"]
     },
     {
       "name": "public funding",
+      "set": "standard",
       "cost": 4,
       "type": "permanent",
       "art": "public_funding",
-      "levels" : [
-        "gain 1",
-        "gain 2",
-        "gain 3"
-      ]
+      "levels": ["gain 1", "gain 2", "gain 3"]
     },
     {
       "name": "rift stitch",
+      "set": "psy",
       "cost": 5,
       "type": "action",
       "art": "stitch",
-      "levels" : [
-        "stitch 1"
-      ]
+      "levels": ["stitch 1"]
     },
     {
       "name": "will of mind",
+      "set": "psy",
       "cost": 5,
       "type": "permanent",
       "art": "mind",
-      "levels" : [
-        "draw 1"
-      ]
+      "levels": ["draw 1"]
     },
     {
       "name": "abyss take me",
+      "set": "occult",
       "cost": 3,
       "type": "attack",
       "art": "abyss",
-      "levels" : [
-        "attack 2, destroy 1",
-        "attack 3, destroy 1",
-        "attack 4, destroy 1",
-        "attack 5, destroy 1",
-        "attack 6, destroy 1",
-        "attack 7, destroy 1"
-      ]
+      "levels": ["attack 2, destroy 1", "attack 3, destroy 1", "attack 4, destroy 1", "attack 5, destroy 1", "attack 6, destroy 1", "attack 7, destroy 1"]
     },
     {
       "name": "blood ritual",
+      "set": "occult",
       "cost": 3,
       "type": "attack",
       "art": "blood_ritual",
-      "levels" : [
-        "attack 3, disrupt 2",
-        "attack 4, disrupt 2",
-        "attack 4, disrupt 3",
-        "attack 5, disrupt 3",
-        "attack 5, disrupt 4",
-        "attack 6, disrupt 4"
-      ]
+      "levels": ["attack 3, disrupt 2", "attack 4, disrupt 2", "attack 4, disrupt 3", "attack 5, disrupt 3", "attack 5, disrupt 4", "attack 6, disrupt 4"]
     },
     {
       "name": "emp bomb",
+      "set": "tech",
       "cost": 3,
       "type": "action",
       "art": "emp_bomb",
-      "levels" : [
-        "disrupt 5",
-        "disrupt 6",
-        "disrupt 7",
-        "disrupt 8",
-        "disrupt 9",
-        "disrupt 10"
-      ]
+      "levels": ["disrupt 5", "disrupt 6", "disrupt 7", "disrupt 8", "disrupt 9", "disrupt 10"]
     },
     {
       "name": "live samples",
+      "set": "tech",
       "cost": 4,
       "type": "permanent",
       "art": "live_samples",
-      "levels" : [
-        "gain 1, stabilize 1",
-        "gain 3, stabilize 2",
-        "gain 5, stabilize 3"
-      ]
+      "levels": ["gain 1, stabilize 1", "gain 3, stabilize 2", "gain 5, stabilize 3"]
     },
     {
       "name": "anti-matter bomb",
+      "set": "standard",
       "cost": 4,
       "type": "attack",
       "art": "am_bomb",
-      "levels" : [
-        "attack 3, disrupt 3",
-        "attack 4, disrupt 3",
-        "attack 4, disrupt 4",
-        "attack 5, disrupt 4",
-        "attack 5, disrupt 5",
-        "attack 6, disrupt 5"
-      ]
+      "levels": ["attack 3, disrupt 3", "attack 4, disrupt 3", "attack 4, disrupt 4", "attack 5, disrupt 4", "attack 5, disrupt 5", "attack 6, disrupt 5"]
     },
     {
       "name": "psychic destruction",
+      "set": "psy",
       "cost": 4,
       "type": "action",
       "art": "psy_destro",
-      "levels" : [
-        "disrupt 3, recall 1",
-        "disrupt 4, recall 1",
-        "disrupt 5, recall 1",
-        "disrupt 6, recall 1",
-        "disrupt 7, recall 1",
-        "disrupt 8, recall 1"
-      ]
+      "levels": ["disrupt 3, recall 1", "disrupt 4, recall 1", "disrupt 5, recall 1", "disrupt 6, recall 1", "disrupt 7, recall 1", "disrupt 8, recall 1"]
     },
     {
       "name": "old one's favour",
+      "set": "occult",
       "cost": 5,
       "type": "permanent",
       "art": "oo_favour",
-      "levels" : [
-        "oldOne 1"
-      ]
+      "levels": ["oldOne 1"]
     },
     {
       "name": "containment field",
+      "set": "tech",
       "cost": 4,
       "type": "permanent",
       "art": "containment_field",
-      "levels" : [
-        "disrupt 1",
-        "disrupt 2",
-        "disrupt 3",
-        "disrupt 4"
-      ]
+      "levels": ["disrupt 1", "disrupt 2", "disrupt 3", "disrupt 4"]
     }
   ]
 }

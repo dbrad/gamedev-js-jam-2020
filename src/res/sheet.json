@@ -5,209 +5,109 @@
     {
       "type": "sprite",
       "name": "solid",
-      "x": 1,
+      "x": 3,
       "y": 0,
       "w": 1,
       "h": 1
     },
     {
-      "type": "sprite",
-      "name": "pointer",
+      "type": "row",
+      "name": ["pointer", "money_icon"],
       "x": 0,
-      "y": 10,
-      "w": 8,
-      "h": 8
-    },
-    {
-      "type": "sprite",
-      "name": "money_icon",
-      "x": 8,
-      "y": 10,
+      "y": 24,
       "w": 8,
       "h": 8
     },
     {
       "type": "row",
-      "name": [
-        "wound",
-        "pistol",
-        "weak_emp",
-        "funds",
-        "barrage",
-        "emp_burst",
-        "taxes",
-        "machine_gun",
-        "bounty",
-        "reevaluate",
-        "recruitment",
-        "psy_offense",
-        "psy_interference",
-        "oo_wrath",
-        "pact",
-        "ex_rifle"
-      ],
+      "name": ["wound", "pistol", "weak_emp", "funds", "barrage", "emp_burst", "taxes", "machine_gun", "bounty", "reevaluate", "recruitment", "psy_offense", "psy_interference", "oo_wrath", "pact", "ex_rifle"],
       "x": 0,
-      "y": 18,
+      "y": 32,
       "w": 32,
       "h": 32
     },
     {
       "type": "row",
-      "name": [
-        "collect_samples",
-        "the_best",
-        "public_funding",
-        "stitch",
-        "mind",
-        "abyss",
-        "blood_ritual",
-        "emp_bomb",
-        "live_samples",
-        "am_bomb",
-        "psy_destro",
-        "oo_favour",
-        "containment_field",
-        "empty_01",
-        "empty_02",
-        "empty_03"
-      ],
+      "name": ["collect_samples", "the_best", "public_funding", "stitch", "mind", "abyss", "blood_ritual", "emp_bomb", "live_samples", "am_bomb", "psy_destro", "oo_favour", "containment_field"],
       "x": 0,
-      "y": 50,
+      "y": 64,
       "w": 32,
       "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "timelost_creature",
-      "x": 0,
-      "y": 82,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "shapeless_threat",
-      "x": 32,
-      "y": 82,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "sentient_rock",
-      "x": 64,
-      "y": 82,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "d_vagabonds",
-      "x": 96,
-      "y": 82,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "rift_horror",
-      "x": 128,
-      "y": 82,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "cultist",
-      "x": 0,
-      "y": 114,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "unspeakable_horror",
-      "x": 32,
-      "y": 114,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "faceless_one",
-      "x": 64,
-      "y": 114,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "creeping_feeler",
-      "x": 96,
-      "y": 114,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "the_king_in_yellow",
-      "x": 128,
-      "y": 114,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "thrashing_tenticle",
-      "x": 160,
-      "y": 114,
-      "w": 32,
-      "h": 32
-    },
-    {
-      "type": "sprite",
-      "name": "card_back",
-      "x": 96,
-      "y": 146,
-      "w": 32,
-      "h": 48
-    },
-    {
-      "type": "sprite",
-      "name": "card_player",
-      "x": 128,
-      "y": 146,
-      "w": 32,
-      "h": 48
-    },
-    {
-      "type": "sprite",
-      "name": "card_empty_space",
-      "x": 96,
-      "y": 194,
-      "w": 32,
-      "h": 48
-    },
-    {
-      "type": "sprite",
-      "name": "card_enemy",
-      "x": 128,
-      "y": 194,
-      "w": 32,
-      "h": 48
     },
     {
       "type": "row",
-      "name": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", "!"],
+      "name": ["timelost_creature", "shapeless_threat", "sentient_rock", "d_vagabonds", "rift_horror"],
       "x": 0,
+      "y": 96,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "row",
+      "name": ["cultist", "unspeakable_horror", "faceless_one", "creeping_feeler", "the_king_in_yellow", "thrashing_tenticle"],
+      "x": 0,
+      "y": 128,
+      "w": 32,
+      "h": 32
+    },
+    {
+      "type": "row",
+      "name": ["card_back", "card_empty_space", "card_player", "card_enemy"],
+      "x": 0,
+      "y": 192,
+      "w": 32,
+      "h": 48
+    },
+    {
+      "type": "font",
+      "name": "gb",
+      "values": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+      "x": 0,
+      "y": 0,
+      "w": 8,
+      "h": 8
+    },
+    {
+      "type": "font",
+      "name": "gb",
+      "values": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+      "x": 0,
+      "y": 8,
+      "w": 8,
+      "h": 8
+    },
+    {
+      "type": "font",
+      "name": "gb",
+      "values": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "(", ")", "!", "?", ",", ".", ":", ";", "'", "\"", "&", "-", "_", "/", "\\", "[", "]", "+"],
+      "x": 0,
+      "y": 16,
+      "w": 8,
+      "h": 8
+    },
+    {
+      "type": "font",
+      "name": "bit",
+      "values": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", ".", "!"],
+      "x": 372,
       "y": 0,
       "w": 5,
       "h": 5
     },
     {
-      "type": "row",
-      "name": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "#", "[", "]", "-", "+", "/", "\\", "|", ":", "(", ")", "<", ">", ",", "'", "\"", "%", "?"],
-      "x": 0,
+      "type": "font",
+      "name": "bit",
+      "values": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", "!"],
+      "x": 372,
+      "y": 0,
+      "w": 5,
+      "h": 5
+    },
+    {
+      "type": "font",
+      "name": "bit",
+      "values": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "#", "[", "]", "-", "+", "/", "\\", "|", ":", "(", ")", "<", ">", ",", "'", "\"", "%", "?"],
+      "x": 372,
       "y": 5,
       "w": 5,
       "h": 5

@@ -31,6 +31,13 @@
       }
     ],
     "ban": false,
+    "brace-style": [
+      true,
+      "allman",
+      {
+        "allowSingleLine": true
+      }
+    ],
     "curly": true,
     "forin": true,
     "label-position": true,
